@@ -44,7 +44,11 @@ git clone https://github.com/MiltonDiazCO/business95-api.git
 
 ## 🚀 Ejecución
 ```bash
+# Compila y ejecuta la aplicación sin limpiar previamente el proyecto
 mvn spring-boot:run
+
+# Limpia el proyecto (elimina la carpeta target/) y luego compila y ejecuta la aplicación
+mvn clean spring-boot:run
 ```
 
 ## Acceder a la API

@@ -1,12 +1,20 @@
 package com.business95.api.business95_api.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -37,17 +45,22 @@ public class Movimiento {
     @JoinColumn(name = "id_medida", nullable = true)
     private Medida medida;
 
+    @JsonIgnoreProperties(value = "movimiento", allowSetters = true)
+    @OneToMany(mappedBy="movimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    private List<ActividadSocio> actividadesSocio = new ArrayList<>();;
+
     public Movimiento() {
     }
 
     public Movimiento(Long idMovimiento, Inversion inversion, String concepto, Categoria categoria, Moneda moneda,
-            Medida medida) {
+            Medida medida, List<ActividadSocio> actividadesSocio) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
         this.moneda = moneda;
         this.medida = medida;
+        this.actividadesSocio = actividadesSocio;
     }
 
     public Long getIdMovimiento() {
@@ -96,6 +109,19 @@ public class Movimiento {
 
     public void setMedida(Medida medida) {
         this.medida = medida;
+    }
+
+    public List<ActividadSocio> getActividadesSocio() {
+        return actividadesSocio;
+    }
+
+    public void setActividadesSocio(List<ActividadSocio> actividadesSocio) {
+        this.actividadesSocio = actividadesSocio;
+    }
+
+    public void addActividadSocio(ActividadSocio actividadSocio) {
+        actividadSocio.setMovimiento(this);
+        this.actividadesSocio.add(actividadSocio);
     }
 
 }

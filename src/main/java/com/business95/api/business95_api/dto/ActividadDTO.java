@@ -5,7 +5,6 @@ import java.time.LocalDateTime;
 
 public class ActividadDTO {
 
-    private Long Movimiento;
     private Long socio;
     private BigDecimal monto;
     private BigDecimal cantidad;
@@ -15,22 +14,13 @@ public class ActividadDTO {
     public ActividadDTO() {
     }
 
-    public ActividadDTO(Long movimiento, Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
+    public ActividadDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
             Long tipoActividad) {
-        Movimiento = movimiento;
         this.socio = socio;
         this.monto = monto;
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.tipoActividad = tipoActividad;
-    }
-
-    public Long getMovimiento() {
-        return Movimiento;
-    }
-
-    public void setMovimiento(Long movimiento) {
-        Movimiento = movimiento;
     }
 
     public Long getSocio() {

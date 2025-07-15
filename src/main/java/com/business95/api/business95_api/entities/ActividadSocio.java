@@ -30,9 +30,9 @@ public class ActividadSocio {
     @JoinColumn(name = "id_socio", nullable = false)
     private Socio socio;
 
-    @ManyToOne
-    @JoinColumn(name = "id_movimiento", nullable = false)
-    private Movimiento movimiento;
+    // @ManyToOne
+    // @JoinColumn(name = "id_movimiento", nullable = false)
+    // private Movimiento movimiento;
 
     @Column(name = "monto", precision = 10, scale = 2, nullable = false)
     @ColumnDefault("0.00")
@@ -68,11 +68,10 @@ public class ActividadSocio {
     public ActividadSocio() {
     }
 
-    public ActividadSocio(Long idActividad, Socio socio, Movimiento movimiento, BigDecimal monto, BigDecimal cantidad,
+    public ActividadSocio(Long idActividad, Socio socio, BigDecimal monto, BigDecimal cantidad,
             LocalDateTime fecha, TipoActividad tipoActividad) {
         this.idActividad = idActividad;
         this.socio = socio;
-        this.movimiento = movimiento;
         this.monto = monto;
         this.cantidad = cantidad;
         this.fecha = fecha;
@@ -93,14 +92,6 @@ public class ActividadSocio {
 
     public void setSocio(Socio socio) {
         this.socio = socio;
-    }
-
-    public Movimiento getMovimiento() {
-        return movimiento;
-    }
-
-    public void setMovimiento(Movimiento movimiento) {
-        this.movimiento = movimiento;
     }
 
     public BigDecimal getMonto() {

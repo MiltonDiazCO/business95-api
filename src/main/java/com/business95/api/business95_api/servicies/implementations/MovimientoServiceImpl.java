@@ -117,6 +117,7 @@ public class MovimientoServiceImpl implements MovimientoService {
             movimientoRepository.save(movimiento);
             return movimientoDTO;
         } catch (Exception e) {
+            e.printStackTrace();
             throw new UnsupportedOperationException("Error al registrar el movimiento");
         }
     }

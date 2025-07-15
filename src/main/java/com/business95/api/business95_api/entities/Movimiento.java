@@ -3,8 +3,6 @@ package com.business95.api.business95_api.entities;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -45,8 +43,8 @@ public class Movimiento {
     @JoinColumn(name = "id_medida", nullable = true)
     private Medida medida;
 
-    @JsonIgnoreProperties(value = "movimiento", allowSetters = true)
-    @OneToMany(mappedBy="movimiento", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @JoinColumn(name = "id_movimiento", nullable = false)
     private List<ActividadSocio> actividadesSocio = new ArrayList<>();;
 
     public Movimiento() {
@@ -120,7 +118,6 @@ public class Movimiento {
     }
 
     public void addActividadSocio(ActividadSocio actividadSocio) {
-        actividadSocio.setMovimiento(this);
         this.actividadesSocio.add(actividadSocio);
     }
 

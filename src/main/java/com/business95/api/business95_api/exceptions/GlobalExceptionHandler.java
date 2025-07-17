@@ -56,4 +56,15 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(InversionNoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> inversionNoEncontradaException(InversionNoEncontradaException exc,
+            HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setRuta(request.getRequestURI());
+        errorResponse.setFecha(LocalDateTime.now());
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
 }

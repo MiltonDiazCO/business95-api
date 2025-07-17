@@ -19,6 +19,7 @@ import com.business95.api.business95_api.entities.Socio;
 import com.business95.api.business95_api.entities.TipoActividad;
 import com.business95.api.business95_api.exceptions.ActividadRequeridaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
 import com.business95.api.business95_api.repositories.CategoriaRepository;
@@ -68,7 +69,8 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         movimiento.setConcepto(movimientoDTO.getConcepto());
 
-        movimiento.setInversion(inversionRepository.findById(movimientoDTO.getInversion()).orElseThrow());
+        movimiento.setInversion(inversionRepository.findById(movimientoDTO.getInversion())
+                .orElseThrow(() -> new InversionNoEncontradaException(movimientoDTO.getInversion())));
 
         movimiento.setCategoria(categoriaRepository.findById(movimientoDTO.getCategoria())
                 .orElseThrow(() -> new CategoriaNoEncontradaException(movimientoDTO.getInversion())));

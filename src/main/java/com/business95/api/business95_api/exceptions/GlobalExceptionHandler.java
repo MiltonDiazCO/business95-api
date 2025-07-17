@@ -34,4 +34,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(MonedaNoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> monedaNoEncontradaException(MonedaNoEncontradaException exc,
+            HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setRuta(request.getRequestURI());
+        errorResponse.setFecha(LocalDateTime.now());
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(MedidaNoEncontradaException.class)
+    public ResponseEntity<ErrorResponse> medidaNoEncontradaException(MedidaNoEncontradaException exc,
+            HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setRuta(request.getRequestURI());
+        errorResponse.setFecha(LocalDateTime.now());
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
 }

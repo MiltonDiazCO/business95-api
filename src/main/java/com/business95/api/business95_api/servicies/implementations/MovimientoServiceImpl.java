@@ -1,7 +1,6 @@
 package com.business95.api.business95_api.servicies.implementations;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,18 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.business95_api.dto.ActividadDTO;
 import com.business95.api.business95_api.dto.MovimientoDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
-import com.business95.api.business95_api.entities.Categoria;
-import com.business95.api.business95_api.entities.Inversion;
-import com.business95.api.business95_api.entities.Medida;
-import com.business95.api.business95_api.entities.Moneda;
 import com.business95.api.business95_api.entities.Movimiento;
-import com.business95.api.business95_api.entities.Socio;
-import com.business95.api.business95_api.entities.TipoActividad;
 import com.business95.api.business95_api.exceptions.ActividadRequeridaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
+import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
 import com.business95.api.business95_api.repositories.CategoriaRepository;
 import com.business95.api.business95_api.repositories.InversionRepository;
 import com.business95.api.business95_api.repositories.MedidaRepository;
@@ -91,17 +86,19 @@ public class MovimientoServiceImpl implements MovimientoService {
             actividadSocio.setCantidad(actividadDTO.getCantidad());
             actividadSocio.setFecha(actividadDTO.getFecha());
 
-            actividadSocio.setSocio(socioRepository.findById(actividadDTO.getSocio()).orElseThrow());
+            actividadSocio.setSocio(socioRepository.findById(actividadDTO.getSocio())
+                    .orElseThrow(() -> new SocioNoEncontradoException(actividadDTO.getSocio())));
 
             actividadSocio.setTipoActividad(
-                    tipoActividadRepository.findById(actividadDTO.getTipoActividad()).orElseThrow());
+                    tipoActividadRepository.findById(actividadDTO.getTipoActividad())
+                            .orElseThrow(
+                                    () -> new TipoActividadNoEncontradoException(actividadDTO.getTipoActividad())));
 
             movimiento.addActividadSocio(actividadSocio);
         }
 
         movimientoRepository.save(movimiento);
         return movimientoDTO;
-
     }
 
 }

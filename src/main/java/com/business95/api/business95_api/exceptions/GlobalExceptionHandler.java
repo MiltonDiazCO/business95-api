@@ -67,4 +67,26 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(SocioNoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> socioNoEncontradoException(SocioNoEncontradoException exc,
+            HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setRuta(request.getRequestURI());
+        errorResponse.setFecha(LocalDateTime.now());
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    @ExceptionHandler(TipoActividadNoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> tipoActividadNoEncontradoException(TipoActividadNoEncontradoException exc,
+            HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setRuta(request.getRequestURI());
+        errorResponse.setFecha(LocalDateTime.now());
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
+
 }

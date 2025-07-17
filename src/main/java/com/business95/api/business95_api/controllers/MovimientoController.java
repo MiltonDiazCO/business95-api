@@ -3,6 +3,9 @@ package com.business95.api.business95_api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,8 +29,8 @@ public class MovimientoController {
     }
 
     @PostMapping
-    public MovimientoDTO registrarMovimiento(@RequestBody MovimientoDTO movimientoDTO) {
-        return movimientoService.save(movimientoDTO);
+    public ResponseEntity<MovimientoDTO> registrarMovimiento(@RequestBody MovimientoDTO movimientoDTO) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoService.save(movimientoDTO));
     }
 
 }

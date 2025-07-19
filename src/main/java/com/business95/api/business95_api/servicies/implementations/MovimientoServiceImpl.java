@@ -67,7 +67,7 @@ public class MovimientoServiceImpl implements MovimientoService {
                                 .orElseThrow(() -> new InversionNoEncontradaException(movimientoDTO.getInversion())));
 
                 movimiento.setCategoria(categoriaRepository.findById(movimientoDTO.getCategoria())
-                                .orElseThrow(() -> new CategoriaNoEncontradaException(movimientoDTO.getInversion())));
+                                .orElseThrow(() -> new CategoriaNoEncontradaException(movimientoDTO.getCategoria())));
 
                 movimiento.setMoneda(monedaRepository.findById(movimientoDTO.getMoneda())
                                 .orElseThrow(() -> new MonedaNoEncontradaException(movimientoDTO.getMoneda())));

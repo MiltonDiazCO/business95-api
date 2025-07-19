@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.business95.api.business95_api.exceptions.ActividadRequeridaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
@@ -22,18 +21,6 @@ import jakarta.servlet.http.HttpServletRequest;
 public class MovimientoExceptionHandler {
 
     public static final String errorRegistroMovimiento = "Error al registrar el movimiento. Por favor, corrija los siguientes errores.";
-
-    @ExceptionHandler(ActividadRequeridaException.class)
-    public ResponseEntity<ErrorResponse> actividadRequeridaException(ActividadRequeridaException exc,
-            HttpServletRequest request) {
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
-        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
-        errorResponse.setCodigoEstado(HttpStatus.UNPROCESSABLE_ENTITY.value());
-        errorResponse.setRuta(request.getRequestURI());
-        errorResponse.setFecha(LocalDateTime.now());
-        return ResponseEntity.unprocessableEntity().body(errorResponse);
-    }
 
     @ExceptionHandler(CategoriaNoEncontradaException.class)
     public ResponseEntity<ErrorResponse> categoriaNoEncontradaException(CategoriaNoEncontradaException exc,

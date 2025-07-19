@@ -10,7 +10,6 @@ import com.business95.api.business95_api.dto.ActividadDTO;
 import com.business95.api.business95_api.dto.MovimientoDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
-import com.business95.api.business95_api.exceptions.ActividadRequeridaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
@@ -75,10 +74,6 @@ public class MovimientoServiceImpl implements MovimientoService {
 
                 movimiento.setMedida(medidaRepository.findById(movimientoDTO.getMedida())
                                 .orElseThrow(() -> new MedidaNoEncontradaException(movimientoDTO.getMedida())));
-
-                if (movimientoDTO.getActividades() == null || movimientoDTO.getActividades().isEmpty()) {
-                        throw new ActividadRequeridaException();
-                }
 
                 for (ActividadDTO actividadDTO : movimientoDTO.getActividades()) {
                         ActividadSocio actividadSocio = new ActividadSocio();

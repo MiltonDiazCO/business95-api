@@ -1,10 +1,12 @@
-package com.business95.api.business95_api.exceptions;
+package com.business95.api.business95_api.exceptions.handlers;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ErrorResponse {
 
     private String mensaje;
+    private List<String> errores;
     private int codigoEstado;
     private String ruta;
     private LocalDateTime fecha;
@@ -49,6 +51,14 @@ public class ErrorResponse {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public List<String> getErrores() {
+        return errores;
+    }
+
+    public void setErrores(List<String> errores) {
+        this.errores = errores;
     }
 
 }

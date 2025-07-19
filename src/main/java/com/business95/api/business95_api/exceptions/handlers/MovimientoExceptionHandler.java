@@ -1,22 +1,34 @@
-package com.business95.api.business95_api.exceptions;
+package com.business95.api.business95_api.exceptions.handlers;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.business95.api.business95_api.exceptions.ActividadRequeridaException;
+import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
+import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
+import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
-public class GlobalExceptionHandler {
+public class MovimientoExceptionHandler {
+
+    public static final String errorRegistroMovimiento = "Error al registrar el movimiento. Por favor, corrija los siguientes errores.";
 
     @ExceptionHandler(ActividadRequeridaException.class)
     public ResponseEntity<ErrorResponse> actividadRequeridaException(ActividadRequeridaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.UNPROCESSABLE_ENTITY.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
@@ -27,7 +39,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> categoriaNoEncontradaException(CategoriaNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
@@ -38,7 +51,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> monedaNoEncontradaException(MonedaNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
@@ -49,7 +63,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> medidaNoEncontradaException(MedidaNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
@@ -60,7 +75,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> inversionNoEncontradaException(InversionNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
@@ -71,7 +87,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> socioNoEncontradoException(SocioNoEncontradoException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
@@ -82,7 +99,8 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResponse> tipoActividadNoEncontradoException(TipoActividadNoEncontradoException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(exc.getMessage());
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());

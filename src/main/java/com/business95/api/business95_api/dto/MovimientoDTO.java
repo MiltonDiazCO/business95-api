@@ -2,13 +2,29 @@ package com.business95.api.business95_api.dto;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
 public class MovimientoDTO {
 
+    @NotNull(message = "La Inversión es requerida.")
     private Long inversion;
+
+    @NotBlank(message = "El Concepto del movimiento es requerido.")
+    @Size(max = 120, message = "El concepto debe ser de máximo 120 caracteres.")
     private String concepto;
+
+    @NotNull(message = "La Categoría es requerida.")
     private Long categoria;
+
     private String moneda;
     private Long medida;
+
+    @Valid
+    @NotEmpty(message = "La lista de actividades es requerida y debe contener al menos una actividad asociada.")
     private List<ActividadDTO> actividades;
 
     public MovimientoDTO() {

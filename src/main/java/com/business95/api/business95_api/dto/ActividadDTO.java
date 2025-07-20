@@ -11,14 +11,16 @@ public class ActividadDTO {
     @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.")
     private Long socio;
 
-    @Digits(integer = 10, fraction = 2)
+    @Digits(integer = 10, fraction = 2, message = "El monto debe tener el formato 10.2 (máximo 10 cifras enteras y 2 decimales). Ejemplo: '43.15'")
     private BigDecimal monto;
 
-    @Digits(integer = 10, fraction = 2)
+    @Digits(integer = 10, fraction = 2, message = "La cantidad debe tener el formato 10.2 (máximo 10 cifras enteras y 2 decimales). Ejemplo: '43.15'")
     private BigDecimal cantidad;
 
     @NotNull(message = "Hay actividades sin una fecha asociada. La fecha es requerida para cada actividad a registrar.")
     private LocalDateTime fecha;
+
+    @NotNull(message = "Hay actividades sin un tipo de actividad asociado. El tipo de actividad es requerido para cada actividad a registrar.")
     private Long tipoActividad;
 
     public ActividadDTO() {

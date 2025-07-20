@@ -6,6 +6,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public class MovimientoRegistroDTO {
@@ -20,6 +21,7 @@ public class MovimientoRegistroDTO {
     @NotNull(message = "La Categoría es requerida.")
     private Long categoria;
 
+    @Pattern(regexp = "^[A-Z]{3}$", message = "El código de la moneda debe tener exactamente 3 letras mayúsculas.")
     private String moneda;
     private Long medida;
 

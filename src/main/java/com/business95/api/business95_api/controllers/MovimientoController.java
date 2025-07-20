@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.business95.api.business95_api.dto.MovimientoDTO;
+import com.business95.api.business95_api.dto.MovimientoRegistroDTO;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.handlers.ErrorResponse;
 import com.business95.api.business95_api.exceptions.handlers.MovimientoExceptionHandler;
@@ -37,7 +37,7 @@ public class MovimientoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoDTO movimientoDTO,
+    public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoRegistroDTO movimientoRegistroDTO,
             BindingResult result, HttpServletRequest request) {
         if (result.hasErrors()) {
             ErrorResponse errorResponse = new ErrorResponse();
@@ -56,7 +56,7 @@ public class MovimientoController {
             return ResponseEntity.badRequest().body(errorResponse);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoService.save(movimientoDTO));
+        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoService.save(movimientoRegistroDTO));
     }
 
 }

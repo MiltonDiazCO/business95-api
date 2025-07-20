@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dto.ActividadDTO;
-import com.business95.api.business95_api.dto.MovimientoDTO;
+import com.business95.api.business95_api.dto.ActividadRegistroDTO;
+import com.business95.api.business95_api.dto.MovimientoRegistroDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
@@ -57,44 +57,48 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional
-        public MovimientoDTO save(MovimientoDTO movimientoDTO) {
+        public MovimientoRegistroDTO save(MovimientoRegistroDTO movimientoRegistroDTO) {
 
                 Movimiento movimiento = new Movimiento();
 
-                movimiento.setConcepto(movimientoDTO.getConcepto());
+                movimiento.setConcepto(movimientoRegistroDTO.getConcepto());
 
-                movimiento.setInversion(inversionRepository.findById(movimientoDTO.getInversion())
-                                .orElseThrow(() -> new InversionNoEncontradaException(movimientoDTO.getInversion())));
+                movimiento.setInversion(inversionRepository.findById(movimientoRegistroDTO.getInversion())
+                                .orElseThrow(() -> new InversionNoEncontradaException(
+                                                movimientoRegistroDTO.getInversion())));
 
-                movimiento.setCategoria(categoriaRepository.findById(movimientoDTO.getCategoria())
-                                .orElseThrow(() -> new CategoriaNoEncontradaException(movimientoDTO.getCategoria())));
+                movimiento.setCategoria(categoriaRepository.findById(movimientoRegistroDTO.getCategoria())
+                                .orElseThrow(() -> new CategoriaNoEncontradaException(
+                                                movimientoRegistroDTO.getCategoria())));
 
-                movimiento.setMoneda(monedaRepository.findById(movimientoDTO.getMoneda())
-                                .orElseThrow(() -> new MonedaNoEncontradaException(movimientoDTO.getMoneda())));
+                movimiento.setMoneda(monedaRepository.findById(movimientoRegistroDTO.getMoneda())
+                                .orElseThrow(() -> new MonedaNoEncontradaException(movimientoRegistroDTO.getMoneda())));
 
-                movimiento.setMedida(medidaRepository.findById(movimientoDTO.getMedida())
-                                .orElseThrow(() -> new MedidaNoEncontradaException(movimientoDTO.getMedida())));
+                movimiento.setMedida(medidaRepository.findById(movimientoRegistroDTO.getMedida())
+                                .orElseThrow(() -> new MedidaNoEncontradaException(movimientoRegistroDTO.getMedida())));
 
-                for (ActividadDTO actividadDTO : movimientoDTO.getActividades()) {
+                for (ActividadRegistroDTO actividadRegistroDTO : movimientoRegistroDTO.getActividades()) {
                         ActividadSocio actividadSocio = new ActividadSocio();
-                        actividadSocio.setMonto(actividadDTO.getMonto());
-                        actividadSocio.setCantidad(actividadDTO.getCantidad());
-                        actividadSocio.setFecha(actividadDTO.getFecha());
+                        actividadSocio.setMonto(actividadRegistroDTO.getMonto());
+                        actividadSocio.setCantidad(actividadRegistroDTO.getCantidad());
+                        actividadSocio.setFecha(actividadRegistroDTO.getFecha());
 
-                        actividadSocio.setSocio(socioRepository.findById(actividadDTO.getSocio())
-                                        .orElseThrow(() -> new SocioNoEncontradoException(actividadDTO.getSocio())));
+                        actividadSocio.setSocio(socioRepository.findById(actividadRegistroDTO.getSocio())
+                                        .orElseThrow(() -> new SocioNoEncontradoException(
+                                                        actividadRegistroDTO.getSocio())));
 
                         actividadSocio.setTipoActividad(
-                                        tipoActividadRepository.findById(actividadDTO.getTipoActividad())
+                                        tipoActividadRepository.findById(actividadRegistroDTO.getTipoActividad())
                                                         .orElseThrow(
                                                                         () -> new TipoActividadNoEncontradoException(
-                                                                                        actividadDTO.getTipoActividad())));
+                                                                                        actividadRegistroDTO
+                                                                                                        .getTipoActividad())));
 
                         movimiento.addActividadSocio(actividadSocio);
                 }
 
                 movimientoRepository.save(movimiento);
-                return movimientoDTO;
+                return movimientoRegistroDTO;
         }
 
 }

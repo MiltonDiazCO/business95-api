@@ -6,15 +6,15 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 
-public class ActividadDTO {
+public class ActividadRegistroDTO {
 
     @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.")
     private Long socio;
 
-    @Digits(integer = 10, fraction = 2, message = "El monto debe tener el formato 10.2 (máximo 10 cifras enteras y 2 decimales). Ejemplo: '43.15'")
+    @Digits(integer = 8, fraction = 2, message = "El monto debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'")
     private BigDecimal monto;
 
-    @Digits(integer = 10, fraction = 2, message = "La cantidad debe tener el formato 10.2 (máximo 10 cifras enteras y 2 decimales). Ejemplo: '43.15'")
+    @Digits(integer = 8, fraction = 2, message = "La cantidad debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'")
     private BigDecimal cantidad;
 
     @NotNull(message = "Hay actividades sin una fecha asociada. La fecha es requerida para cada actividad a registrar.")
@@ -23,10 +23,10 @@ public class ActividadDTO {
     @NotNull(message = "Hay actividades sin un tipo de actividad asociado. El tipo de actividad es requerido para cada actividad a registrar.")
     private Long tipoActividad;
 
-    public ActividadDTO() {
+    public ActividadRegistroDTO() {
     }
 
-    public ActividadDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
+    public ActividadRegistroDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
             Long tipoActividad) {
         this.socio = socio;
         this.monto = monto;

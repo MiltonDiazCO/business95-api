@@ -8,7 +8,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-public class MovimientoDTO {
+public class MovimientoRegistroDTO {
 
     @NotNull(message = "La Inversión es requerida.")
     private Long inversion;
@@ -25,13 +25,13 @@ public class MovimientoDTO {
 
     @Valid
     @NotEmpty(message = "La lista de actividades es requerida y debe contener al menos una actividad asociada.")
-    private List<ActividadDTO> actividades;
+    private List<ActividadRegistroDTO> actividades;
 
-    public MovimientoDTO() {
+    public MovimientoRegistroDTO() {
     }
 
-    public MovimientoDTO(Long inversion, String concepto, Long categoria, String moneda, Long medida,
-            List<ActividadDTO> actividades) {
+    public MovimientoRegistroDTO(Long inversion, String concepto, Long categoria, String moneda, Long medida,
+            List<ActividadRegistroDTO> actividades) {
         this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
@@ -80,11 +80,11 @@ public class MovimientoDTO {
         this.medida = medida;
     }
 
-    public List<ActividadDTO> getActividades() {
+    public List<ActividadRegistroDTO> getActividades() {
         return actividades;
     }
 
-    public void setActividades(List<ActividadDTO> actividades) {
+    public void setActividades(List<ActividadRegistroDTO> actividades) {
         this.actividades = actividades;
     }
 

@@ -5,8 +5,6 @@ import java.time.LocalDateTime;
 
 import org.hibernate.annotations.ColumnDefault;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -29,10 +27,6 @@ public class ActividadSocio {
     @ManyToOne
     @JoinColumn(name = "id_socio", nullable = false)
     private Socio socio;
-
-    // @ManyToOne
-    // @JoinColumn(name = "id_movimiento", nullable = false)
-    // private Movimiento movimiento;
 
     @Column(name = "monto", precision = 10, scale = 2, nullable = false)
     @ColumnDefault("0.00")

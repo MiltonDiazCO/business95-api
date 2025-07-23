@@ -1,4 +1,4 @@
-package com.business95.api.business95_api.dto;
+package com.business95.api.business95_api.dto.request;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 
-public class ActividadRegistroDTO {
+public class ActividadRequestDTO {
 
     @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.")
     private Long socio;
@@ -23,10 +23,10 @@ public class ActividadRegistroDTO {
     @NotNull(message = "Hay actividades sin un tipo de actividad asociado. El tipo de actividad es requerido para cada actividad a registrar.")
     private Long tipoActividad;
 
-    public ActividadRegistroDTO() {
+    public ActividadRequestDTO() {
     }
 
-    public ActividadRegistroDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
+    public ActividadRequestDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
             Long tipoActividad) {
         this.socio = socio;
         this.monto = monto;

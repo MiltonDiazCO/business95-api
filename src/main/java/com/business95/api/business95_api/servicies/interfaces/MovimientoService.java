@@ -2,16 +2,13 @@ package com.business95.api.business95_api.servicies.interfaces;
 
 import java.util.List;
 
-import com.business95.api.business95_api.dto.MovimientoConsultaDTO;
-import com.business95.api.business95_api.dto.MovimientoRegistroDTO;
-import com.business95.api.business95_api.entities.Movimiento;
+import com.business95.api.business95_api.dto.projection.MovimientoConsultaDTO;
+import com.business95.api.business95_api.dto.request.MovimientoRequestDTO;
 
 public interface MovimientoService {
 
-    List<Movimiento> findAll();
-
     List<MovimientoConsultaDTO> findMovimientoDTOById(Long idMovimiento);
 
-    MovimientoRegistroDTO save(MovimientoRegistroDTO movimientoRegistroDTO);
+    MovimientoRequestDTO save(MovimientoRequestDTO movimientoRequestDTO);
 
 }

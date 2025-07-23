@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.business95.api.business95_api.dto.MovimientoConsultaDTO;
-import com.business95.api.business95_api.dto.MovimientoRegistroDTO;
+import com.business95.api.business95_api.dto.projection.MovimientoConsultaDTO;
+import com.business95.api.business95_api.dto.request.MovimientoRequestDTO;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.handlers.ErrorResponse;
 import com.business95.api.business95_api.exceptions.handlers.MovimientoExceptionHandler;
@@ -33,18 +33,13 @@ public class MovimientoController {
     @Autowired
     private MovimientoService movimientoService;
 
-    @GetMapping
-    public List<Movimiento> movimientos() {
-        return movimientoService.findAll();
-    }
-
     @GetMapping("/{idMovimiento}")
     public List<MovimientoConsultaDTO> movimientoPorId(@PathVariable Long idMovimiento) {
         return movimientoService.findMovimientoDTOById(idMovimiento);
     }
 
     @PostMapping
-    public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoRegistroDTO movimientoRegistroDTO,
+    public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoRequestDTO movimientoRegistroDTO,
             BindingResult result, HttpServletRequest request) {
         if (result.hasErrors()) {
             ErrorResponse errorResponse = new ErrorResponse();

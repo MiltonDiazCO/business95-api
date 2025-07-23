@@ -1,4 +1,4 @@
-package com.business95.api.business95_api.dto;
+package com.business95.api.business95_api.dto.request;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class MovimientoRegistroDTO {
+public class MovimientoRequestDTO {
 
     @NotNull(message = "La Inversión es requerida.")
     private Long inversion;
@@ -27,13 +27,13 @@ public class MovimientoRegistroDTO {
 
     @Valid
     @NotEmpty(message = "La lista de actividades es requerida y debe contener al menos una actividad asociada.")
-    private List<ActividadRegistroDTO> actividades;
+    private List<ActividadRequestDTO> actividades;
 
-    public MovimientoRegistroDTO() {
+    public MovimientoRequestDTO() {
     }
 
-    public MovimientoRegistroDTO(Long inversion, String concepto, Long categoria, String moneda, Long medida,
-            List<ActividadRegistroDTO> actividades) {
+    public MovimientoRequestDTO(Long inversion, String concepto, Long categoria, String moneda, Long medida,
+            List<ActividadRequestDTO> actividades) {
         this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
@@ -82,11 +82,11 @@ public class MovimientoRegistroDTO {
         this.medida = medida;
     }
 
-    public List<ActividadRegistroDTO> getActividades() {
+    public List<ActividadRequestDTO> getActividades() {
         return actividades;
     }
 
-    public void setActividades(List<ActividadRegistroDTO> actividades) {
+    public void setActividades(List<ActividadRequestDTO> actividades) {
         this.actividades = actividades;
     }
 

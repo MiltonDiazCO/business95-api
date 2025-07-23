@@ -16,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.business95.api.business95_api.dto.projection.MovimientoConsultaDTO;
 import com.business95.api.business95_api.dto.request.MovimientoRequestDTO;
-import com.business95.api.business95_api.entities.Movimiento;
+import com.business95.api.business95_api.dto.response.MovimientoResponseDTO;
 import com.business95.api.business95_api.exceptions.handlers.ErrorResponse;
 import com.business95.api.business95_api.exceptions.handlers.MovimientoExceptionHandler;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
@@ -34,7 +33,7 @@ public class MovimientoController {
     private MovimientoService movimientoService;
 
     @GetMapping("/{idMovimiento}")
-    public List<MovimientoConsultaDTO> movimientoPorId(@PathVariable Long idMovimiento) {
+    public MovimientoResponseDTO movimientoPorId(@PathVariable Long idMovimiento) {
         return movimientoService.findMovimientoDTOById(idMovimiento);
     }
 

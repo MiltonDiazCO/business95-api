@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dto.ActividadRegistroDTO;
+import com.business95.api.business95_api.dto.MovimientoConsultaDTO;
 import com.business95.api.business95_api.dto.MovimientoRegistroDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
@@ -53,6 +54,12 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Transactional(readOnly = true)
         public List<Movimiento> findAll() {
                 return (List<Movimiento>) movimientoRepository.findAll();
+        }
+
+        @Override
+        @Transactional(readOnly = true)
+        public List<MovimientoConsultaDTO> findMovimientoDTOById(Long idMovimiento) {
+                return movimientoRepository.findMovimientoDTOById(idMovimiento);
         }
 
         @Override

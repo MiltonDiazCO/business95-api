@@ -1,35 +1,49 @@
 package com.business95.api.business95_api.dto;
 
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public class MovimientoConsultaDTO {
 
-    private String inversion;
+    private Long idMovimiento;
     private String concepto;
     private String categoria;
     private String moneda;
     private String medida;
-    private List<ActividadConsultaDTO> actividades;
+    private String inversion;
+    private Long idActividad;
+    private String socio;
+    private BigDecimal monto;
+    private BigDecimal cantidad;
+    private LocalDateTime fecha;
+    private String tipoActividad;
 
     public MovimientoConsultaDTO() {
     }
 
-    public MovimientoConsultaDTO(String inversion, String concepto, String categoria, String moneda, String medida,
-            List<ActividadConsultaDTO> actividades) {
-        this.inversion = inversion;
+    public MovimientoConsultaDTO(Long idMovimiento, String concepto, String categoria, String moneda, String medida,
+            String inversion, Long idActividad, String socio, BigDecimal monto, BigDecimal cantidad,
+            LocalDateTime fecha, String tipoActividad) {
+        this.idMovimiento = idMovimiento;
         this.concepto = concepto;
         this.categoria = categoria;
         this.moneda = moneda;
         this.medida = medida;
-        this.actividades = actividades;
-    }
-
-    public String getInversion() {
-        return inversion;
-    }
-
-    public void setInversion(String inversion) {
         this.inversion = inversion;
+        this.idActividad = idActividad;
+        this.socio = socio;
+        this.monto = monto;
+        this.cantidad = cantidad;
+        this.fecha = fecha;
+        this.tipoActividad = tipoActividad;
+    }
+
+    public Long getIdMovimiento() {
+        return idMovimiento;
+    }
+
+    public void setIdMovimiento(Long idMovimiento) {
+        this.idMovimiento = idMovimiento;
     }
 
     public String getConcepto() {
@@ -64,12 +78,60 @@ public class MovimientoConsultaDTO {
         this.medida = medida;
     }
 
-    public List<ActividadConsultaDTO> getActividades() {
-        return actividades;
+    public String getInversion() {
+        return inversion;
     }
 
-    public void setActividades(List<ActividadConsultaDTO> actividades) {
-        this.actividades = actividades;
+    public void setInversion(String inversion) {
+        this.inversion = inversion;
+    }
+
+    public Long getIdActividad() {
+        return idActividad;
+    }
+
+    public void setIdActividad(Long idActividad) {
+        this.idActividad = idActividad;
+    }
+
+    public String getSocio() {
+        return socio;
+    }
+
+    public void setSocio(String socio) {
+        this.socio = socio;
+    }
+
+    public BigDecimal getMonto() {
+        return monto;
+    }
+
+    public void setMonto(BigDecimal monto) {
+        this.monto = monto;
+    }
+
+    public BigDecimal getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(BigDecimal cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public LocalDateTime getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(LocalDateTime fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getTipoActividad() {
+        return tipoActividad;
+    }
+
+    public void setTipoActividad(String tipoActividad) {
+        this.tipoActividad = tipoActividad;
     }
 
 }

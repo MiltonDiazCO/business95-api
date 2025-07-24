@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 
-public class ActividadRequestDTO {
+public class ActividadSocioRequestDTO {
 
     @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.")
     private Long socio;
@@ -23,10 +23,10 @@ public class ActividadRequestDTO {
     @NotNull(message = "Hay actividades sin un tipo de actividad asociado. El tipo de actividad es requerido para cada actividad a registrar.")
     private Long tipoActividad;
 
-    public ActividadRequestDTO() {
+    public ActividadSocioRequestDTO() {
     }
 
-    public ActividadRequestDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
+    public ActividadSocioRequestDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
             Long tipoActividad) {
         this.socio = socio;
         this.monto = monto;

@@ -14,11 +14,12 @@ import com.business95.api.business95_api.entities.Movimiento;
 public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
 
     @Query("SELECT new com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO(" +
-            "m.idMovimiento, m.concepto, m.categoria.categoria, m.moneda.moneda," +
-            "m.medida.medida, m.inversion.inversion, a.idActividad," +
+            "m.idMovimiento, m.concepto, m.categoria.categoria, mo.moneda," +
+            "md.medida, m.inversion.inversion, a.idActividad," +
             "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos)," +
             "a.monto, a.cantidad, a.fecha, a.tipoActividad.tipoActividad)" +
-            "FROM Movimiento m LEFT JOIN m.actividadesSocio a WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha")
+            "FROM Movimiento m LEFT JOIN m.moneda mo LEFT JOIN m.medida md " +
+            "LEFT JOIN m.actividadesSocio a WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha")
     List<MovimientoConsultaDTO> findMovimientoDTOById(@Param("idMovimiento") Long idMovimiento);
 
 }

@@ -2,6 +2,8 @@ package com.business95.api.business95_api.dtos.requests;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MovimientoRequestDTO {
 
     @NotNull(message = "La Inversión es requerida.")
@@ -27,13 +30,13 @@ public class MovimientoRequestDTO {
 
     @Valid
     @NotEmpty(message = "La lista de actividades es requerida y debe contener al menos una actividad asociada.")
-    private List<ActividadRequestDTO> actividades;
+    private List<ActividadSocioRequestDTO> actividades;
 
     public MovimientoRequestDTO() {
     }
 
     public MovimientoRequestDTO(Long inversion, String concepto, Long categoria, String moneda, Long medida,
-            List<ActividadRequestDTO> actividades) {
+            List<ActividadSocioRequestDTO> actividades) {
         this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
@@ -82,11 +85,11 @@ public class MovimientoRequestDTO {
         this.medida = medida;
     }
 
-    public List<ActividadRequestDTO> getActividades() {
+    public List<ActividadSocioRequestDTO> getActividades() {
         return actividades;
     }
 
-    public void setActividades(List<ActividadRequestDTO> actividades) {
+    public void setActividades(List<ActividadSocioRequestDTO> actividades) {
         this.actividades = actividades;
     }
 

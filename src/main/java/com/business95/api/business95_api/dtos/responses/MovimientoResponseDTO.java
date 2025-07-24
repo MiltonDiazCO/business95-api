@@ -3,6 +3,9 @@ package com.business95.api.business95_api.dtos.responses;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class MovimientoResponseDTO {
 
     private Long idMovimiento;
@@ -11,20 +14,20 @@ public class MovimientoResponseDTO {
     private String moneda;
     private String medida;
     private String inversion;
-    private List<ActividadResponseDTO> actividadesSocio = new ArrayList<>();
+    private List<ActividadSocioResponseDTO> actividades = new ArrayList<>();
 
     public MovimientoResponseDTO() {
     }
 
     public MovimientoResponseDTO(Long idMovimiento, String concepto, String categoria, String moneda, String medida,
-            String inversion, List<ActividadResponseDTO> actividadesSocio) {
+            String inversion, List<ActividadSocioResponseDTO> actividades) {
         this.idMovimiento = idMovimiento;
         this.concepto = concepto;
         this.categoria = categoria;
         this.moneda = moneda;
         this.medida = medida;
         this.inversion = inversion;
-        this.actividadesSocio = actividadesSocio;
+        this.actividades = actividades;
     }
 
     public Long getIdMovimiento() {
@@ -75,16 +78,16 @@ public class MovimientoResponseDTO {
         this.inversion = inversion;
     }
 
-    public List<ActividadResponseDTO> getActividadesSocio() {
-        return actividadesSocio;
+    public List<ActividadSocioResponseDTO> getActividades() {
+        return actividades;
     }
 
-    public void setActividadesSocio(List<ActividadResponseDTO> actividadesSocio) {
-        this.actividadesSocio = actividadesSocio;
+    public void setActividades(List<ActividadSocioResponseDTO> actividades) {
+        this.actividades = actividades;
     }
 
-    public void addActividadSocio(ActividadResponseDTO actividadResponseDTO) {
-        this.actividadesSocio.add(actividadResponseDTO);
+    public void addActividadSocio(ActividadSocioResponseDTO actividadSocioResponseDTO) {
+        this.actividades.add(actividadSocioResponseDTO);
     }
 
 }

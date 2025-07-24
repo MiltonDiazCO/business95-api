@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO;
-import com.business95.api.business95_api.dtos.requests.ActividadRequestDTO;
+import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
-import com.business95.api.business95_api.dtos.responses.ActividadResponseDTO;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
@@ -69,14 +69,14 @@ public class MovimientoServiceImpl implements MovimientoService {
                 movimientoResponseDTO.setInversion(movimientoConsultaDTO.get(0).getInversion());
 
                 for (MovimientoConsultaDTO actividadSocio : movimientoConsultaDTO) {
-                        ActividadResponseDTO actividadResponseDTO = new ActividadResponseDTO();
-                        actividadResponseDTO.setIdActividad(actividadSocio.getIdActividad());
-                        actividadResponseDTO.setSocio(actividadSocio.getSocio());
-                        actividadResponseDTO.setMonto(actividadSocio.getMonto());
-                        actividadResponseDTO.setCantidad(actividadSocio.getCantidad());
-                        actividadResponseDTO.setFecha(actividadSocio.getFecha());
-                        actividadResponseDTO.setTipoActividad(actividadSocio.getTipoActividad());
-                        movimientoResponseDTO.addActividadSocio(actividadResponseDTO);
+                        ActividadSocioResponseDTO actividadSocioResponseDTO = new ActividadSocioResponseDTO();
+                        actividadSocioResponseDTO.setIdActividad(actividadSocio.getIdActividad());
+                        actividadSocioResponseDTO.setSocio(actividadSocio.getSocio());
+                        actividadSocioResponseDTO.setMonto(actividadSocio.getMonto());
+                        actividadSocioResponseDTO.setCantidad(actividadSocio.getCantidad());
+                        actividadSocioResponseDTO.setFecha(actividadSocio.getFecha());
+                        actividadSocioResponseDTO.setTipoActividad(actividadSocio.getTipoActividad());
+                        movimientoResponseDTO.addActividadSocio(actividadSocioResponseDTO);
                 }
 
                 return movimientoResponseDTO;
@@ -98,13 +98,20 @@ public class MovimientoServiceImpl implements MovimientoService {
                                 .orElseThrow(() -> new CategoriaNoEncontradaException(
                                                 movimientoRequestDTO.getCategoria())));
 
-                movimiento.setMoneda(monedaRepository.findById(movimientoRequestDTO.getMoneda())
-                                .orElseThrow(() -> new MonedaNoEncontradaException(movimientoRequestDTO.getMoneda())));
+                if (movimientoRequestDTO.getMoneda() != null) {
+                        movimiento.setMoneda(monedaRepository.findById(movimientoRequestDTO.getMoneda())
+                                        .orElseThrow(() -> new MonedaNoEncontradaException(
+                                                        movimientoRequestDTO.getMoneda())));
+                }
 
-                movimiento.setMedida(medidaRepository.findById(movimientoRequestDTO.getMedida())
-                                .orElseThrow(() -> new MedidaNoEncontradaException(movimientoRequestDTO.getMedida())));
+                if (movimientoRequestDTO.getMedida() != null) {
+                        movimiento.setMedida(medidaRepository.findById(movimientoRequestDTO.getMedida())
+                                        .orElseThrow(() -> new MedidaNoEncontradaException(
+                                                        movimientoRequestDTO.getMedida())));
+                }
 
-                for (ActividadRequestDTO actividadRequestDTO : movimientoRequestDTO.getActividades()) {
+                for (ActividadSocioRequestDTO actividadRequestDTO : movimientoRequestDTO
+                                .getActividades()) {
                         ActividadSocio actividadSocio = new ActividadSocio();
                         actividadSocio.setMonto(actividadRequestDTO.getMonto());
                         actividadSocio.setCantidad(actividadRequestDTO.getCantidad());

@@ -1,4 +1,4 @@
-package com.business95.api.business95_api.dto.response;
+package com.business95.api.business95_api.dtos.responses;
 
 import java.util.ArrayList;
 import java.util.List;

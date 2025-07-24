@@ -6,11 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dto.projection.MovimientoConsultaDTO;
-import com.business95.api.business95_api.dto.request.ActividadRequestDTO;
-import com.business95.api.business95_api.dto.request.MovimientoRequestDTO;
-import com.business95.api.business95_api.dto.response.ActividadResponseDTO;
-import com.business95.api.business95_api.dto.response.MovimientoResponseDTO;
+import com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO;
+import com.business95.api.business95_api.dtos.requests.ActividadRequestDTO;
+import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
+import com.business95.api.business95_api.dtos.responses.ActividadResponseDTO;
+import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;

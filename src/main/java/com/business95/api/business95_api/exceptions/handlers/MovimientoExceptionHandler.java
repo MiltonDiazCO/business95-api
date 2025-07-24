@@ -12,6 +12,7 @@ import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaExcepti
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
 
@@ -19,8 +20,19 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class MovimientoExceptionHandler {
-
     public static final String errorRegistroMovimiento = "Error al registrar el movimiento. Por favor, corrija los siguientes errores.";
+
+    @ExceptionHandler(MovimientoNoEncontradoException.class)
+    public ResponseEntity<ErrorResponse> movimientoNoEncontradoException(MovimientoNoEncontradoException exc,
+            HttpServletRequest request) {
+        ErrorResponse errorResponse = new ErrorResponse();
+        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setErrores(Arrays.asList(exc.getMessage()));
+        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setRuta(request.getRequestURI());
+        errorResponse.setFecha(LocalDateTime.now());
+        return ResponseEntity.badRequest().body(errorResponse);
+    }
 
     @ExceptionHandler(CategoriaNoEncontradaException.class)
     public ResponseEntity<ErrorResponse> categoriaNoEncontradaException(CategoriaNoEncontradaException exc,

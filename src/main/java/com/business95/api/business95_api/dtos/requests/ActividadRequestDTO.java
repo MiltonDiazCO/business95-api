@@ -1,4 +1,4 @@
-package com.business95.api.business95_api.dto.request;
+package com.business95.api.business95_api.dtos.requests;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

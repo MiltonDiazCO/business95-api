@@ -17,6 +17,7 @@ import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaExcepti
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
 import com.business95.api.business95_api.repositories.CategoriaRepository;
@@ -56,8 +57,12 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Transactional(readOnly = true)
         public MovimientoResponseDTO findMovimientoDTOById(Long idMovimiento) {
 
-                List<MovimientoConsultaDTO> movimientoConsultaDTO = movimientoRepository
+                List<MovimientoConsultaDTO> movimientoConsultaDTO = (List<MovimientoConsultaDTO>) movimientoRepository
                                 .findMovimientoDTOById(idMovimiento);
+
+                if (movimientoConsultaDTO.isEmpty()) {
+                        throw new MovimientoNoEncontradoException(idMovimiento);
+                }
 
                 MovimientoResponseDTO movimientoResponseDTO = new MovimientoResponseDTO();
 

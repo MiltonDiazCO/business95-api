@@ -1,7 +1,5 @@
 package com.business95.api.business95_api.repositories;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,6 +18,6 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
             "a.monto, a.cantidad, a.fecha, a.tipoActividad.tipoActividad)" +
             "FROM Movimiento m LEFT JOIN m.moneda mo LEFT JOIN m.medida md " +
             "LEFT JOIN m.actividadesSocio a WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha")
-    List<MovimientoConsultaDTO> findMovimientoDTOById(@Param("idMovimiento") Long idMovimiento);
+    Iterable<MovimientoConsultaDTO> findMovimientoDTOById(@Param("idMovimiento") Long idMovimiento);
 
 }

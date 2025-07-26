@@ -20,25 +20,26 @@ import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
 public class MovimientoExceptionHandler {
-    public static final String errorRegistroMovimiento = "Error al registrar el movimiento. Por favor, corrija los siguientes errores.";
+    public static final String ERROR_REGISTRO_MOVIMIENTO = "Error al registrar el movimiento. Por favor, corrija los siguientes errores.";
+    public static final String ERROR_CONSULTA_MOVIMIENTO = "No se pudo consultar el movimiento. Por favor, verifique los datos e intente nuevamente.";
 
     @ExceptionHandler(MovimientoNoEncontradoException.class)
     public ResponseEntity<ErrorResponse> movimientoNoEncontradoException(MovimientoNoEncontradoException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setMensaje(ERROR_CONSULTA_MOVIMIENTO);
         errorResponse.setErrores(Arrays.asList(exc.getMessage()));
-        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setCodigoEstado(HttpStatus.NOT_FOUND.value());
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
-        return ResponseEntity.badRequest().body(errorResponse);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
     }
 
     @ExceptionHandler(CategoriaNoEncontradaException.class)
     public ResponseEntity<ErrorResponse> categoriaNoEncontradaException(CategoriaNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setMensaje(ERROR_REGISTRO_MOVIMIENTO);
         errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
@@ -50,7 +51,7 @@ public class MovimientoExceptionHandler {
     public ResponseEntity<ErrorResponse> monedaNoEncontradaException(MonedaNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setMensaje(ERROR_REGISTRO_MOVIMIENTO);
         errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
@@ -62,7 +63,7 @@ public class MovimientoExceptionHandler {
     public ResponseEntity<ErrorResponse> medidaNoEncontradaException(MedidaNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setMensaje(ERROR_REGISTRO_MOVIMIENTO);
         errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
@@ -74,7 +75,7 @@ public class MovimientoExceptionHandler {
     public ResponseEntity<ErrorResponse> inversionNoEncontradaException(InversionNoEncontradaException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setMensaje(ERROR_REGISTRO_MOVIMIENTO);
         errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
@@ -86,7 +87,7 @@ public class MovimientoExceptionHandler {
     public ResponseEntity<ErrorResponse> socioNoEncontradoException(SocioNoEncontradoException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setMensaje(ERROR_REGISTRO_MOVIMIENTO);
         errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());
@@ -98,7 +99,7 @@ public class MovimientoExceptionHandler {
     public ResponseEntity<ErrorResponse> tipoActividadNoEncontradoException(TipoActividadNoEncontradoException exc,
             HttpServletRequest request) {
         ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
+        errorResponse.setMensaje(ERROR_REGISTRO_MOVIMIENTO);
         errorResponse.setErrores(Arrays.asList(exc.getMessage()));
         errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
         errorResponse.setRuta(request.getRequestURI());

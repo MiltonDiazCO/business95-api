@@ -48,7 +48,7 @@ public class MovimientoController {
                 errores.put(error.getField(), error.getDefaultMessage());
             });
 
-            errorResponse.setMensaje(MovimientoExceptionHandler.errorRegistroMovimiento);
+            errorResponse.setMensaje(MovimientoExceptionHandler.ERROR_REGISTRO_MOVIMIENTO);
             errorResponse.setErrores(List.copyOf(errores.values()));
             errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
             errorResponse.setRuta(request.getRequestURI());

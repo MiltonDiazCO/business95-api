@@ -9,4 +9,6 @@ public interface MovimientoService {
 
     MovimientoRequestDTO save(MovimientoRequestDTO movimientoRequestDTO);
 
+    Long delete(Long idMovimiento);
+
 }

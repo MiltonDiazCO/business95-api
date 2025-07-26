@@ -140,4 +140,11 @@ public class MovimientoServiceImpl implements MovimientoService {
                 return movimientoRequestDTO;
         }
 
+        @Override
+        public Long delete(Long idMovimiento) {
+                movimientoRepository.delete(movimientoRepository.findById(idMovimiento)
+                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento)));
+                return idMovimiento;
+        }
+
 }

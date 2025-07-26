@@ -115,22 +115,22 @@ public class MovimientoServiceImpl implements MovimientoService {
                                                         movimientoRequestDTO.getMedida())));
                 }
 
-                for (ActividadSocioRequestDTO actividadRequestDTO : movimientoRequestDTO
+                for (ActividadSocioRequestDTO actividadSocioRequestDTO : movimientoRequestDTO
                                 .getActividades()) {
                         ActividadSocio actividadSocio = new ActividadSocio();
-                        actividadSocio.setMonto(actividadRequestDTO.getMonto());
-                        actividadSocio.setCantidad(actividadRequestDTO.getCantidad());
-                        actividadSocio.setFecha(actividadRequestDTO.getFecha());
+                        actividadSocio.setMonto(actividadSocioRequestDTO.getMonto());
+                        actividadSocio.setCantidad(actividadSocioRequestDTO.getCantidad());
+                        actividadSocio.setFecha(actividadSocioRequestDTO.getFecha());
 
-                        actividadSocio.setSocio(socioRepository.findById(actividadRequestDTO.getSocio())
+                        actividadSocio.setSocio(socioRepository.findById(actividadSocioRequestDTO.getSocio())
                                         .orElseThrow(() -> new SocioNoEncontradoException(
-                                                        actividadRequestDTO.getSocio())));
+                                                        actividadSocioRequestDTO.getSocio())));
 
                         actividadSocio.setTipoActividad(
-                                        tipoActividadRepository.findById(actividadRequestDTO.getTipoActividad())
+                                        tipoActividadRepository.findById(actividadSocioRequestDTO.getTipoActividad())
                                                         .orElseThrow(
                                                                         () -> new TipoActividadNoEncontradoException(
-                                                                                        actividadRequestDTO
+                                                                                        actividadSocioRequestDTO
                                                                                                         .getTipoActividad())));
 
                         movimiento.addActividadSocio(actividadSocio);

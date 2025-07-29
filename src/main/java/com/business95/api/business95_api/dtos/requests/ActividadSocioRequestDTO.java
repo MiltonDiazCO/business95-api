@@ -3,10 +3,15 @@ package com.business95.api.business95_api.dtos.requests;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ActividadSocioRequestDTO {
+
+    private Long actividad;
 
     @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.")
     private Long socio;
@@ -26,13 +31,26 @@ public class ActividadSocioRequestDTO {
     public ActividadSocioRequestDTO() {
     }
 
-    public ActividadSocioRequestDTO(Long socio, BigDecimal monto, BigDecimal cantidad, LocalDateTime fecha,
-            Long tipoActividad) {
+    public ActividadSocioRequestDTO(Long actividad,
+            @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.") Long socio,
+            @Digits(integer = 8, fraction = 2, message = "El monto debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'") BigDecimal monto,
+            @Digits(integer = 8, fraction = 2, message = "La cantidad debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'") BigDecimal cantidad,
+            @NotNull(message = "Hay actividades sin una fecha asociada. La fecha es requerida para cada actividad a registrar.") LocalDateTime fecha,
+            @NotNull(message = "Hay actividades sin un tipo de actividad asociado. El tipo de actividad es requerido para cada actividad a registrar.") Long tipoActividad) {
+        this.actividad = actividad;
         this.socio = socio;
         this.monto = monto;
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.tipoActividad = tipoActividad;
+    }
+
+    public Long getActividad() {
+        return actividad;
+    }
+
+    public void setActividad(Long idActividad) {
+        this.actividad = idActividad;
     }
 
     public Long getSocio() {

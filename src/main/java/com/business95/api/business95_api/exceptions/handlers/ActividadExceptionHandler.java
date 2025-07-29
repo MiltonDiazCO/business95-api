@@ -5,10 +5,12 @@ import java.util.Arrays;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
+import com.business95.api.business95_api.utils.ErrorUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
 

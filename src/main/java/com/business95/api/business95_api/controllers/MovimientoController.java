@@ -1,5 +1,6 @@
 package com.business95.api.business95_api.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,8 @@ public class MovimientoController {
     }
 
     @DeleteMapping("/{idMovimiento}")
-    public ResponseEntity<Long> elimianrActividad(@PathVariable Long idMovimiento) {
+    public ResponseEntity<Long> elimianrMovimiento(@PathVariable Long idMovimiento) {
+        movimientoService.delete(idMovimiento);
         return ResponseEntity.noContent().build();
     }
 
@@ -99,6 +101,13 @@ public class MovimientoController {
 
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(saveActividadSocio(idMovimiento, actividadesSocioRequestDTOs));
+    }
+
+    @DeleteMapping("/{idMovimiento}/actividades")
+    public ResponseEntity<Long> elimianrActividad(@PathVariable Long idMovimiento,
+            @RequestBody ArrayList<Long> idActividades) {
+        actividadService.delete(idMovimiento, idActividades);
+        return ResponseEntity.noContent().build();
     }
 
     private List<ActividadSocioRequestDTO> saveActividadSocio(Long idMovimiento,

@@ -1,5 +1,6 @@
 package com.business95.api.business95_api.servicies.implementations;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,6 +72,19 @@ public class ActividadServiceImpl implements ActividadService {
                 movimientoRepository.save(movimiento);
 
                 return actividadesSocioRequestDTOs;
+        }
+
+        @Override
+        public void delete(Long idMovimiento, ArrayList<Long> idActividades) {
+                Movimiento movimiento = movimientoRepository.findById(idMovimiento)
+                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+
+                for (Long idActividad : idActividades) {
+                        movimiento.removeActividadSocio(actividadSocioRepository.findById(idActividad)
+                                        .orElseThrow(() -> new ActividadSocioNoEncontradaException(idActividad)));
+                }
+
+                movimientoRepository.save(movimiento);
         }
 
 }

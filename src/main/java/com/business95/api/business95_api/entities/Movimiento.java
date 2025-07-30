@@ -121,4 +121,8 @@ public class Movimiento {
         this.actividadesSocio.add(actividadSocio);
     }
 
+    public void removeActividadSocio(ActividadSocio actividadSocio) {
+        this.actividadesSocio.remove(actividadSocio);
+    }
+
 }

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
+import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
@@ -145,6 +146,37 @@ public class MovimientoServiceImpl implements MovimientoService {
                 movimientoRepository.delete(movimientoRepository.findById(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento)));
                 return idMovimiento;
+        }
+
+        @Override
+        public MovimientoUpdateRequestDTO update(Long idMovimiento,
+                        MovimientoUpdateRequestDTO movimientoUpdateRequestDTO) {
+                Movimiento movimiento = movimientoRepository.findById(idMovimiento)
+                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+
+                movimiento.setConcepto(movimientoUpdateRequestDTO.getConcepto());
+
+                movimiento.setInversion(inversionRepository.findById(movimientoUpdateRequestDTO.getInversion())
+                                .orElseThrow(() -> new InversionNoEncontradaException(
+                                                movimientoUpdateRequestDTO.getInversion())));
+
+                movimiento.setCategoria(categoriaRepository.findById(movimientoUpdateRequestDTO.getCategoria())
+                                .orElseThrow(() -> new CategoriaNoEncontradaException(
+                                                movimientoUpdateRequestDTO.getCategoria())));
+
+                if (movimientoUpdateRequestDTO.getMoneda() != null) {
+                        movimiento.setMoneda(monedaRepository.findById(movimientoUpdateRequestDTO.getMoneda())
+                                        .orElseThrow(() -> new MonedaNoEncontradaException(
+                                                        movimientoUpdateRequestDTO.getMoneda())));
+                }
+
+                if (movimientoUpdateRequestDTO.getMedida() != null) {
+                        movimiento.setMedida(medidaRepository.findById(movimientoUpdateRequestDTO.getMedida())
+                                        .orElseThrow(() -> new MedidaNoEncontradaException(
+                                                        movimientoUpdateRequestDTO.getMedida())));
+                }
+                movimientoRepository.save(movimiento);
+                return movimientoUpdateRequestDTO;
         }
 
 }

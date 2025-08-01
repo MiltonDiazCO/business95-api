@@ -14,8 +14,9 @@ public class ErrorResponse {
     public ErrorResponse() {
     }
 
-    public ErrorResponse(String mensaje, int codigoEstado, String ruta, LocalDateTime fecha) {
+    public ErrorResponse(String mensaje, List<String> errores, int codigoEstado, String ruta, LocalDateTime fecha) {
         this.mensaje = mensaje;
+        this.errores = errores;
         this.codigoEstado = codigoEstado;
         this.ruta = ruta;
         this.fecha = fecha;
@@ -27,6 +28,14 @@ public class ErrorResponse {
 
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
+    }
+
+    public List<String> getErrores() {
+        return errores;
+    }
+
+    public void setErrores(List<String> errores) {
+        this.errores = errores;
     }
 
     public int getCodigoEstado() {
@@ -51,14 +60,6 @@ public class ErrorResponse {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
-    }
-
-    public List<String> getErrores() {
-        return errores;
-    }
-
-    public void setErrores(List<String> errores) {
-        this.errores = errores;
     }
 
 }

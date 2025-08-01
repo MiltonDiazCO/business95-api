@@ -1,11 +1,11 @@
 package com.business95.api.business95_api.utils;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 
@@ -15,23 +15,53 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class ErrorUtils {
 
-    public static ResponseEntity<ErrorResponse> construirRespuestaErrorValidacion(BindingResult result,
-            HttpServletRequest request, String mensaje) {
-
-        Map<String, String> errores = new HashMap<>();
-        result.getFieldErrors().forEach(error -> {
-            errores.put(error.getField(), error.getDefaultMessage());
-        });
+    private static ErrorResponse construirErrorResponse(
+            String mensaje,
+            List<String> errores,
+            int httpStatusCode,
+            HttpServletRequest request) {
 
         ErrorResponse errorResponse = new ErrorResponse();
 
         errorResponse.setMensaje(mensaje);
-        errorResponse.setErrores(List.copyOf(errores.values()));
-        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
+        errorResponse.setErrores(errores);
+        errorResponse.setCodigoEstado(httpStatusCode);
         errorResponse.setRuta(request.getRequestURI());
         errorResponse.setFecha(LocalDateTime.now());
 
-        return ResponseEntity.badRequest().body(errorResponse);
+        return errorResponse;
+    }
+
+    public static ResponseEntity<ErrorResponse> construirRespuestaErrorExcepcion(
+            String mensaje,
+            String errorExcepcion,
+            int httpStatusCode,
+            HttpServletRequest request) {
+
+        ErrorResponse errorResponse = construirErrorResponse(mensaje,
+                Arrays.asList(errorExcepcion),
+                httpStatusCode, request);
+
+        return ResponseEntity.status(httpStatusCode).body(errorResponse);
+    }
+
+    public static ResponseEntity<ErrorResponse> construirRespuestaErrorValidacion(
+            String mensaje,
+            BindingResult result,
+            int httpStatusCode,
+            HttpServletRequest request) {
+
+        Map<String, String> errores = new HashMap<>();
+
+        result.getFieldErrors().forEach(error -> {
+            errores.put(error.getField(), error.getDefaultMessage());
+        });
+
+        ErrorResponse errorResponse = construirErrorResponse(mensaje,
+                List.copyOf(errores.values()),
+                httpStatusCode, request);
+
+        return ResponseEntity.status(httpStatusCode).body(errorResponse);
     }
 
 }

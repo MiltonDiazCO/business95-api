@@ -2,8 +2,10 @@ package com.business95.api.business95_api.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,7 +22,6 @@ import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
-import com.business95.api.business95_api.exceptions.handlers.MovimientoExceptionHandler;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
@@ -38,6 +39,9 @@ public class MovimientoController {
     @Autowired
     private ActividadService actividadService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @GetMapping("/{idMovimiento}")
     public ResponseEntity<MovimientoResponseDTO> movimientoPorId(@PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.findMovimientoDTOById(idMovimiento));
@@ -46,9 +50,11 @@ public class MovimientoController {
     @PostMapping
     public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoRequestDTO movimientoRegistroDTO,
             BindingResult result, HttpServletRequest request) {
+
         if (result.hasErrors()) {
-            return ErrorUtils.construirRespuestaErrorValidacion(result, request,
-                    MovimientoExceptionHandler.ERROR_REGISTRO_MOVIMIENTO);
+            return ErrorUtils.construirRespuestaErrorValidacion(
+                    messageSource.getMessage("error.registro", null, Locale.getDefault()),
+                    result, HttpStatus.BAD_REQUEST.value(), request);
         }
 
         return ResponseEntity.status(HttpStatus.CREATED).body(movimientoService.save(movimientoRegistroDTO));
@@ -59,10 +65,13 @@ public class MovimientoController {
             @Valid @RequestBody MovimientoUpdateRequestDTO movimientoUpdateRequestDTO,
             BindingResult result,
             HttpServletRequest request) {
+
         if (result.hasErrors()) {
-            return ErrorUtils.construirRespuestaErrorValidacion(result, request,
-                    MovimientoExceptionHandler.ERROR_REGISTRO_MOVIMIENTO);
+            return ErrorUtils.construirRespuestaErrorValidacion(
+                    messageSource.getMessage("error.actualizacion", null, Locale.getDefault()),
+                    result, HttpStatus.BAD_REQUEST.value(), request);
         }
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(movimientoService.update(idMovimiento, movimientoUpdateRequestDTO));
     }
@@ -79,9 +88,11 @@ public class MovimientoController {
             @Valid @RequestBody List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs,
             BindingResult result,
             HttpServletRequest request) {
+
         if (result.hasErrors()) {
-            return ErrorUtils.construirRespuestaErrorValidacion(result, request,
-                    MovimientoExceptionHandler.ERROR_REGISTRO_MOVIMIENTO);
+            return ErrorUtils.construirRespuestaErrorValidacion(
+                    messageSource.getMessage("error.registro", null, Locale.getDefault()),
+                    result, HttpStatus.BAD_REQUEST.value(), request);
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
@@ -94,9 +105,11 @@ public class MovimientoController {
             @Valid @RequestBody List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs,
             BindingResult result,
             HttpServletRequest request) {
+
         if (result.hasErrors()) {
-            return ErrorUtils.construirRespuestaErrorValidacion(result, request,
-                    MovimientoExceptionHandler.ERROR_REGISTRO_MOVIMIENTO);
+            return ErrorUtils.construirRespuestaErrorValidacion(
+                    messageSource.getMessage("error.actualizacion", null, Locale.getDefault()),
+                    result, HttpStatus.BAD_REQUEST.value(), request);
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)

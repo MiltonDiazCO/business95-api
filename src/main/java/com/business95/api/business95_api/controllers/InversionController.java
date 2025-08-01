@@ -1,6 +1,9 @@
 package com.business95.api.business95_api.controllers;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -26,12 +29,18 @@ public class InversionController {
     @Autowired
     private InversionService inversionService;
 
+    @Autowired
+    private MessageSource messageSource;
+
     @PostMapping
     public ResponseEntity<?> registrarInversion(@Valid @RequestBody Inversion inversion,
             BindingResult result,
             HttpServletRequest request) {
+
         if (result.hasErrors()) {
-            return ErrorUtils.construirRespuestaErrorValidacion(result, request, "Error al registrar la inversión.");
+            return ErrorUtils.construirRespuestaErrorValidacion(
+                    messageSource.getMessage("error.registro", null, Locale.getDefault()),
+                    result, HttpStatus.BAD_REQUEST.value(), request);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(inversionService.save(inversion));
     }
@@ -41,8 +50,12 @@ public class InversionController {
             @Valid @RequestBody Inversion inversion,
             BindingResult result,
             HttpServletRequest request) {
+
         if (result.hasErrors()) {
-            return ErrorUtils.construirRespuestaErrorValidacion(result, request, "Error al actualizar la inversión.");
+
+            return ErrorUtils.construirRespuestaErrorValidacion(
+                    messageSource.getMessage("error.actualizacion", null, Locale.getDefault()),
+                    result, HttpStatus.BAD_REQUEST.value(), request);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(inversionService.update(idInversion, inversion));
     }

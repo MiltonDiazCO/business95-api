@@ -2,14 +2,25 @@ package com.business95.api.business95_api.exceptions.handlers;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Locale;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
+import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
+import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
+import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
+import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
+import com.business95.api.business95_api.utils.ErrorUtils;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
@@ -18,37 +29,59 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    public static final String errorRegistroMovimiento = "Formato de entrada inválido. Por favor, verifique que los datos enviados tengan el formato correcto.";
+    @Autowired
+    private MessageSource messageSource;
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> formatoEntradaInvalidoException(HttpMessageNotReadableException exc,
+    @Autowired
+    private MensajeErrorHttpService mensajeErrorHttpService;
+
+    @ExceptionHandler({
+            MovimientoNoEncontradoException.class,
+            CategoriaNoEncontradaException.class,
+            MonedaNoEncontradaException.class,
+            MedidaNoEncontradaException.class,
+            InversionNoEncontradaException.class,
+            SocioNoEncontradoException.class,
+            TipoActividadNoEncontradoException.class,
+            ActividadSocioNoEncontradaException.class
+    })
+    public ResponseEntity<ErrorResponse> manejarExcepcionesRecursoNoEncontrado(RuntimeException exc,
             HttpServletRequest request) {
 
-        String mensajeErrorNumeroIncorrecto = exc.getMessage();
+        return ErrorUtils.construirRespuestaErrorExcepcion(
+                mensajeErrorHttpService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                exc.getMessage(),
+                HttpStatus.NOT_FOUND.value(), request);
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ErrorResponse> manejarFormatoEntradaInvalido(
+            HttpMessageNotReadableException exc,
+            HttpServletRequest request) {
+
+        String error = exc.getMessage();
 
         if (exc.getCause() instanceof InvalidFormatException) {
+
             InvalidFormatException invalidExc = (InvalidFormatException) exc.getCause();
 
             if (invalidExc.getTargetType().equals(BigDecimal.class) || invalidExc.getTargetType().equals(Long.class)) {
-                mensajeErrorNumeroIncorrecto = "Se esperaba un número válido (sin letras ni símbolos).";
+                error = messageSource.getMessage("error.numero.invalido", null, Locale.getDefault());
             }
         }
 
         if (exc.getCause() instanceof MismatchedInputException) {
+
             MismatchedInputException mismatchedExc = (MismatchedInputException) exc.getCause();
 
             if (mismatchedExc.getTargetType().equals(LocalDateTime.class)) {
-                mensajeErrorNumeroIncorrecto = "Se esperaba una fecha en formato ISO. Ejemplo: '2025-07-19T14:30:00'";
+                error = messageSource.getMessage("error.fecha.formato.invalido", null, Locale.getDefault());
             }
         }
 
-        ErrorResponse errorResponse = new ErrorResponse();
-        errorResponse.setMensaje(errorRegistroMovimiento);
-        errorResponse.setErrores(Arrays.asList(mensajeErrorNumeroIncorrecto));
-        errorResponse.setCodigoEstado(HttpStatus.BAD_REQUEST.value());
-        errorResponse.setRuta(request.getRequestURI());
-        errorResponse.setFecha(LocalDateTime.now());
-        return ResponseEntity.badRequest().body(errorResponse);
+        return ErrorUtils.construirRespuestaErrorExcepcion(
+                messageSource.getMessage("error.formato.invalido", null, Locale.getDefault()),
+                error, HttpStatus.BAD_REQUEST.value(), request);
     }
 
 }

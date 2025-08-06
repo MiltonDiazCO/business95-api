@@ -56,10 +56,10 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
-        public MovimientoResponseDTO findMovimientoDTOById(Long idMovimiento) {
+        public MovimientoResponseDTO movimientoPorId(Long idMovimiento) {
 
                 List<MovimientoConsultaDTO> movimientoConsultaDTO = (List<MovimientoConsultaDTO>) movimientoRepository
-                                .findMovimientoDTOById(idMovimiento);
+                                .movimientoPorId(idMovimiento);
 
                 if (movimientoConsultaDTO.isEmpty()) {
                         throw new MovimientoNoEncontradoException(idMovimiento);

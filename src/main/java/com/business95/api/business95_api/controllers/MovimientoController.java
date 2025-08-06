@@ -44,7 +44,7 @@ public class MovimientoController {
 
     @GetMapping("/{idMovimiento}")
     public ResponseEntity<MovimientoResponseDTO> movimientoPorId(@PathVariable Long idMovimiento) {
-        return ResponseEntity.ok().body(movimientoService.findMovimientoDTOById(idMovimiento));
+        return ResponseEntity.ok().body(movimientoService.movimientoPorId(idMovimiento));
     }
 
     @PostMapping

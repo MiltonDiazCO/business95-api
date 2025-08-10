@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.business95.api.business95_api.dtos.projections.BalanceSociosPorMovimientoConsultaDTO;
 import com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDTO;
+import com.business95.api.business95_api.dtos.responses.BalanceSocioResponseDTO;
+import com.business95.api.business95_api.dtos.responses.BalanceSociosPorMovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
@@ -58,8 +61,7 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Transactional(readOnly = true)
         public MovimientoResponseDTO movimientoPorId(Long idMovimiento) {
 
-                List<MovimientoConsultaDTO> movimientoConsultaDTO = (List<MovimientoConsultaDTO>) movimientoRepository
-                                .movimientoPorId(idMovimiento);
+                List<MovimientoConsultaDTO> movimientoConsultaDTO = movimientoRepository.movimientoPorId(idMovimiento);
 
                 if (movimientoConsultaDTO.isEmpty()) {
                         throw new MovimientoNoEncontradoException(idMovimiento);
@@ -86,6 +88,43 @@ public class MovimientoServiceImpl implements MovimientoService {
                 }
 
                 return movimientoResponseDTO;
+        }
+
+        @Override
+        @Transactional(readOnly = true)
+        public BalanceSociosPorMovimientoResponseDTO balanceSociosPorMovimiento(Long idMovimiento) {
+
+                List<BalanceSociosPorMovimientoConsultaDTO> balanceSociosPorMovimientoConsultaDTO = movimientoRepository
+                                .balanceSociosPorMovimiento(idMovimiento);
+
+                if (balanceSociosPorMovimientoConsultaDTO.isEmpty()) {
+                        throw new MovimientoNoEncontradoException(idMovimiento);
+                }
+
+                BalanceSociosPorMovimientoResponseDTO balanceSociosPorMovimientoResponseDTO = new BalanceSociosPorMovimientoResponseDTO();
+
+                balanceSociosPorMovimientoResponseDTO
+                                .setIdMovimiento(balanceSociosPorMovimientoConsultaDTO.get(0).getIdMovimiento());
+                balanceSociosPorMovimientoResponseDTO
+                                .setInversion(balanceSociosPorMovimientoConsultaDTO.get(0).getInversion());
+                balanceSociosPorMovimientoResponseDTO
+                                .setConcepto(balanceSociosPorMovimientoConsultaDTO.get(0).getConcepto());
+                balanceSociosPorMovimientoResponseDTO
+                                .setCategoria(balanceSociosPorMovimientoConsultaDTO.get(0).getCategoria());
+                balanceSociosPorMovimientoResponseDTO
+                                .setMedida(balanceSociosPorMovimientoConsultaDTO.get(0).getMedida());
+                balanceSociosPorMovimientoResponseDTO
+                                .setMoneda(balanceSociosPorMovimientoConsultaDTO.get(0).getMoneda());
+
+                for (BalanceSociosPorMovimientoConsultaDTO balanceSocio : balanceSociosPorMovimientoConsultaDTO) {
+                        BalanceSocioResponseDTO balanceSocioResponseDTO = new BalanceSocioResponseDTO();
+                        balanceSocioResponseDTO.setSocio(balanceSocio.getSocio());
+                        balanceSocioResponseDTO.setCantidad(balanceSocio.getCantidad());
+                        balanceSocioResponseDTO.setBalanceMonetario(balanceSocio.getBalanceMonetario());
+                        balanceSociosPorMovimientoResponseDTO.addBalanceSocio(balanceSocioResponseDTO);
+                }
+
+                return balanceSociosPorMovimientoResponseDTO;
         }
 
         @Override
@@ -179,4 +218,4 @@ public class MovimientoServiceImpl implements MovimientoService {
                 return movimientoUpdateRequestDTO;
         }
 
-}
+};

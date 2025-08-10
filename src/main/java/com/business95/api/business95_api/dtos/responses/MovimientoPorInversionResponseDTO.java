@@ -9,8 +9,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class MovimientoPorInversionResponseDTO {
 
     private Long idMovimiento;
-    private String categoria;
     private String concepto;
+    private String categoria;
     private BigDecimal cantidad;
     private String medida;
     private BigDecimal balance;
@@ -20,11 +20,11 @@ public class MovimientoPorInversionResponseDTO {
     public MovimientoPorInversionResponseDTO() {
     }
 
-    public MovimientoPorInversionResponseDTO(Long idMovimiento, String categoria, String concepto, BigDecimal cantidad,
+    public MovimientoPorInversionResponseDTO(Long idMovimiento, String concepto, String categoria, BigDecimal cantidad,
             String medida, BigDecimal balance, String moneda, LocalDateTime fechaUltimaActividad) {
         this.idMovimiento = idMovimiento;
-        this.categoria = categoria;
         this.concepto = concepto;
+        this.categoria = categoria;
         this.cantidad = cantidad;
         this.medida = medida;
         this.balance = balance;
@@ -40,20 +40,20 @@ public class MovimientoPorInversionResponseDTO {
         this.idMovimiento = idMovimiento;
     }
 
-    public String getCategoria() {
-        return categoria;
-    }
-
-    public void setCategoria(String categoria) {
-        this.categoria = categoria;
-    }
-
     public String getConcepto() {
         return concepto;
     }
 
     public void setConcepto(String concepto) {
         this.concepto = concepto;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public BigDecimal getCantidad() {

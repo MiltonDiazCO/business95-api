@@ -7,20 +7,20 @@ public class ActividadSocioResponseDTO {
 
     private Long idActividad;
     private String socio;
-    private BigDecimal monto;
     private BigDecimal cantidad;
+    private BigDecimal monto;
     private LocalDateTime fecha;
     private String tipoActividad;
 
     public ActividadSocioResponseDTO() {
     }
 
-    public ActividadSocioResponseDTO(Long idActividad, String socio, BigDecimal monto, BigDecimal cantidad,
+    public ActividadSocioResponseDTO(Long idActividad, String socio, BigDecimal cantidad, BigDecimal monto,
             LocalDateTime fecha, String tipoActividad) {
         this.idActividad = idActividad;
         this.socio = socio;
-        this.monto = monto;
         this.cantidad = cantidad;
+        this.monto = monto;
         this.fecha = fecha;
         this.tipoActividad = tipoActividad;
     }
@@ -41,20 +41,20 @@ public class ActividadSocioResponseDTO {
         this.socio = socio;
     }
 
-    public BigDecimal getMonto() {
-        return monto;
-    }
-
-    public void setMonto(BigDecimal monto) {
-        this.monto = monto;
-    }
-
     public BigDecimal getCantidad() {
         return cantidad;
     }
 
     public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public BigDecimal getMonto() {
+        return monto;
+    }
+
+    public void setMonto(BigDecimal monto) {
+        this.monto = monto;
     }
 
     public LocalDateTime getFecha() {

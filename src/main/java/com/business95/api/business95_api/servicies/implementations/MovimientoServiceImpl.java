@@ -70,18 +70,18 @@ public class MovimientoServiceImpl implements MovimientoService {
                 MovimientoResponseDTO movimientoResponseDTO = new MovimientoResponseDTO();
 
                 movimientoResponseDTO.setIdMovimiento(movimientoConsultaDTO.get(0).getIdMovimiento());
+                movimientoResponseDTO.setInversion(movimientoConsultaDTO.get(0).getInversion());
                 movimientoResponseDTO.setConcepto(movimientoConsultaDTO.get(0).getConcepto());
                 movimientoResponseDTO.setCategoria(movimientoConsultaDTO.get(0).getCategoria());
-                movimientoResponseDTO.setMoneda(movimientoConsultaDTO.get(0).getMoneda());
                 movimientoResponseDTO.setMedida(movimientoConsultaDTO.get(0).getMedida());
-                movimientoResponseDTO.setInversion(movimientoConsultaDTO.get(0).getInversion());
+                movimientoResponseDTO.setMoneda(movimientoConsultaDTO.get(0).getMoneda());
 
                 for (MovimientoConsultaDTO actividadSocio : movimientoConsultaDTO) {
                         ActividadSocioResponseDTO actividadSocioResponseDTO = new ActividadSocioResponseDTO();
                         actividadSocioResponseDTO.setIdActividad(actividadSocio.getIdActividad());
                         actividadSocioResponseDTO.setSocio(actividadSocio.getSocio());
-                        actividadSocioResponseDTO.setMonto(actividadSocio.getMonto());
                         actividadSocioResponseDTO.setCantidad(actividadSocio.getCantidad());
+                        actividadSocioResponseDTO.setMonto(actividadSocio.getMonto());
                         actividadSocioResponseDTO.setFecha(actividadSocio.getFecha());
                         actividadSocioResponseDTO.setTipoActividad(actividadSocio.getTipoActividad());
                         movimientoResponseDTO.addActividadSocio(actividadSocioResponseDTO);

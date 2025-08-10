@@ -9,24 +9,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class MovimientoResponseDTO {
 
     private Long idMovimiento;
+    private String inversion;
     private String concepto;
     private String categoria;
-    private String moneda;
     private String medida;
-    private String inversion;
+    private String moneda;
     private List<ActividadSocioResponseDTO> actividades = new ArrayList<>();
 
     public MovimientoResponseDTO() {
     }
 
-    public MovimientoResponseDTO(Long idMovimiento, String concepto, String categoria, String moneda, String medida,
-            String inversion, List<ActividadSocioResponseDTO> actividades) {
+    public MovimientoResponseDTO(Long idMovimiento, String inversion, String concepto, String categoria, String medida,
+            String moneda, List<ActividadSocioResponseDTO> actividades) {
         this.idMovimiento = idMovimiento;
+        this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
-        this.moneda = moneda;
         this.medida = medida;
-        this.inversion = inversion;
+        this.moneda = moneda;
         this.actividades = actividades;
     }
 
@@ -36,6 +36,14 @@ public class MovimientoResponseDTO {
 
     public void setIdMovimiento(Long idMovimiento) {
         this.idMovimiento = idMovimiento;
+    }
+
+    public String getInversion() {
+        return inversion;
+    }
+
+    public void setInversion(String inversion) {
+        this.inversion = inversion;
     }
 
     public String getConcepto() {
@@ -54,14 +62,6 @@ public class MovimientoResponseDTO {
         this.categoria = categoria;
     }
 
-    public String getMoneda() {
-        return moneda;
-    }
-
-    public void setMoneda(String moneda) {
-        this.moneda = moneda;
-    }
-
     public String getMedida() {
         return medida;
     }
@@ -70,12 +70,12 @@ public class MovimientoResponseDTO {
         this.medida = medida;
     }
 
-    public String getInversion() {
-        return inversion;
+    public String getMoneda() {
+        return moneda;
     }
 
-    public void setInversion(String inversion) {
-        this.inversion = inversion;
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
     }
 
     public List<ActividadSocioResponseDTO> getActividades() {

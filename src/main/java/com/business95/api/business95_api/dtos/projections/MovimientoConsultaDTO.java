@@ -6,34 +6,34 @@ import java.time.LocalDateTime;
 public class MovimientoConsultaDTO {
 
     private Long idMovimiento;
+    private String inversion;
     private String concepto;
     private String categoria;
-    private String moneda;
     private String medida;
-    private String inversion;
+    private String moneda;
     private Long idActividad;
     private String socio;
-    private BigDecimal monto;
     private BigDecimal cantidad;
+    private BigDecimal monto;
     private LocalDateTime fecha;
     private String tipoActividad;
 
     public MovimientoConsultaDTO() {
     }
 
-    public MovimientoConsultaDTO(Long idMovimiento, String concepto, String categoria, String moneda, String medida,
-            String inversion, Long idActividad, String socio, BigDecimal monto, BigDecimal cantidad,
-            LocalDateTime fecha, String tipoActividad) {
+    public MovimientoConsultaDTO(Long idMovimiento, String inversion, String concepto, String categoria, String medida,
+            String moneda, Long idActividad, String socio, BigDecimal cantidad, BigDecimal monto, LocalDateTime fecha,
+            String tipoActividad) {
         this.idMovimiento = idMovimiento;
+        this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
-        this.moneda = moneda;
         this.medida = medida;
-        this.inversion = inversion;
+        this.moneda = moneda;
         this.idActividad = idActividad;
         this.socio = socio;
-        this.monto = monto;
         this.cantidad = cantidad;
+        this.monto = monto;
         this.fecha = fecha;
         this.tipoActividad = tipoActividad;
     }
@@ -44,6 +44,14 @@ public class MovimientoConsultaDTO {
 
     public void setIdMovimiento(Long idMovimiento) {
         this.idMovimiento = idMovimiento;
+    }
+
+    public String getInversion() {
+        return inversion;
+    }
+
+    public void setInversion(String inversion) {
+        this.inversion = inversion;
     }
 
     public String getConcepto() {
@@ -62,14 +70,6 @@ public class MovimientoConsultaDTO {
         this.categoria = categoria;
     }
 
-    public String getMoneda() {
-        return moneda;
-    }
-
-    public void setMoneda(String moneda) {
-        this.moneda = moneda;
-    }
-
     public String getMedida() {
         return medida;
     }
@@ -78,12 +78,12 @@ public class MovimientoConsultaDTO {
         this.medida = medida;
     }
 
-    public String getInversion() {
-        return inversion;
+    public String getMoneda() {
+        return moneda;
     }
 
-    public void setInversion(String inversion) {
-        this.inversion = inversion;
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
     }
 
     public Long getIdActividad() {
@@ -102,20 +102,20 @@ public class MovimientoConsultaDTO {
         this.socio = socio;
     }
 
-    public BigDecimal getMonto() {
-        return monto;
-    }
-
-    public void setMonto(BigDecimal monto) {
-        this.monto = monto;
-    }
-
     public BigDecimal getCantidad() {
         return cantidad;
     }
 
     public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public BigDecimal getMonto() {
+        return monto;
+    }
+
+    public void setMonto(BigDecimal monto) {
+        this.monto = monto;
     }
 
     public LocalDateTime getFecha() {

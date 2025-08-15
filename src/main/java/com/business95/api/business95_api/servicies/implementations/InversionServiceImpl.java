@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.projections.MovimientoPorInversionConsultaDTO;
+import com.business95.api.business95_api.dtos.responses.InversionResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoPorInversionResponseDTO;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
@@ -24,6 +25,19 @@ public class InversionServiceImpl implements InversionService {
     public Inversion findById(Long idInversion) {
         return inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public InversionResponseDTO inversionFindById(Long idInversion) {
+        Inversion inversion = findById(idInversion);
+
+        InversionResponseDTO inversionResponseDTO = new InversionResponseDTO();
+
+        inversionResponseDTO.setIdInversion(inversion.getIdInversion());
+        inversionResponseDTO.setInversion(inversion.getInversion());
+
+        return inversionResponseDTO;
     }
 
     @Override

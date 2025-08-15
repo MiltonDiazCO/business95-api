@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
@@ -35,6 +36,7 @@ public class ActividadServiceImpl implements ActividadService {
         private TipoActividadRepository tipoActividadRepository;
 
         @Override
+        @Transactional()
         public List<ActividadSocioRequestDTO> save(Long idMovimiento,
                         List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs) {
 
@@ -75,6 +77,7 @@ public class ActividadServiceImpl implements ActividadService {
         }
 
         @Override
+        @Transactional()
         public void delete(Long idMovimiento, ArrayList<Long> idActividades) {
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));

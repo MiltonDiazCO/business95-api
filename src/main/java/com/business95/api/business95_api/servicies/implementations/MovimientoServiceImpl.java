@@ -181,6 +181,7 @@ public class MovimientoServiceImpl implements MovimientoService {
         }
 
         @Override
+        @Transactional()
         public Long delete(Long idMovimiento) {
                 movimientoRepository.delete(movimientoRepository.findById(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento)));
@@ -188,6 +189,7 @@ public class MovimientoServiceImpl implements MovimientoService {
         }
 
         @Override
+        @Transactional()
         public MovimientoUpdateRequestDTO update(Long idMovimiento,
                         MovimientoUpdateRequestDTO movimientoUpdateRequestDTO) {
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)

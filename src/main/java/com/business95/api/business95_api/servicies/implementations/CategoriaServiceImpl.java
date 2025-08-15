@@ -9,6 +9,8 @@ import com.business95.api.business95_api.entities.Categoria;
 import com.business95.api.business95_api.repositories.CategoriaRepository;
 import com.business95.api.business95_api.servicies.interfaces.CategoriaService;
 
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class CategoriaServiceImpl implements CategoriaService {
 
@@ -16,6 +18,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     private CategoriaRepository categoriaRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public List<Categoria> findAll() {
         return (List<Categoria>) categoriaRepository.findAll();
     }

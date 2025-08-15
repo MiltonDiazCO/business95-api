@@ -22,6 +22,7 @@ public class InversionServiceImpl implements InversionService {
     InversionRepository inversionRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public Inversion findById(Long idInversion) {
         return inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
@@ -67,11 +68,13 @@ public class InversionServiceImpl implements InversionService {
     }
 
     @Override
+    @Transactional()
     public Inversion save(Inversion inversion) {
         return inversionRepository.save(inversion);
     }
 
     @Override
+    @Transactional()
     public Inversion update(Long idInversion, Inversion inversion) {
         Inversion inversionUpdate = inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
@@ -80,6 +83,7 @@ public class InversionServiceImpl implements InversionService {
     }
 
     @Override
+    @Transactional()
     public void delete(Long idInversion) {
         inversionRepository.findById(idInversion).orElseThrow(() -> new InversionNoEncontradaException(idInversion));
         inversionRepository.deleteById(idInversion);

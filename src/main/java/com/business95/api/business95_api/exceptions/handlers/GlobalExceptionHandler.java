@@ -21,6 +21,7 @@ import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoExcept
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
 import com.business95.api.business95_api.utils.ErrorUtils;
+import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
@@ -76,6 +77,15 @@ public class GlobalExceptionHandler {
 
             if (mismatchedExc.getTargetType().equals(LocalDateTime.class)) {
                 error = messageSource.getMessage("error.fecha.formato.invalido", null, Locale.getDefault());
+            }
+        }
+
+        if (exc.getCause() instanceof JsonParseException) {
+
+            JsonParseException jsonParseExc = (JsonParseException) exc.getCause();
+
+            if (jsonParseExc.getOriginalMessage().contains("Leading zeroes not allowed")) {
+                error = messageSource.getMessage("error.ceros.izquierda", null, Locale.getDefault());
             }
         }
 

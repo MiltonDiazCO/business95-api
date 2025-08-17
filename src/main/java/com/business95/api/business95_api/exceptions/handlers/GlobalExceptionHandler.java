@@ -89,6 +89,9 @@ public class GlobalExceptionHandler {
             }
         }
 
+        System.out.println("============");
+        System.out.println(exc.getCause());
+
         return ErrorUtils.construirRespuestaErrorExcepcion(
                 messageSource.getMessage("error.formato.invalido", null, Locale.getDefault()),
                 error, HttpStatus.BAD_REQUEST.value(), request);

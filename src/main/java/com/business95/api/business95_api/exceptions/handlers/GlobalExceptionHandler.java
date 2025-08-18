@@ -21,7 +21,7 @@ import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoExcept
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
 import com.business95.api.business95_api.utils.ErrorUtils;
-import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.fasterxml.jackson.databind.exc.MismatchedInputException;
 
@@ -80,17 +80,14 @@ public class GlobalExceptionHandler {
             }
         }
 
-        if (exc.getCause() instanceof JsonParseException) {
+        if (exc.getCause() instanceof JsonProcessingException) {
 
-            JsonParseException jsonParseExc = (JsonParseException) exc.getCause();
+            JsonProcessingException jsonProcessingExc = (JsonProcessingException) exc.getCause();
 
-            if (jsonParseExc.getOriginalMessage().contains("Leading zeroes not allowed")) {
+            if (jsonProcessingExc.getOriginalMessage().contains("Leading zeroes not allowed")) {
                 error = messageSource.getMessage("error.ceros.izquierda", null, Locale.getDefault());
             }
         }
-
-        System.out.println("============");
-        System.out.println(exc.getCause());
 
         return ErrorUtils.construirRespuestaErrorExcepcion(
                 messageSource.getMessage("error.formato.invalido", null, Locale.getDefault()),

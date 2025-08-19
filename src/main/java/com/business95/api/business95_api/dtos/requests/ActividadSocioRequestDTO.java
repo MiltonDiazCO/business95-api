@@ -11,7 +11,7 @@ import jakarta.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ActividadSocioRequestDTO {
 
-    private Long actividad;
+    private Long idActividad;
 
     @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.")
     private Long socio;
@@ -31,13 +31,13 @@ public class ActividadSocioRequestDTO {
     public ActividadSocioRequestDTO() {
     }
 
-    public ActividadSocioRequestDTO(Long actividad,
+    public ActividadSocioRequestDTO(Long idActividad,
             @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.") Long socio,
             @Digits(integer = 8, fraction = 2, message = "La cantidad debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'") BigDecimal cantidad,
             @Digits(integer = 8, fraction = 2, message = "El monto debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'") BigDecimal monto,
             @NotNull(message = "Hay actividades sin una fecha asociada. La fecha es requerida para cada actividad a registrar.") LocalDateTime fecha,
             @NotNull(message = "Hay actividades sin un tipo de actividad asociado. El tipo de actividad es requerido para cada actividad a registrar.") Long tipoActividad) {
-        this.actividad = actividad;
+        this.idActividad = idActividad;
         this.socio = socio;
         this.cantidad = cantidad;
         this.monto = monto;
@@ -45,12 +45,12 @@ public class ActividadSocioRequestDTO {
         this.tipoActividad = tipoActividad;
     }
 
-    public Long getActividad() {
-        return actividad;
+    public Long getIdActividad() {
+        return idActividad;
     }
 
-    public void setActividad(Long idActividad) {
-        this.actividad = idActividad;
+    public void setIdActividad(Long idActividad) {
+        this.idActividad = idActividad;
     }
 
     public Long getSocio() {

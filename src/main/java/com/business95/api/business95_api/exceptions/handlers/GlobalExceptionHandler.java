@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
+import com.business95.api.business95_api.exceptions.IdActividadRequeridaException;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
@@ -53,6 +54,17 @@ public class GlobalExceptionHandler {
                 mensajeErrorHttpService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 exc.getMessage(),
                 HttpStatus.NOT_FOUND.value(), request);
+    }
+
+    @ExceptionHandler(IdActividadRequeridaException.class)
+    public ResponseEntity<ErrorResponse> manejarExcepcionesRecursoObligatorio(
+            RuntimeException exc,
+            HttpServletRequest request) {
+
+        return ErrorUtils.construirRespuestaErrorExcepcion(
+                mensajeErrorHttpService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                exc.getMessage(),
+                HttpStatus.BAD_REQUEST.value(), request);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)

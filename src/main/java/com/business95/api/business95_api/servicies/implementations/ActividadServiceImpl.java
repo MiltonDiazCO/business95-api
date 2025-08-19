@@ -47,8 +47,8 @@ public class ActividadServiceImpl implements ActividadService {
 
                         ActividadSocio actividadSocio = new ActividadSocio();
 
-                        if (actividadSocioRequestDTO.getActividad() != null) {
-                                Long idActividadSocio = actividadSocioRequestDTO.getActividad();
+                        if (actividadSocioRequestDTO.getIdActividad() != null) {
+                                Long idActividadSocio = actividadSocioRequestDTO.getIdActividad();
                                 actividadSocio = actividadSocioRepository.findById(idActividadSocio).orElseThrow(
                                                 () -> new ActividadSocioNoEncontradaException(idActividadSocio));
                         }

@@ -23,6 +23,7 @@ import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSociosPorMovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
+import com.business95.api.business95_api.exceptions.IdActividadRequeridaException;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
@@ -112,6 +113,12 @@ public class MovimientoController {
             @Valid @RequestBody List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs,
             BindingResult result,
             HttpServletRequest request) {
+
+        for (ActividadSocioRequestDTO actividadSocioRequestDTO : actividadesSocioRequestDTOs) {
+            if (actividadSocioRequestDTO.getIdActividad() == null) {
+                throw new IdActividadRequeridaException();
+            }
+        }
 
         if (result.hasErrors()) {
             return ErrorUtils.construirRespuestaErrorValidacion(

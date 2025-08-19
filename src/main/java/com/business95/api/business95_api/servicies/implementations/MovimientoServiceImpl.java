@@ -17,6 +17,7 @@ import com.business95.api.business95_api.dtos.responses.BalanceSociosPorMovimien
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
+import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
@@ -24,6 +25,7 @@ import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
+import com.business95.api.business95_api.repositories.ActividadSocioRepository;
 import com.business95.api.business95_api.repositories.CategoriaRepository;
 import com.business95.api.business95_api.repositories.InversionRepository;
 import com.business95.api.business95_api.repositories.MedidaRepository;
@@ -38,6 +40,9 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Autowired
         private MovimientoRepository movimientoRepository;
+
+        @Autowired
+        private ActividadSocioRepository actividadSocioRepository;
 
         @Autowired
         private InversionRepository inversionRepository;
@@ -158,6 +163,14 @@ public class MovimientoServiceImpl implements MovimientoService {
                 for (ActividadSocioRequestDTO actividadSocioRequestDTO : movimientoRequestDTO
                                 .getActividades()) {
                         ActividadSocio actividadSocio = new ActividadSocio();
+
+                        if (actividadSocioRequestDTO.getIdActividad() != null) {
+                                actividadSocio = actividadSocioRepository
+                                                .findById(actividadSocioRequestDTO.getIdActividad())
+                                                .orElseThrow(() -> new ActividadSocioNoEncontradaException(
+                                                                actividadSocioRequestDTO.getIdActividad()));
+                        }
+
                         actividadSocio.setMonto(actividadSocioRequestDTO.getMonto());
                         actividadSocio.setCantidad(actividadSocioRequestDTO.getCantidad());
                         actividadSocio.setFecha(actividadSocioRequestDTO.getFecha());

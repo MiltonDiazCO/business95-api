@@ -15,6 +15,7 @@ import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDT
 import com.business95.api.business95_api.dtos.responses.BalanceSocioResponseDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSociosPorMovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
+import com.business95.api.business95_api.dtos.responses.MovimientoUpdateResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
@@ -25,6 +26,8 @@ import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
+import com.business95.api.business95_api.mappers.MovimientoMapper;
+import com.business95.api.business95_api.mappers.MovimientoUpdateMapper;
 import com.business95.api.business95_api.repositories.ActividadSocioRepository;
 import com.business95.api.business95_api.repositories.CategoriaRepository;
 import com.business95.api.business95_api.repositories.InversionRepository;
@@ -61,6 +64,12 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Autowired
         private TipoActividadRepository tipoActividadRepository;
+
+        @Autowired
+        private MovimientoMapper movimientoMapper;
+
+        @Autowired
+        private MovimientoUpdateMapper movimientoUpdateMapper;
 
         @Override
         @Transactional(readOnly = true)
@@ -134,7 +143,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional
-        public MovimientoRequestDTO save(MovimientoRequestDTO movimientoRequestDTO) {
+        public MovimientoResponseDTO save(MovimientoRequestDTO movimientoRequestDTO) {
 
                 Movimiento movimiento = new Movimiento();
 
@@ -189,8 +198,7 @@ public class MovimientoServiceImpl implements MovimientoService {
                         movimiento.addActividadSocio(actividadSocio);
                 }
 
-                movimientoRepository.save(movimiento);
-                return movimientoRequestDTO;
+                return movimientoMapper.movimientoToMovimientoResponseDTO(movimientoRepository.save(movimiento));
         }
 
         @Override
@@ -203,7 +211,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
-        public MovimientoUpdateRequestDTO update(Long idMovimiento,
+        public MovimientoUpdateResponseDTO update(Long idMovimiento,
                         MovimientoUpdateRequestDTO movimientoUpdateRequestDTO) {
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
@@ -229,8 +237,9 @@ public class MovimientoServiceImpl implements MovimientoService {
                                         .orElseThrow(() -> new MedidaNoEncontradaException(
                                                         movimientoUpdateRequestDTO.getMedida())));
                 }
-                movimientoRepository.save(movimiento);
-                return movimientoUpdateRequestDTO;
+
+                return movimientoUpdateMapper
+                                .movimientoToMovimientoUpdateResponseDTO(movimientoRepository.save(movimiento));
         }
 
 };

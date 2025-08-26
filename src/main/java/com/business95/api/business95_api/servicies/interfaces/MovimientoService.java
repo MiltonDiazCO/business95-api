@@ -4,6 +4,7 @@ import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSociosPorMovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
+import com.business95.api.business95_api.dtos.responses.MovimientoUpdateResponseDTO;
 
 public interface MovimientoService {
 
@@ -11,9 +12,9 @@ public interface MovimientoService {
 
     BalanceSociosPorMovimientoResponseDTO balanceSociosPorMovimiento(Long idMovimiento);
 
-    MovimientoRequestDTO save(MovimientoRequestDTO movimientoRequestDTO);
+    MovimientoResponseDTO save(MovimientoRequestDTO movimientoRequestDTO);
 
-    MovimientoUpdateRequestDTO update(Long idMovimiento, MovimientoUpdateRequestDTO MovimientoUpdateRequestDTO);
+    MovimientoUpdateResponseDTO update(Long idMovimiento, MovimientoUpdateRequestDTO MovimientoUpdateRequestDTO);
 
     Long delete(Long idMovimiento);
 

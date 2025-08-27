@@ -8,16 +8,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
-import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
-import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
+import com.business95.api.business95_api.helpers.ActividadSocioHelper;
+import com.business95.api.business95_api.mappers.ActividadSocioMapper;
 import com.business95.api.business95_api.repositories.ActividadSocioRepository;
 import com.business95.api.business95_api.repositories.MovimientoRepository;
-import com.business95.api.business95_api.repositories.SocioRepository;
-import com.business95.api.business95_api.repositories.TipoActividadRepository;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 
 @Service
@@ -30,55 +29,48 @@ public class ActividadServiceImpl implements ActividadService {
         private MovimientoRepository movimientoRepository;
 
         @Autowired
-        private SocioRepository socioRepository;
+        private ActividadSocioMapper actividadSocioMapper;
 
         @Autowired
-        private TipoActividadRepository tipoActividadRepository;
+        private ActividadSocioHelper actividadSocioHelper;
 
         @Override
         @Transactional()
-        public List<ActividadSocioRequestDTO> save(Long idMovimiento,
+        public List<ActividadSocioResponseDTO> save(
+                        Long idMovimiento,
                         List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs) {
 
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 
+                List<ActividadSocio> nuevasActividades = new ArrayList<>();
+
                 for (ActividadSocioRequestDTO actividadSocioRequestDTO : actividadesSocioRequestDTOs) {
 
-                        ActividadSocio actividadSocio = new ActividadSocio();
-
-                        if (actividadSocioRequestDTO.getIdActividad() != null) {
-                                Long idActividadSocio = actividadSocioRequestDTO.getIdActividad();
-                                actividadSocio = actividadSocioRepository.findById(idActividadSocio).orElseThrow(
-                                                () -> new ActividadSocioNoEncontradaException(idActividadSocio));
-                        }
-
-                        actividadSocio.setMonto(actividadSocioRequestDTO.getMonto());
-                        actividadSocio.setCantidad(actividadSocioRequestDTO.getCantidad());
-                        actividadSocio.setFecha(actividadSocioRequestDTO.getFecha());
-
-                        actividadSocio.setSocio(socioRepository.findById(actividadSocioRequestDTO.getSocio())
-                                        .orElseThrow(() -> new SocioNoEncontradoException(
-                                                        actividadSocioRequestDTO.getSocio())));
-
-                        actividadSocio.setTipoActividad(
-                                        tipoActividadRepository.findById(actividadSocioRequestDTO.getTipoActividad())
-                                                        .orElseThrow(
-                                                                        () -> new TipoActividadNoEncontradoException(
-                                                                                        actividadSocioRequestDTO
-                                                                                                        .getTipoActividad())));
+                        ActividadSocio actividadSocio = actividadSocioHelper.construirActividadSocio(
+                                        actividadSocioRequestDTO.getIdActividad(),
+                                        actividadSocioRequestDTO.getMonto(),
+                                        actividadSocioRequestDTO.getCantidad(),
+                                        actividadSocioRequestDTO.getFecha(),
+                                        actividadSocioRequestDTO.getSocio(),
+                                        actividadSocioRequestDTO.getTipoActividad());
 
                         movimiento.addActividadSocio(actividadSocio);
+                        actividadSocioRepository.save(actividadSocio);
+                        nuevasActividades.add(actividadSocio);
                 }
 
                 movimientoRepository.save(movimiento);
 
-                return actividadesSocioRequestDTOs;
+                return nuevasActividades.stream()
+                                .map(actividadSocioMapper::actividadSocioToActividadSocioResponseDTO)
+                                .toList();
         }
 
         @Override
         @Transactional()
         public void delete(Long idMovimiento, ArrayList<Long> idActividades) {
+
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 

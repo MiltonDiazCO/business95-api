@@ -23,7 +23,6 @@ import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSociosPorMovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
-import com.business95.api.business95_api.exceptions.IdActividadRequeridaException;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
@@ -104,7 +103,7 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(saveActividadSocio(idMovimiento, actividadesSocioRequestDTOs));
+                .body(actividadService.save(idMovimiento, actividadesSocioRequestDTOs));
     }
 
     @PutMapping("/{idMovimiento}/actividades")
@@ -114,12 +113,6 @@ public class MovimientoController {
             BindingResult result,
             HttpServletRequest request) {
 
-        for (ActividadSocioRequestDTO actividadSocioRequestDTO : actividadesSocioRequestDTOs) {
-            if (actividadSocioRequestDTO.getIdActividad() == null) {
-                throw new IdActividadRequeridaException();
-            }
-        }
-
         if (result.hasErrors()) {
             return ErrorUtils.construirRespuestaErrorValidacion(
                     messageSource.getMessage("error.actualizacion", null, Locale.getDefault()),
@@ -127,7 +120,7 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(saveActividadSocio(idMovimiento, actividadesSocioRequestDTOs));
+                .body(actividadService.save(idMovimiento, actividadesSocioRequestDTOs));
     }
 
     @DeleteMapping("/{idMovimiento}/actividades")
@@ -135,11 +128,6 @@ public class MovimientoController {
             @RequestBody ArrayList<Long> idActividades) {
         actividadService.delete(idMovimiento, idActividades);
         return ResponseEntity.noContent().build();
-    }
-
-    private List<ActividadSocioRequestDTO> saveActividadSocio(Long idMovimiento,
-            List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs) {
-        return actividadService.save(idMovimiento, actividadesSocioRequestDTOs);
     }
 
 }

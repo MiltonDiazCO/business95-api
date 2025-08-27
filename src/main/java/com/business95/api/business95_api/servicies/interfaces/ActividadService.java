@@ -4,11 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDTO;
 
 public interface ActividadService {
 
-    List<ActividadSocioRequestDTO> save(Long idMovimiento, List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs);
+        List<ActividadSocioResponseDTO> save(
+                        Long idMovimiento,
+                        List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs);
 
-    void delete(Long idMovimiento, ArrayList<Long> idActividades);
+        void delete(Long idMovimiento, ArrayList<Long> idActividades);
 
 }

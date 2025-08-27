@@ -190,10 +190,8 @@ public class MovimientoServiceImpl implements MovimientoService {
 
                         actividadSocio.setTipoActividad(
                                         tipoActividadRepository.findById(actividadSocioRequestDTO.getTipoActividad())
-                                                        .orElseThrow(
-                                                                        () -> new TipoActividadNoEncontradoException(
-                                                                                        actividadSocioRequestDTO
-                                                                                                        .getTipoActividad())));
+                                                        .orElseThrow(() -> new TipoActividadNoEncontradoException(
+                                                                        actividadSocioRequestDTO.getTipoActividad())));
 
                         movimiento.addActividadSocio(actividadSocio);
                 }

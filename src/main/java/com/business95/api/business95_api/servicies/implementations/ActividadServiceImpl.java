@@ -3,7 +3,6 @@ package com.business95.api.business95_api.servicies.implementations;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,17 +21,21 @@ import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 @Service
 public class ActividadServiceImpl implements ActividadService {
 
-        @Autowired
-        private ActividadSocioRepository actividadSocioRepository;
+        private final ActividadSocioRepository actividadSocioRepository;
+        private final MovimientoRepository movimientoRepository;
+        private final ActividadSocioMapper actividadSocioMapper;
+        private final ActividadSocioHelper actividadSocioHelper;
 
-        @Autowired
-        private MovimientoRepository movimientoRepository;
-
-        @Autowired
-        private ActividadSocioMapper actividadSocioMapper;
-
-        @Autowired
-        private ActividadSocioHelper actividadSocioHelper;
+        public ActividadServiceImpl(
+                        ActividadSocioRepository actividadSocioRepository,
+                        MovimientoRepository movimientoRepository,
+                        ActividadSocioMapper actividadSocioMapper,
+                        ActividadSocioHelper actividadSocioHelper) {
+                this.actividadSocioRepository = actividadSocioRepository;
+                this.movimientoRepository = movimientoRepository;
+                this.actividadSocioMapper = actividadSocioMapper;
+                this.actividadSocioHelper = actividadSocioHelper;
+        }
 
         @Override
         @Transactional()
@@ -41,7 +44,7 @@ public class ActividadServiceImpl implements ActividadService {
                         List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs) {
 
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)
-                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+                        .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 
                 List<ActividadSocio> nuevasActividades = new ArrayList<>();
 
@@ -63,8 +66,8 @@ public class ActividadServiceImpl implements ActividadService {
                 movimientoRepository.save(movimiento);
 
                 return nuevasActividades.stream()
-                                .map(actividadSocioMapper::actividadSocioToActividadSocioResponseDTO)
-                                .toList();
+                        .map(actividadSocioMapper::actividadSocioToActividadSocioResponseDTO)
+                        .toList();
         }
 
         @Override
@@ -72,11 +75,11 @@ public class ActividadServiceImpl implements ActividadService {
         public void delete(Long idMovimiento, ArrayList<Long> idActividades) {
 
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)
-                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+                        .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 
                 for (Long idActividad : idActividades) {
                         movimiento.removeActividadSocio(actividadSocioRepository.findById(idActividad)
-                                        .orElseThrow(() -> new ActividadSocioNoEncontradaException(idActividad)));
+                        .orElseThrow(() -> new ActividadSocioNoEncontradaException(idActividad)));
                 }
 
                 movimientoRepository.save(movimiento);

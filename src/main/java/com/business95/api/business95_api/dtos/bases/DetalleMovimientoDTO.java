@@ -1,9 +1,6 @@
-package com.business95.api.business95_api.dtos.responses;
+package com.business95.api.business95_api.dtos.bases;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class BalanceSociosPorMovimientoResponseDTO {
+public class DetalleMovimientoDTO {
 
     private Long idMovimiento;
     private String inversion;
@@ -11,20 +8,18 @@ public class BalanceSociosPorMovimientoResponseDTO {
     private String categoria;
     private String medida;
     private String moneda;
-    private List<BalanceSocioResponseDTO> balances = new ArrayList<>();
 
-    public BalanceSociosPorMovimientoResponseDTO() {
+    public DetalleMovimientoDTO() {
     }
 
-    public BalanceSociosPorMovimientoResponseDTO(Long idMovimiento, String inversion, String concepto, String categoria,
-            String medida, String moneda, List<BalanceSocioResponseDTO> balances) {
+    public DetalleMovimientoDTO(Long idMovimiento, String inversion, String concepto, String categoria, String medida,
+            String moneda) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
         this.medida = medida;
         this.moneda = moneda;
-        this.balances = balances;
     }
 
     public Long getIdMovimiento() {
@@ -73,18 +68,6 @@ public class BalanceSociosPorMovimientoResponseDTO {
 
     public void setMoneda(String moneda) {
         this.moneda = moneda;
-    }
-
-    public List<BalanceSocioResponseDTO> getBalances() {
-        return balances;
-    }
-
-    public void setBalances(List<BalanceSocioResponseDTO> balances) {
-        this.balances = balances;
-    }
-
-    public void addBalanceSocio(BalanceSocioResponseDTO balanceSocioResponseDTO) {
-        this.balances.add(balanceSocioResponseDTO);
     }
 
 }

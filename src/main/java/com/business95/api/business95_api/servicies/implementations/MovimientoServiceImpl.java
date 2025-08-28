@@ -2,136 +2,106 @@ package com.business95.api.business95_api.servicies.implementations;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dtos.projections.BalanceSociosPorMovimientoConsultaDTO;
+import com.business95.api.business95_api.dtos.projections.BalanceSocioPorMovimientoConsultaDTO;
 import com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
-import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioResponseDTO;
-import com.business95.api.business95_api.dtos.responses.BalanceSociosPorMovimientoResponseDTO;
+import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoUpdateResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
-import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
-import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
-import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
-import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
 import com.business95.api.business95_api.helpers.MovimientoHelper;
+import com.business95.api.business95_api.mappers.ActividadSocioMapper;
 import com.business95.api.business95_api.mappers.MovimientoMapper;
-import com.business95.api.business95_api.mappers.MovimientoUpdateMapper;
-import com.business95.api.business95_api.repositories.CategoriaRepository;
-import com.business95.api.business95_api.repositories.InversionRepository;
-import com.business95.api.business95_api.repositories.MedidaRepository;
-import com.business95.api.business95_api.repositories.MonedaRepository;
 import com.business95.api.business95_api.repositories.MovimientoRepository;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 
 @Service
 public class MovimientoServiceImpl implements MovimientoService {
 
-        @Autowired
-        private MovimientoRepository movimientoRepository;
+        private final MovimientoRepository movimientoRepository;
+        private final MovimientoMapper movimientoMapper;
+        private final ActividadSocioMapper actividadSocioMapper;
+        private final MovimientoHelper movimientoHelper;
+        private final ActividadSocioHelper actividadSocioHelper;
 
-        @Autowired
-        private InversionRepository inversionRepository;
-
-        @Autowired
-        private CategoriaRepository categoriaRepository;
-
-        @Autowired
-        private MonedaRepository monedaRepository;
-
-        @Autowired
-        private MedidaRepository medidaRepository;
-
-        @Autowired
-        private MovimientoMapper movimientoMapper;
-
-        @Autowired
-        private MovimientoUpdateMapper movimientoUpdateMapper;
-
-        @Autowired
-        private MovimientoHelper movimientoHelper;
-
-        @Autowired
-        private ActividadSocioHelper actividadSocioHelper;
+        public MovimientoServiceImpl(
+                        MovimientoRepository movimientoRepository,
+                        MovimientoMapper movimientoMapper,
+                        ActividadSocioMapper actividadSocioMapper,
+                        MovimientoHelper movimientoHelper,
+                        ActividadSocioHelper actividadSocioHelper) {
+                this.movimientoRepository = movimientoRepository;
+                this.movimientoMapper = movimientoMapper;
+                this.actividadSocioMapper = actividadSocioMapper;
+                this.movimientoHelper = movimientoHelper;
+                this.actividadSocioHelper = actividadSocioHelper;
+        }
 
         @Override
         @Transactional(readOnly = true)
         public MovimientoResponseDTO movimientoPorId(Long idMovimiento) {
 
-                List<MovimientoConsultaDTO> movimientoConsultaDTO = movimientoRepository.movimientoPorId(idMovimiento);
+                List<MovimientoConsultaDTO> consultaDTO = movimientoRepository.movimientoPorId(idMovimiento);
 
-                if (movimientoConsultaDTO.isEmpty()) {
+                if (consultaDTO.isEmpty()) {
                         throw new MovimientoNoEncontradoException(idMovimiento);
                 }
 
-                MovimientoResponseDTO movimientoResponseDTO = new MovimientoResponseDTO();
+                MovimientoResponseDTO responseDTO = movimientoHelper.construirDetalleMovimiento(
+                                consultaDTO.get(0).getIdMovimiento(),
+                                consultaDTO.get(0).getInversion(),
+                                consultaDTO.get(0).getConcepto(),
+                                consultaDTO.get(0).getCategoria(),
+                                consultaDTO.get(0).getMedida(),
+                                consultaDTO.get(0).getMoneda(),
+                                MovimientoResponseDTO::new);
 
-                movimientoResponseDTO.setIdMovimiento(movimientoConsultaDTO.get(0).getIdMovimiento());
-                movimientoResponseDTO.setInversion(movimientoConsultaDTO.get(0).getInversion());
-                movimientoResponseDTO.setConcepto(movimientoConsultaDTO.get(0).getConcepto());
-                movimientoResponseDTO.setCategoria(movimientoConsultaDTO.get(0).getCategoria());
-                movimientoResponseDTO.setMedida(movimientoConsultaDTO.get(0).getMedida());
-                movimientoResponseDTO.setMoneda(movimientoConsultaDTO.get(0).getMoneda());
-
-                for (MovimientoConsultaDTO actividadSocio : movimientoConsultaDTO) {
-                        ActividadSocioResponseDTO actividadSocioResponseDTO = new ActividadSocioResponseDTO();
-                        actividadSocioResponseDTO.setIdActividad(actividadSocio.getIdActividad());
-                        actividadSocioResponseDTO.setSocio(actividadSocio.getSocio());
-                        actividadSocioResponseDTO.setCantidad(actividadSocio.getCantidad());
-                        actividadSocioResponseDTO.setMonto(actividadSocio.getMonto());
-                        actividadSocioResponseDTO.setFecha(actividadSocio.getFecha());
-                        actividadSocioResponseDTO.setTipoActividad(actividadSocio.getTipoActividad());
-                        movimientoResponseDTO.addActividadSocio(actividadSocioResponseDTO);
+                for (MovimientoConsultaDTO movimientoConsultaDTO : consultaDTO) {
+                        responseDTO.addActividadSocio(actividadSocioMapper
+                                .movimientoConsultaDtoToActividadSocioResponseDTO(movimientoConsultaDTO));
                 }
 
-                return movimientoResponseDTO;
+                return responseDTO;
         }
 
         @Override
         @Transactional(readOnly = true)
-        public BalanceSociosPorMovimientoResponseDTO balanceSociosPorMovimiento(Long idMovimiento) {
+        public BalanceSocioPorMovimientoResponseDTO balanceSociosPorMovimiento(Long idMovimiento) {
 
-                List<BalanceSociosPorMovimientoConsultaDTO> balanceSociosPorMovimientoConsultaDTO = movimientoRepository
-                                .balanceSociosPorMovimiento(idMovimiento);
+                List<BalanceSocioPorMovimientoConsultaDTO> consultaDTO = movimientoRepository
+                                .balanceSocioPorMovimiento(idMovimiento);
 
-                if (balanceSociosPorMovimientoConsultaDTO.isEmpty()) {
+                if (consultaDTO.isEmpty()) {
                         throw new MovimientoNoEncontradoException(idMovimiento);
                 }
 
-                BalanceSociosPorMovimientoResponseDTO balanceSociosPorMovimientoResponseDTO = new BalanceSociosPorMovimientoResponseDTO();
+                BalanceSocioPorMovimientoResponseDTO responseDTO = movimientoHelper.construirDetalleMovimiento(
+                                consultaDTO.get(0).getIdMovimiento(),
+                                consultaDTO.get(0).getInversion(),
+                                consultaDTO.get(0).getConcepto(),
+                                consultaDTO.get(0).getCategoria(),
+                                consultaDTO.get(0).getMedida(),
+                                consultaDTO.get(0).getMoneda(),
+                                BalanceSocioPorMovimientoResponseDTO::new);
 
-                balanceSociosPorMovimientoResponseDTO
-                                .setIdMovimiento(balanceSociosPorMovimientoConsultaDTO.get(0).getIdMovimiento());
-                balanceSociosPorMovimientoResponseDTO
-                                .setInversion(balanceSociosPorMovimientoConsultaDTO.get(0).getInversion());
-                balanceSociosPorMovimientoResponseDTO
-                                .setConcepto(balanceSociosPorMovimientoConsultaDTO.get(0).getConcepto());
-                balanceSociosPorMovimientoResponseDTO
-                                .setCategoria(balanceSociosPorMovimientoConsultaDTO.get(0).getCategoria());
-                balanceSociosPorMovimientoResponseDTO
-                                .setMedida(balanceSociosPorMovimientoConsultaDTO.get(0).getMedida());
-                balanceSociosPorMovimientoResponseDTO
-                                .setMoneda(balanceSociosPorMovimientoConsultaDTO.get(0).getMoneda());
-
-                for (BalanceSociosPorMovimientoConsultaDTO balanceSocio : balanceSociosPorMovimientoConsultaDTO) {
+                for (BalanceSocioPorMovimientoConsultaDTO balanceSocio : consultaDTO) {
                         BalanceSocioResponseDTO balanceSocioResponseDTO = new BalanceSocioResponseDTO();
                         balanceSocioResponseDTO.setSocio(balanceSocio.getSocio());
                         balanceSocioResponseDTO.setCantidad(balanceSocio.getCantidad());
                         balanceSocioResponseDTO.setBalanceMonetario(balanceSocio.getBalanceMonetario());
-                        balanceSociosPorMovimientoResponseDTO.addBalanceSocio(balanceSocioResponseDTO);
+                        responseDTO.addBalanceSocio(balanceSocioResponseDTO);
                 }
 
-                return balanceSociosPorMovimientoResponseDTO;
+                return responseDTO;
         }
 
         @Override
@@ -139,6 +109,7 @@ public class MovimientoServiceImpl implements MovimientoService {
         public MovimientoResponseDTO save(MovimientoRequestDTO movimientoRequestDTO) {
 
                 Movimiento movimiento = movimientoHelper.construirMovimiento(
+                                null,
                                 movimientoRequestDTO.getInversion(),
                                 movimientoRequestDTO.getConcepto(),
                                 movimientoRequestDTO.getCategoria(),
@@ -154,52 +125,36 @@ public class MovimientoServiceImpl implements MovimientoService {
                                         actividadSocioRequestDTO.getFecha(),
                                         actividadSocioRequestDTO.getSocio(),
                                         actividadSocioRequestDTO.getTipoActividad());
-
                         movimiento.addActividadSocio(actividadSocio);
                 }
 
-                return movimientoMapper.movimientoToMovimientoResponseDTO(movimientoRepository.save(movimiento));
+                return movimientoMapper.movimientoToMovimientoResponseDTO(
+                                movimientoRepository.save(movimiento));
         }
 
         @Override
         @Transactional()
-        public Long delete(Long idMovimiento) {
-                movimientoRepository.delete(movimientoRepository.findById(idMovimiento)
-                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento)));
-                return idMovimiento;
-        }
-
-        @Override
-        @Transactional()
-        public MovimientoUpdateResponseDTO update(Long idMovimiento,
+        public MovimientoUpdateResponseDTO update(
+                        Long idMovimiento,
                         MovimientoUpdateRequestDTO movimientoUpdateRequestDTO) {
-                Movimiento movimiento = movimientoRepository.findById(idMovimiento)
-                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 
-                movimiento.setConcepto(movimientoUpdateRequestDTO.getConcepto());
+                Movimiento movimiento = movimientoHelper.construirMovimiento(
+                                idMovimiento,
+                                movimientoUpdateRequestDTO.getInversion(),
+                                movimientoUpdateRequestDTO.getConcepto(),
+                                movimientoUpdateRequestDTO.getCategoria(),
+                                movimientoUpdateRequestDTO.getMedida(),
+                                movimientoUpdateRequestDTO.getMoneda());
 
-                movimiento.setInversion(inversionRepository.findById(movimientoUpdateRequestDTO.getInversion())
-                                .orElseThrow(() -> new InversionNoEncontradaException(
-                                                movimientoUpdateRequestDTO.getInversion())));
+                return movimientoMapper.movimientoToMovimientoUpdateResponseDTO(
+                        movimientoRepository.save(movimiento));
+        }
 
-                movimiento.setCategoria(categoriaRepository.findById(movimientoUpdateRequestDTO.getCategoria())
-                                .orElseThrow(() -> new CategoriaNoEncontradaException(
-                                                movimientoUpdateRequestDTO.getCategoria())));
-
-                if (movimientoUpdateRequestDTO.getMoneda() != null) {
-                        movimiento.setMoneda(monedaRepository.findById(movimientoUpdateRequestDTO.getMoneda())
-                                        .orElseThrow(() -> new MonedaNoEncontradaException(
-                                                        movimientoUpdateRequestDTO.getMoneda())));
-                }
-
-                if (movimientoUpdateRequestDTO.getMedida() != null) {
-                        movimiento.setMedida(medidaRepository.findById(movimientoUpdateRequestDTO.getMedida())
-                                        .orElseThrow(() -> new MedidaNoEncontradaException(
-                                                        movimientoUpdateRequestDTO.getMedida())));
-                }
-
-                return movimientoUpdateMapper
-                                .movimientoToMovimientoUpdateResponseDTO(movimientoRepository.save(movimiento));
+        @Override
+        @Transactional()
+        public void delete(Long idMovimiento) {
+                movimientoRepository.delete(movimientoRepository.findById(idMovimiento)
+                        .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento)));
         }
 
 };

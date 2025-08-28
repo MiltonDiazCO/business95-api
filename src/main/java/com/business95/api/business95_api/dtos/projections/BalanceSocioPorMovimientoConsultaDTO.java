@@ -2,7 +2,7 @@ package com.business95.api.business95_api.dtos.projections;
 
 import java.math.BigDecimal;
 
-public class BalanceSociosPorMovimientoConsultaDTO {
+public class BalanceSocioPorMovimientoConsultaDTO {
 
     private Long idMovimiento;
     private String inversion;
@@ -14,10 +14,10 @@ public class BalanceSociosPorMovimientoConsultaDTO {
     private BigDecimal cantidad;
     private BigDecimal balanceMonetario;
 
-    public BalanceSociosPorMovimientoConsultaDTO() {
+    public BalanceSocioPorMovimientoConsultaDTO() {
     }
 
-    public BalanceSociosPorMovimientoConsultaDTO(Long idMovimiento, String inversion, String concepto, String categoria,
+    public BalanceSocioPorMovimientoConsultaDTO(Long idMovimiento, String inversion, String concepto, String categoria,
             String medida, String moneda, String socio, BigDecimal cantidad, BigDecimal balanceMonetario) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;

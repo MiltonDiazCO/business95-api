@@ -54,6 +54,7 @@ public class ActividadSocioHelper {
 
         TipoActividad tipoActividad = tipoActividadRepository.findById(idTipoActividad)
                 .orElseThrow(() -> new TipoActividadNoEncontradoException(idTipoActividad));
+
         actividadSocio.setTipoActividad(tipoActividad);
 
         return actividadSocio;

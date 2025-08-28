@@ -18,24 +18,20 @@ import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoUpdateResponseDTO;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
-import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
-import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
-import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
+import com.business95.api.business95_api.helpers.ActividadSocioHelper;
+import com.business95.api.business95_api.helpers.MovimientoHelper;
 import com.business95.api.business95_api.mappers.MovimientoMapper;
 import com.business95.api.business95_api.mappers.MovimientoUpdateMapper;
-import com.business95.api.business95_api.repositories.ActividadSocioRepository;
 import com.business95.api.business95_api.repositories.CategoriaRepository;
 import com.business95.api.business95_api.repositories.InversionRepository;
 import com.business95.api.business95_api.repositories.MedidaRepository;
 import com.business95.api.business95_api.repositories.MonedaRepository;
 import com.business95.api.business95_api.repositories.MovimientoRepository;
-import com.business95.api.business95_api.repositories.SocioRepository;
-import com.business95.api.business95_api.repositories.TipoActividadRepository;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 
 @Service
@@ -43,9 +39,6 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Autowired
         private MovimientoRepository movimientoRepository;
-
-        @Autowired
-        private ActividadSocioRepository actividadSocioRepository;
 
         @Autowired
         private InversionRepository inversionRepository;
@@ -60,16 +53,16 @@ public class MovimientoServiceImpl implements MovimientoService {
         private MedidaRepository medidaRepository;
 
         @Autowired
-        private SocioRepository socioRepository;
-
-        @Autowired
-        private TipoActividadRepository tipoActividadRepository;
-
-        @Autowired
         private MovimientoMapper movimientoMapper;
 
         @Autowired
         private MovimientoUpdateMapper movimientoUpdateMapper;
+
+        @Autowired
+        private MovimientoHelper movimientoHelper;
+
+        @Autowired
+        private ActividadSocioHelper actividadSocioHelper;
 
         @Override
         @Transactional(readOnly = true)
@@ -145,53 +138,22 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Transactional
         public MovimientoResponseDTO save(MovimientoRequestDTO movimientoRequestDTO) {
 
-                Movimiento movimiento = new Movimiento();
+                Movimiento movimiento = movimientoHelper.construirMovimiento(
+                                movimientoRequestDTO.getInversion(),
+                                movimientoRequestDTO.getConcepto(),
+                                movimientoRequestDTO.getCategoria(),
+                                movimientoRequestDTO.getMedida(),
+                                movimientoRequestDTO.getMoneda());
 
-                movimiento.setConcepto(movimientoRequestDTO.getConcepto());
+                for (ActividadSocioRequestDTO actividadSocioRequestDTO : movimientoRequestDTO.getActividades()) {
 
-                movimiento.setInversion(inversionRepository.findById(movimientoRequestDTO.getInversion())
-                                .orElseThrow(() -> new InversionNoEncontradaException(
-                                                movimientoRequestDTO.getInversion())));
-
-                movimiento.setCategoria(categoriaRepository.findById(movimientoRequestDTO.getCategoria())
-                                .orElseThrow(() -> new CategoriaNoEncontradaException(
-                                                movimientoRequestDTO.getCategoria())));
-
-                if (movimientoRequestDTO.getMoneda() != null) {
-                        movimiento.setMoneda(monedaRepository.findById(movimientoRequestDTO.getMoneda())
-                                        .orElseThrow(() -> new MonedaNoEncontradaException(
-                                                        movimientoRequestDTO.getMoneda())));
-                }
-
-                if (movimientoRequestDTO.getMedida() != null) {
-                        movimiento.setMedida(medidaRepository.findById(movimientoRequestDTO.getMedida())
-                                        .orElseThrow(() -> new MedidaNoEncontradaException(
-                                                        movimientoRequestDTO.getMedida())));
-                }
-
-                for (ActividadSocioRequestDTO actividadSocioRequestDTO : movimientoRequestDTO
-                                .getActividades()) {
-                        ActividadSocio actividadSocio = new ActividadSocio();
-
-                        if (actividadSocioRequestDTO.getIdActividad() != null) {
-                                actividadSocio = actividadSocioRepository
-                                                .findById(actividadSocioRequestDTO.getIdActividad())
-                                                .orElseThrow(() -> new ActividadSocioNoEncontradaException(
-                                                                actividadSocioRequestDTO.getIdActividad()));
-                        }
-
-                        actividadSocio.setMonto(actividadSocioRequestDTO.getMonto());
-                        actividadSocio.setCantidad(actividadSocioRequestDTO.getCantidad());
-                        actividadSocio.setFecha(actividadSocioRequestDTO.getFecha());
-
-                        actividadSocio.setSocio(socioRepository.findById(actividadSocioRequestDTO.getSocio())
-                                        .orElseThrow(() -> new SocioNoEncontradoException(
-                                                        actividadSocioRequestDTO.getSocio())));
-
-                        actividadSocio.setTipoActividad(
-                                        tipoActividadRepository.findById(actividadSocioRequestDTO.getTipoActividad())
-                                                        .orElseThrow(() -> new TipoActividadNoEncontradoException(
-                                                                        actividadSocioRequestDTO.getTipoActividad())));
+                        ActividadSocio actividadSocio = actividadSocioHelper.construirActividadSocio(
+                                        actividadSocioRequestDTO.getIdActividad(),
+                                        actividadSocioRequestDTO.getMonto(),
+                                        actividadSocioRequestDTO.getCantidad(),
+                                        actividadSocioRequestDTO.getFecha(),
+                                        actividadSocioRequestDTO.getSocio(),
+                                        actividadSocioRequestDTO.getTipoActividad());
 
                         movimiento.addActividadSocio(actividadSocio);
                 }

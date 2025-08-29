@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioResponse;
 import com.business95.api.business95_api.dtos.responses.MovimientoPorInversionResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesSociosResponse;
@@ -17,10 +18,8 @@ import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
 import com.business95.api.business95_api.helpers.MovimientoHelper;
-import com.business95.api.business95_api.mappers.ActividadSocioMapper;
 import com.business95.api.business95_api.mappers.MovimientoMapper;
 import com.business95.api.business95_api.projections.BalanceSocioPorMovimientoProjection;
-import com.business95.api.business95_api.projections.MovimientoProjection;
 import com.business95.api.business95_api.repositories.MovimientoRepository;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 
@@ -29,19 +28,16 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         private final MovimientoRepository movimientoRepository;
         private final MovimientoMapper movimientoMapper;
-        private final ActividadSocioMapper actividadSocioMapper;
         private final MovimientoHelper movimientoHelper;
         private final ActividadSocioHelper actividadSocioHelper;
 
         public MovimientoServiceImpl(
                         MovimientoRepository movimientoRepository,
                         MovimientoMapper movimientoMapper,
-                        ActividadSocioMapper actividadSocioMapper,
                         MovimientoHelper movimientoHelper,
                         ActividadSocioHelper actividadSocioHelper) {
                 this.movimientoRepository = movimientoRepository;
                 this.movimientoMapper = movimientoMapper;
-                this.actividadSocioMapper = actividadSocioMapper;
                 this.movimientoHelper = movimientoHelper;
                 this.actividadSocioHelper = actividadSocioHelper;
         }
@@ -50,25 +46,17 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Transactional(readOnly = true)
         public MovimientoResponse movimientoPorId(Long idMovimiento) {
 
-                movimientoHelper.findByIdOrThrow(idMovimiento);
+                Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
 
-                List<MovimientoProjection> actividadesMovimiento = movimientoRepository.movimientoPorId(idMovimiento);
+                MovimientoResponse movimientoResponse = movimientoMapper.toMovimientoResponse(movimiento);
 
-                MovimientoResponse responseDTO = movimientoHelper.construirDetalleMovimiento(
-                                actividadesMovimiento.get(0).getIdMovimiento(),
-                                actividadesMovimiento.get(0).getInversion(),
-                                actividadesMovimiento.get(0).getConcepto(),
-                                actividadesMovimiento.get(0).getCategoria(),
-                                actividadesMovimiento.get(0).getMedida(),
-                                actividadesMovimiento.get(0).getMoneda(),
-                                MovimientoResponse::new);
+                List<ActividadSocioResponse> actividades = movimientoRepository.actividadesPorMovimiento(idMovimiento);
 
-                for (MovimientoProjection actividadMovimiento : actividadesMovimiento) {
-                        responseDTO.addActividadSocio(actividadSocioMapper
-                                .MovimientoConsultaProjectionToActividadSocioResponseDTO(actividadMovimiento));
+                for (ActividadSocioResponse actividadSocio : actividades) {
+                        movimientoResponse.addActividadSocio(actividadSocio);
                 }
 
-                return responseDTO;
+                return movimientoResponse;
         }
 
         @Override
@@ -136,8 +124,7 @@ public class MovimientoServiceImpl implements MovimientoService {
                         movimiento.addActividadSocio(actividadSocio);
                 }
 
-                return movimientoMapper.movimientoToMovimientoResponseDTO(
-                                movimientoRepository.save(movimiento));
+                return movimientoMapper.toMovimientoResponse(movimientoRepository.save(movimiento));
         }
 
         @Override
@@ -154,8 +141,7 @@ public class MovimientoServiceImpl implements MovimientoService {
                                 movimientoUpdateRequest.getMedida(),
                                 movimientoUpdateRequest.getMoneda());
 
-                return movimientoMapper.movimientoToMovimientoUpdateResponseDTO(
-                        movimientoRepository.save(movimiento));
+                return movimientoMapper.tOMovimientoUpdateResponse(movimientoRepository.save(movimiento));
         }
 
         @Override

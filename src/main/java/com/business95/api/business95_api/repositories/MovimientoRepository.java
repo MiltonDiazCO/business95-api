@@ -7,25 +7,22 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.projections.BalanceSocioPorMovimientoProjection;
 import com.business95.api.business95_api.projections.MovimientoPorInversionProjection;
-import com.business95.api.business95_api.projections.MovimientoProjection;
 
 @Repository
 public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
 
-        @Query("SELECT m.idMovimiento AS idMovimiento, " + "m.inversion.inversion AS inversion, " +
-                        "m.concepto AS concepto, " + "m.categoria.categoria AS categoria, " +
-                        "md.medida AS medida, " + "mo.moneda AS moneda, " +
+        @Query("SELECT new com.business95.api.business95_api.dtos.responses.ActividadSocioResponse(" +
                         "a.idActividad AS idActividad, " +
                         "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
-                        "a.cantidad AS cantidad, " + "a.monto AS monto, " +
-                        "a.fecha AS fecha, " + "a.tipoActividad.tipoActividad AS tipoActividad " +
-                        "FROM Movimiento m " + "LEFT JOIN m.moneda mo " +
-                        "LEFT JOIN m.medida md " + "LEFT JOIN m.actividadesSocio a " +
-                        "WHERE m.idMovimiento = :idMovimiento " + "ORDER BY a.fecha DESC")
-        List<MovimientoProjection> movimientoPorId(@Param("idMovimiento") Long idMovimiento);
+                        "a.cantidad AS cantidad, a.monto AS monto, a.fecha AS fecha, " +
+                        "a.tipoActividad.tipoActividad AS tipoActividad) FROM Movimiento m " +
+                        "LEFT JOIN m.moneda mo LEFT JOIN m.medida md LEFT JOIN m.actividadesSocio a " +
+                        "WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha DESC")
+        List<ActividadSocioResponse> actividadesPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
         @Query("SELECT m.idMovimiento AS idMovimiento, " + "m.inversion.inversion AS inversion, " +
                         "m.concepto AS concepto, " + "m.categoria.categoria AS categoria, " +

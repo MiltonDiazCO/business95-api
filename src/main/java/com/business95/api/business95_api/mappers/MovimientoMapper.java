@@ -17,13 +17,13 @@ public interface MovimientoMapper {
     @Mapping(source = "medida.medida", target = "medida")
     @Mapping(source = "moneda.moneda", target = "moneda")
     @Mapping(source = "actividadesSocio", target = "actividades")
-    MovimientoResponse movimientoToMovimientoResponseDTO(Movimiento movimiento);
+    MovimientoResponse toMovimientoResponse(Movimiento movimiento);
 
     @Mapping(source = "inversion.inversion", target = "inversion")
     @Mapping(source = "categoria.categoria", target = "categoria")
     @Mapping(source = "medida.medida", target = "medida")
     @Mapping(source = "moneda.moneda", target = "moneda")
-    MovimientoUpdateResponse movimientoToMovimientoUpdateResponseDTO(Movimiento movimiento);
+    MovimientoUpdateResponse tOMovimientoUpdateResponse(Movimiento movimiento);
 
     @Mapping(target = "inversion", ignore = true)
     MovimientoPorInversionResponseDTO movimientoPorInversionProjectionTOMovimientoPorInversionResponseDTO(

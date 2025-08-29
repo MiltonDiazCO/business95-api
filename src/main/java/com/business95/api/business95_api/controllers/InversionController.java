@@ -3,7 +3,6 @@ package com.business95.api.business95_api.controllers;
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,6 +20,7 @@ import com.business95.api.business95_api.dtos.responses.InversionResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoPorInversionResponseDTO;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.servicies.interfaces.InversionService;
+import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -30,11 +30,18 @@ import jakarta.validation.Valid;
 @RequestMapping("/inversiones")
 public class InversionController {
 
-    @Autowired
-    private InversionService inversionService;
+    private final InversionService inversionService;
+    private final MessageSource messageSource;
+    private final MovimientoService movimientoService;
 
-    @Autowired
-    private MessageSource messageSource;
+    public InversionController(
+            InversionService inversionService,
+            MessageSource messageSource,
+            MovimientoService movimientoService) {
+        this.inversionService = inversionService;
+        this.messageSource = messageSource;
+        this.movimientoService = movimientoService;
+    }
 
     @GetMapping("/{idInversion}")
     public ResponseEntity<InversionResponseDTO> inversionFindById(@PathVariable Long idInversion) {
@@ -44,7 +51,7 @@ public class InversionController {
     @GetMapping("/{idInversion}/movimientos")
     public ResponseEntity<List<MovimientoPorInversionResponseDTO>> findMovimientosPorInversion(
             @PathVariable Long idInversion) {
-        return ResponseEntity.ok().body(inversionService.findMovimientosPorInversion(idInversion));
+        return ResponseEntity.ok().body(movimientoService.findMovimientosPorInversion(idInversion));
     }
 
     @PostMapping

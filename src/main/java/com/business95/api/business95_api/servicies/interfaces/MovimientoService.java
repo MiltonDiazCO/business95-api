@@ -1,8 +1,11 @@
 package com.business95.api.business95_api.servicies.interfaces;
 
+import java.util.List;
+
 import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovimientoResponseDTO;
+import com.business95.api.business95_api.dtos.responses.MovimientoPorInversionResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoUpdateResponseDTO;
 
@@ -11,6 +14,8 @@ public interface MovimientoService {
     MovimientoResponseDTO movimientoPorId(Long idMovimiento);
 
     BalanceSocioPorMovimientoResponseDTO balanceSociosPorMovimiento(Long idMovimiento);
+
+    List<MovimientoPorInversionResponseDTO> findMovimientosPorInversion(Long idInversion);
 
     MovimientoResponseDTO save(MovimientoRequestDTO movimientoRequestDTO);
 

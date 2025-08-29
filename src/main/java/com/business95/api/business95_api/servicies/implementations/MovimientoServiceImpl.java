@@ -11,6 +11,7 @@ import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioResponseDTO;
+import com.business95.api.business95_api.dtos.responses.MovimientoPorInversionResponseDTO;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
 import com.business95.api.business95_api.dtos.responses.MovimientoUpdateResponseDTO;
@@ -102,6 +103,15 @@ public class MovimientoServiceImpl implements MovimientoService {
                 }
 
                 return responseDTO;
+        }
+
+        @Override
+        @Transactional(readOnly = true)
+        public List<MovimientoPorInversionResponseDTO> findMovimientosPorInversion(Long idInversion) {
+
+                return movimientoRepository.findMovimientosPorInversion(idInversion).stream()
+                                .map(movimientoMapper::movimientoPorInversionConsultaDtoTOMovimientoPorInversionResponseDTO)
+                                .toList();
         }
 
         @Override

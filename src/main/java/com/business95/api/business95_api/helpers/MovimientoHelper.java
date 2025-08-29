@@ -4,7 +4,7 @@ import java.util.function.Supplier;
 
 import org.springframework.stereotype.Component;
 
-import com.business95.api.business95_api.dtos.bases.DetalleMovimientoDTO;
+import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.CategoriaNoEncontradaException;
@@ -39,6 +39,11 @@ public class MovimientoHelper {
         this.monedaRepository = monedaRepository;
     }
 
+    public Movimiento findByIdOrThrow(Long idMovimiento) {
+        return movimientoRepository.findById(idMovimiento)
+                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+    }
+
     public Movimiento construirMovimiento(
             Long idMovimiento,
             Long idInversion,
@@ -50,8 +55,7 @@ public class MovimientoHelper {
         Movimiento movimiento = new Movimiento();
 
         if (idMovimiento != null) {
-            movimiento = movimientoRepository.findById(idMovimiento)
-                    .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+            movimiento = findByIdOrThrow(idMovimiento);
         }
 
         movimiento.setConcepto(concepto);
@@ -75,7 +79,7 @@ public class MovimientoHelper {
         return movimiento;
     }
 
-    public <T extends DetalleMovimientoDTO> T construirDetalleMovimiento(
+    public <T extends DetalleMovimiento> T construirDetalleMovimiento(
             Long idMovimiento,
             String inversion,
             String concepto,

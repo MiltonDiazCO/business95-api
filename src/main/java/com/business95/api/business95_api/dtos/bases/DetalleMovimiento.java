@@ -3,7 +3,7 @@ package com.business95.api.business95_api.dtos.bases;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DetalleMovimientoDTO {
+public class DetalleMovimiento {
 
     private Long idMovimiento;
     private String inversion;
@@ -12,10 +12,10 @@ public class DetalleMovimientoDTO {
     private String medida;
     private String moneda;
 
-    public DetalleMovimientoDTO() {
+    public DetalleMovimiento() {
     }
 
-    public DetalleMovimientoDTO(Long idMovimiento, String inversion, String concepto, String categoria, String medida,
+    public DetalleMovimiento(Long idMovimiento, String inversion, String concepto, String categoria, String medida,
             String moneda) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;

@@ -3,11 +3,11 @@ package com.business95.api.business95_api.dtos.responses;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.business95.api.business95_api.dtos.bases.DetalleMovimientoDTO;
+import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MovimientoPorInversionResponseDTO extends DetalleMovimientoDTO {
+public class MovimientoPorInversionResponseDTO extends DetalleMovimiento {
 
     private BigDecimal cantidad;
     private BigDecimal balance;

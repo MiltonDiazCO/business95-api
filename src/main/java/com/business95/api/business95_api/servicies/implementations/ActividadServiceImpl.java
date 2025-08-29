@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
-import com.business95.api.business95_api.dtos.responses.ActividadSocioResponseDTO;
+import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
@@ -39,24 +39,24 @@ public class ActividadServiceImpl implements ActividadService {
 
         @Override
         @Transactional()
-        public List<ActividadSocioResponseDTO> save(
+        public List<ActividadSocioResponse> save(
                         Long idMovimiento,
-                        List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs) {
+                        List<ActividadSocioRequest> actividadesSociosRequest) {
 
                 Movimiento movimiento = movimientoRepository.findById(idMovimiento)
                         .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 
                 List<ActividadSocio> nuevasActividades = new ArrayList<>();
 
-                for (ActividadSocioRequestDTO actividadSocioRequestDTO : actividadesSocioRequestDTOs) {
+                for (ActividadSocioRequest actividadSocioRequest : actividadesSociosRequest) {
 
                         ActividadSocio actividadSocio = actividadSocioHelper.construirActividadSocio(
-                                        actividadSocioRequestDTO.getIdActividad(),
-                                        actividadSocioRequestDTO.getMonto(),
-                                        actividadSocioRequestDTO.getCantidad(),
-                                        actividadSocioRequestDTO.getFecha(),
-                                        actividadSocioRequestDTO.getSocio(),
-                                        actividadSocioRequestDTO.getTipoActividad());
+                                        actividadSocioRequest.getIdActividad(),
+                                        actividadSocioRequest.getMonto(),
+                                        actividadSocioRequest.getCantidad(),
+                                        actividadSocioRequest.getFecha(),
+                                        actividadSocioRequest.getSocio(),
+                                        actividadSocioRequest.getTipoActividad());
 
                         movimiento.addActividadSocio(actividadSocio);
                         actividadSocioRepository.save(actividadSocio);

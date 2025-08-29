@@ -5,7 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class MovimientoUpdateRequestDTO {
+public class MovimientoUpdateRequest {
 
     private Long idMmovimiento;
 
@@ -23,10 +23,10 @@ public class MovimientoUpdateRequestDTO {
     private String moneda;
     private Long medida;
 
-    public MovimientoUpdateRequestDTO() {
+    public MovimientoUpdateRequest() {
     }
 
-    public MovimientoUpdateRequestDTO(Long idMmovimiento,
+    public MovimientoUpdateRequest(Long idMmovimiento,
             @NotNull(message = "La Inversión es requerida.") Long inversion,
             @NotBlank(message = "El Concepto del movimiento es requerido.") @Size(max = 120, message = "El concepto debe ser de máximo 120 caracteres.") String concepto,
             @NotNull(message = "La Categoría es requerida.") Long categoria,

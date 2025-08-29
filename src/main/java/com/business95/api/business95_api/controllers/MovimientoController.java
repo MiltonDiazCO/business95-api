@@ -18,11 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.business95.api.business95_api.dtos.requests.ActividadSocioRequestDTO;
-import com.business95.api.business95_api.dtos.requests.MovimientoRequestDTO;
-import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequestDTO;
-import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovimientoResponseDTO;
-import com.business95.api.business95_api.dtos.responses.MovimientoResponseDTO;
+import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
+import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
+import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
+import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesSociosResponse;
+import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
@@ -44,18 +44,18 @@ public class MovimientoController {
     private MessageSource messageSource;
 
     @GetMapping("/{idMovimiento}")
-    public ResponseEntity<MovimientoResponseDTO> movimientoPorId(@PathVariable Long idMovimiento) {
+    public ResponseEntity<MovimientoResponse> movimientoPorId(@PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.movimientoPorId(idMovimiento));
     }
 
     @GetMapping("/{idMovimiento}/actividades/balance")
-    public ResponseEntity<BalanceSocioPorMovimientoResponseDTO> balanceSociosPorMovimiento(
+    public ResponseEntity<MovimientoConBalancesSociosResponse> balanceSociosPorMovimiento(
             @PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.balanceSociosPorMovimiento(idMovimiento));
     }
 
     @PostMapping
-    public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoRequestDTO movimientoRegistroDTO,
+    public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoRequest movimientoRegistroDTO,
             BindingResult result, HttpServletRequest request) {
 
         if (result.hasErrors()) {
@@ -69,7 +69,7 @@ public class MovimientoController {
 
     @PutMapping("/{idMovimiento}")
     public ResponseEntity<?> actualizarMovimiento(@PathVariable Long idMovimiento,
-            @Valid @RequestBody MovimientoUpdateRequestDTO movimientoUpdateRequestDTO,
+            @Valid @RequestBody MovimientoUpdateRequest movimientoUpdateRequest,
             BindingResult result,
             HttpServletRequest request) {
 
@@ -80,7 +80,7 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(movimientoService.update(idMovimiento, movimientoUpdateRequestDTO));
+                .body(movimientoService.update(idMovimiento, movimientoUpdateRequest));
     }
 
     @DeleteMapping("/{idMovimiento}")
@@ -92,7 +92,7 @@ public class MovimientoController {
     @PostMapping("/{idMovimiento}/actividades")
     public ResponseEntity<?> registrarActividad(
             @PathVariable Long idMovimiento,
-            @Valid @RequestBody List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs,
+            @Valid @RequestBody List<ActividadSocioRequest> actividadesSociosRequest,
             BindingResult result,
             HttpServletRequest request) {
 
@@ -103,13 +103,13 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(actividadService.save(idMovimiento, actividadesSocioRequestDTOs));
+                .body(actividadService.save(idMovimiento, actividadesSociosRequest));
     }
 
     @PutMapping("/{idMovimiento}/actividades")
     public ResponseEntity<?> actualizarActividad(
             @PathVariable Long idMovimiento,
-            @Valid @RequestBody List<ActividadSocioRequestDTO> actividadesSocioRequestDTOs,
+            @Valid @RequestBody List<ActividadSocioRequest> actividadesSociosRequest,
             BindingResult result,
             HttpServletRequest request) {
 
@@ -120,7 +120,7 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(actividadService.save(idMovimiento, actividadesSocioRequestDTOs));
+                .body(actividadService.save(idMovimiento, actividadesSociosRequest));
     }
 
     @DeleteMapping("/{idMovimiento}/actividades")

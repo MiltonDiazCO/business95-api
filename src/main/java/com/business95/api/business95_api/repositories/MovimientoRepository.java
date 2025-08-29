@@ -7,38 +7,42 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.business95.api.business95_api.dtos.projections.BalanceSocioPorMovimientoConsultaDTO;
-import com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO;
-import com.business95.api.business95_api.dtos.projections.MovimientoPorInversionConsultaDTO;
 import com.business95.api.business95_api.entities.Movimiento;
+import com.business95.api.business95_api.projections.BalanceSocioPorMovimientoProjection;
+import com.business95.api.business95_api.projections.MovimientoPorInversionProjection;
+import com.business95.api.business95_api.projections.MovimientoProjection;
 
 @Repository
 public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
 
-        @Query("SELECT new com.business95.api.business95_api.dtos.projections.MovimientoConsultaDTO(" +
-                        "m.idMovimiento, m.inversion.inversion, m.concepto, m.categoria.categoria," +
-                        "md.medida, mo.moneda, a.idActividad," +
-                        "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos)," +
-                        "a.cantidad, a.monto, a.fecha, a.tipoActividad.tipoActividad)" +
-                        "FROM Movimiento m LEFT JOIN m.moneda mo LEFT JOIN m.medida md " +
-                        "LEFT JOIN m.actividadesSocio a WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha DESC")
-        List<MovimientoConsultaDTO> movimientoPorId(@Param("idMovimiento") Long idMovimiento);
+        @Query("SELECT m.idMovimiento AS idMovimiento, " + "m.inversion.inversion AS inversion, " +
+                        "m.concepto AS concepto, " + "m.categoria.categoria AS categoria, " +
+                        "md.medida AS medida, " + "mo.moneda AS moneda, " +
+                        "a.idActividad AS idActividad, " +
+                        "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
+                        "a.cantidad AS cantidad, " + "a.monto AS monto, " +
+                        "a.fecha AS fecha, " + "a.tipoActividad.tipoActividad AS tipoActividad " +
+                        "FROM Movimiento m " + "LEFT JOIN m.moneda mo " +
+                        "LEFT JOIN m.medida md " + "LEFT JOIN m.actividadesSocio a " +
+                        "WHERE m.idMovimiento = :idMovimiento " + "ORDER BY a.fecha DESC")
+        List<MovimientoProjection> movimientoPorId(@Param("idMovimiento") Long idMovimiento);
 
-        @Query("SELECT new com.business95.api.business95_api.dtos.projections.BalanceSocioPorMovimientoConsultaDTO(" +
-                        "m.idMovimiento, m.inversion.inversion, m.concepto, m.categoria.categoria, md.medida," +
-                        "mo.moneda, CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos)," +
-                        "SUM(a.cantidad), SUM(a.monto)) FROM Movimiento m LEFT JOIN m.medida md " +
-                        "LEFT JOIN m.moneda mo LEFT JOIN m.actividadesSocio a " +
-                        "WHERE m.idMovimiento = :idMovimiento GROUP BY m.idMovimiento, a.socio.idSocio")
-        List<BalanceSocioPorMovimientoConsultaDTO> balanceSocioPorMovimiento(
-                        @Param("idMovimiento") Long idMovimiento);
+        @Query("SELECT m.idMovimiento AS idMovimiento, " + "m.inversion.inversion AS inversion, " +
+                        "m.concepto AS concepto, " + "m.categoria.categoria AS categoria, " +
+                        "md.medida AS medida, " + "mo.moneda AS moneda, " +
+                        "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
+                        "SUM(a.cantidad) AS cantidad, " + "SUM(a.monto) AS balanceMonetario " +
+                        "FROM Movimiento m " + "LEFT JOIN m.medida md " + "LEFT JOIN m.moneda mo " +
+                        "LEFT JOIN m.actividadesSocio a " + "WHERE m.idMovimiento = :idMovimiento " +
+                        "GROUP BY m.idMovimiento, a.socio.idSocio")
+        List<BalanceSocioPorMovimientoProjection> balanceSocioPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
-        @Query("SELECT new com.business95.api.business95_api.dtos.projections.MovimientoPorInversionConsultaDTO(" +
-                        "m.idMovimiento, m.categoria.categoria, m.concepto, SUM(a.cantidad), md.medida," +
-                        "SUM(a.monto), m.moneda.idMoneda, MAX(a.fecha)) FROM Movimiento m " +
-                        "LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida " +
-                        "md WHERE m.inversion.idInversion = :idInversion " +
-                        "GROUP BY m.idMovimiento ORDER BY MAX(a.fecha) DESC")
-        List<MovimientoPorInversionConsultaDTO> findMovimientosPorInversion(@Param("idInversion") Long idInversion);
+        @Query("SELECT m.idMovimiento AS idMovimiento, m.categoria.categoria AS categoria, " +
+                        "m.concepto AS concepto, SUM(a.cantidad) AS cantidad, " +
+                        "md.medida AS medida, SUM(a.monto) AS balance, " +
+                        "m.moneda.idMoneda AS moneda, MAX(a.fecha) AS fechaUltimaActividad " +
+                        "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
+                        "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento ")
+        List<MovimientoPorInversionProjection> movimientoPorInversion(@Param("idInversion") Long idMovimiento);
 
 }

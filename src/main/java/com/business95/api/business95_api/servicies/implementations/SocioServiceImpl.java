@@ -3,7 +3,7 @@ package com.business95.api.business95_api.servicies.implementations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dtos.responses.SocioResponseDTO;
+import com.business95.api.business95_api.dtos.responses.SocioResponse;
 import com.business95.api.business95_api.entities.Socio;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.mappers.SocioMapper;
@@ -23,7 +23,7 @@ public class SocioServiceImpl implements SocioService {
 
     @Override
     @Transactional(readOnly = true)
-    public SocioResponseDTO socioFindById(Long idSocio) {
+    public SocioResponse socioFindById(Long idSocio) {
 
         Socio socio = socioRepository.findById(idSocio)
                 .orElseThrow(() -> new SocioNoEncontradoException(idSocio));

@@ -2,16 +2,16 @@ package com.business95.api.business95_api.dtos.responses;
 
 import java.math.BigDecimal;
 
-public class BalanceSocioResponseDTO {
+public class BalanceSocioResponse {
 
     private String socio;
     private BigDecimal cantidad;
     private BigDecimal balanceMonetario;
 
-    public BalanceSocioResponseDTO() {
+    public BalanceSocioResponse() {
     }
 
-    public BalanceSocioResponseDTO(String socio, BigDecimal cantidad, BigDecimal balanceMonetario) {
+    public BalanceSocioResponse(String socio, BigDecimal cantidad, BigDecimal balanceMonetario) {
         this.socio = socio;
         this.cantidad = cantidad;
         this.balanceMonetario = balanceMonetario;

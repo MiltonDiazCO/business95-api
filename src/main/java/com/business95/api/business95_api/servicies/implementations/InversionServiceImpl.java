@@ -3,7 +3,7 @@ package com.business95.api.business95_api.servicies.implementations;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dtos.responses.InversionResponseDTO;
+import com.business95.api.business95_api.dtos.responses.InversionResponse;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.repositories.InversionRepository;
@@ -27,15 +27,15 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    public InversionResponseDTO inversionFindById(Long idInversion) {
+    public InversionResponse inversionFindById(Long idInversion) {
         Inversion inversion = findById(idInversion);
 
-        InversionResponseDTO inversionResponseDTO = new InversionResponseDTO();
+        InversionResponse inversionResponse = new InversionResponse();
 
-        inversionResponseDTO.setIdInversion(inversion.getIdInversion());
-        inversionResponseDTO.setInversion(inversion.getInversion());
+        inversionResponse.setIdInversion(inversion.getIdInversion());
+        inversionResponse.setInversion(inversion.getInversion());
 
-        return inversionResponseDTO;
+        return inversionResponse;
     }
 
     @Override

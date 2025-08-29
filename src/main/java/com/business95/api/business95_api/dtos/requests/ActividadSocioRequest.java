@@ -9,7 +9,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.NotNull;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ActividadSocioRequestDTO {
+public class ActividadSocioRequest {
 
     private Long idActividad;
 
@@ -28,10 +28,10 @@ public class ActividadSocioRequestDTO {
     @NotNull(message = "Hay actividades sin un tipo de actividad asociado. El tipo de actividad es requerido para cada actividad a registrar.")
     private Long tipoActividad;
 
-    public ActividadSocioRequestDTO() {
+    public ActividadSocioRequest() {
     }
 
-    public ActividadSocioRequestDTO(Long idActividad,
+    public ActividadSocioRequest(Long idActividad,
             @NotNull(message = "Hay actividades sin un socio asociado. El socio es requerido para cada actividad a registrar.") Long socio,
             @Digits(integer = 8, fraction = 2, message = "La cantidad debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'") BigDecimal cantidad,
             @Digits(integer = 8, fraction = 2, message = "El monto debe tener el formato 8.2 (máximo 8 cifras enteras y 2 decimales). Ejemplo: '43.15'") BigDecimal monto,

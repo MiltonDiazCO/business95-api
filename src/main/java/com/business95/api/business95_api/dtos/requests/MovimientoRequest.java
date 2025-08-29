@@ -12,7 +12,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MovimientoRequestDTO {
+public class MovimientoRequest {
 
     @NotNull(message = "La Inversión es requerida.")
     private Long inversion;
@@ -30,13 +30,13 @@ public class MovimientoRequestDTO {
 
     @Valid
     @NotEmpty(message = "La lista de actividades es requerida y debe contener al menos una actividad asociada.")
-    private List<ActividadSocioRequestDTO> actividades;
+    private List<ActividadSocioRequest> actividades;
 
-    public MovimientoRequestDTO() {
+    public MovimientoRequest() {
     }
 
-    public MovimientoRequestDTO(Long inversion, String concepto, Long categoria, String moneda, Long medida,
-            List<ActividadSocioRequestDTO> actividades) {
+    public MovimientoRequest(Long inversion, String concepto, Long categoria, String moneda, Long medida,
+            List<ActividadSocioRequest> actividades) {
         this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
@@ -85,11 +85,11 @@ public class MovimientoRequestDTO {
         this.medida = medida;
     }
 
-    public List<ActividadSocioRequestDTO> getActividades() {
+    public List<ActividadSocioRequest> getActividades() {
         return actividades;
     }
 
-    public void setActividades(List<ActividadSocioRequestDTO> actividades) {
+    public void setActividades(List<ActividadSocioRequest> actividades) {
         this.actividades = actividades;
     }
 

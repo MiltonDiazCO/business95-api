@@ -1,13 +1,13 @@
 package com.business95.api.business95_api.servicies.interfaces;
 
-import com.business95.api.business95_api.dtos.responses.InversionResponseDTO;
+import com.business95.api.business95_api.dtos.responses.InversionResponse;
 import com.business95.api.business95_api.entities.Inversion;
 
 public interface InversionService {
 
     Inversion findById(Long idInversion);
 
-    InversionResponseDTO inversionFindById(Long idInversion);
+    InversionResponse inversionFindById(Long idInversion);
 
     Inversion save(Inversion inversion);
 

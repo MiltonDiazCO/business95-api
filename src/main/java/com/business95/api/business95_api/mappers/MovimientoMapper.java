@@ -25,6 +25,7 @@ public interface MovimientoMapper {
     @Mapping(source = "moneda.moneda", target = "moneda")
     MovimientoUpdateResponseDTO movimientoToMovimientoUpdateResponseDTO(Movimiento movimiento);
 
+    @Mapping(target = "inversion", ignore = true)
     MovimientoPorInversionResponseDTO movimientoPorInversionConsultaDtoTOMovimientoPorInversionResponseDTO(
             MovimientoPorInversionConsultaDTO movimientoPorInversionConsultaDTO);
 }

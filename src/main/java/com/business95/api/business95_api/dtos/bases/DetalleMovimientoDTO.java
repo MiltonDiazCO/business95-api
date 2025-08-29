@@ -1,5 +1,8 @@
 package com.business95.api.business95_api.dtos.bases;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class DetalleMovimientoDTO {
 
     private Long idMovimiento;

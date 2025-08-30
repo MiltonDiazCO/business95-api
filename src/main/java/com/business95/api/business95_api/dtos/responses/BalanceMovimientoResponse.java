@@ -7,16 +7,16 @@ import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MovimientoPorInversionResponseDTO extends DetalleMovimiento {
+public class BalanceMovimientoResponse extends DetalleMovimiento {
 
     private BigDecimal cantidad;
     private BigDecimal balance;
     private LocalDateTime fechaUltimaActividad;
 
-    public MovimientoPorInversionResponseDTO() {
+    public BalanceMovimientoResponse() {
     }
 
-    public MovimientoPorInversionResponseDTO(
+    public BalanceMovimientoResponse(
             BigDecimal cantidad,
             BigDecimal balance,
             LocalDateTime fechaUltimaActividad) {
@@ -25,7 +25,7 @@ public class MovimientoPorInversionResponseDTO extends DetalleMovimiento {
         this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
-    public MovimientoPorInversionResponseDTO(
+    public BalanceMovimientoResponse(
             Long idMovimiento,
             String inversion,
             String concepto,

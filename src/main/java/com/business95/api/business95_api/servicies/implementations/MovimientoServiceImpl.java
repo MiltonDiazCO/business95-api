@@ -5,21 +5,20 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
 import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioResponse;
-import com.business95.api.business95_api.dtos.responses.MovimientoPorInversionResponseDTO;
-import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesSociosResponse;
+import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
+import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesResponse;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
-import com.business95.api.business95_api.dtos.responses.MovimientoUpdateResponse;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
 import com.business95.api.business95_api.helpers.MovimientoHelper;
 import com.business95.api.business95_api.mappers.MovimientoMapper;
-import com.business95.api.business95_api.projections.BalanceSocioPorMovimientoProjection;
 import com.business95.api.business95_api.repositories.MovimientoRepository;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 
@@ -61,43 +60,25 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
-        public MovimientoConBalancesSociosResponse balanceSociosPorMovimiento(Long idMovimiento) {
+        public MovimientoConBalancesResponse balanceSociosPorMovimiento(Long idMovimiento) {
 
-                movimientoHelper.findByIdOrThrow(idMovimiento);
+                Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
 
-                List<BalanceSocioPorMovimientoProjection> balancesSocios = movimientoRepository.balanceSocioPorMovimiento(idMovimiento);
+                MovimientoConBalancesResponse movimientoResponse = movimientoMapper.toMovimientoConBalancesResponse(movimiento);
 
-                System.out.println(movimientoRepository.balanceSocioPorMovimiento(idMovimiento).get(0).getIdMovimiento());
+                List<BalanceSocioResponse> balancesSocios = movimientoRepository.balanceSociosPorMovimiento(idMovimiento);
 
-                MovimientoConBalancesSociosResponse movimientoConBalances = movimientoHelper.construirDetalleMovimiento(
-                                balancesSocios.get(0).getIdMovimiento(),
-                                balancesSocios.get(0).getInversion(),
-                                balancesSocios.get(0).getConcepto(),
-                                balancesSocios.get(0).getCategoria(),
-                                balancesSocios.get(0).getMedida(),
-                                balancesSocios.get(0).getMoneda(),
-                                MovimientoConBalancesSociosResponse::new);
-
-                for (BalanceSocioPorMovimientoProjection balanceSocio : balancesSocios) {
-                        BalanceSocioResponse balanceSocioResponse = new BalanceSocioResponse();
-                        balanceSocioResponse.setSocio(balanceSocio.getSocio());
-                        balanceSocioResponse.setCantidad(balanceSocio.getCantidad());
-                        balanceSocioResponse.setBalanceMonetario(balanceSocio.getBalanceMonetario());
-                        movimientoConBalances.addBalanceSocio(balanceSocioResponse);
+                for (BalanceSocioResponse balanceSocio : balancesSocios) {
+                        movimientoResponse.addBalanceSocio(balanceSocio);
                 }
 
-                return movimientoConBalances;
+                return movimientoResponse;
         }
 
         @Override
         @Transactional(readOnly = true)
-        public List<MovimientoPorInversionResponseDTO> findMovimientosPorInversion(Long idInversion) {
-
-                System.out.println(movimientoRepository.movimientoPorInversion(idInversion).size());
-
-                return movimientoRepository.movimientoPorInversion(idInversion).stream()
-                                .map(movimientoMapper::movimientoPorInversionProjectionTOMovimientoPorInversionResponseDTO)
-                                .toList();
+        public List<BalanceMovimientoResponse> balanceMovimientosPorInversion(Long idInversion) {
+                return movimientoRepository.balanceMovimientosPorInversion(idInversion);
         }
 
         @Override
@@ -129,7 +110,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
-        public MovimientoUpdateResponse update(
+        public DetalleMovimiento update(
                         Long idMovimiento,
                         MovimientoUpdateRequest movimientoUpdateRequest) {
 
@@ -141,7 +122,7 @@ public class MovimientoServiceImpl implements MovimientoService {
                                 movimientoUpdateRequest.getMedida(),
                                 movimientoUpdateRequest.getMoneda());
 
-                return movimientoMapper.tOMovimientoUpdateResponse(movimientoRepository.save(movimiento));
+                return movimientoMapper.toDetalleMovimiento(movimientoRepository.save(movimiento));
         }
 
         @Override

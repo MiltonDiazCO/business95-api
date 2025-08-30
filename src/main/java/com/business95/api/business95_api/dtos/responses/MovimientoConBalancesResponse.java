@@ -5,18 +5,18 @@ import java.util.List;
 
 import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 
-public class MovimientoConBalancesSociosResponse extends DetalleMovimiento {
+public class MovimientoConBalancesResponse extends DetalleMovimiento {
 
     private List<BalanceSocioResponse> balances = new ArrayList<>();
 
-    public MovimientoConBalancesSociosResponse() {
+    public MovimientoConBalancesResponse() {
     }
 
-    public MovimientoConBalancesSociosResponse(List<BalanceSocioResponse> balances) {
+    public MovimientoConBalancesResponse(List<BalanceSocioResponse> balances) {
         this.balances = balances;
     }
 
-    public MovimientoConBalancesSociosResponse(
+    public MovimientoConBalancesResponse(
             Long idMovimiento,
             String inversion,
             String concepto,

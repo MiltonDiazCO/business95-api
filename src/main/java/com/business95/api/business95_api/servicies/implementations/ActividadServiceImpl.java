@@ -10,9 +10,8 @@ import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
-import com.business95.api.business95_api.exceptions.ActividadSocioNoEncontradaException;
-import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
+import com.business95.api.business95_api.helpers.MovimientoHelper;
 import com.business95.api.business95_api.mappers.ActividadSocioMapper;
 import com.business95.api.business95_api.repositories.ActividadSocioRepository;
 import com.business95.api.business95_api.repositories.MovimientoRepository;
@@ -23,18 +22,21 @@ public class ActividadServiceImpl implements ActividadService {
 
         private final ActividadSocioRepository actividadSocioRepository;
         private final MovimientoRepository movimientoRepository;
-        private final ActividadSocioMapper actividadSocioMapper;
         private final ActividadSocioHelper actividadSocioHelper;
+        private final MovimientoHelper movimientoHelper;
+        private final ActividadSocioMapper actividadSocioMapper;
 
         public ActividadServiceImpl(
                         ActividadSocioRepository actividadSocioRepository,
                         MovimientoRepository movimientoRepository,
-                        ActividadSocioMapper actividadSocioMapper,
-                        ActividadSocioHelper actividadSocioHelper) {
+                        ActividadSocioHelper actividadSocioHelper,
+                        MovimientoHelper movimientoHelper,
+                        ActividadSocioMapper actividadSocioMapper) {
                 this.actividadSocioRepository = actividadSocioRepository;
                 this.movimientoRepository = movimientoRepository;
-                this.actividadSocioMapper = actividadSocioMapper;
                 this.actividadSocioHelper = actividadSocioHelper;
+                this.movimientoHelper = movimientoHelper;
+                this.actividadSocioMapper = actividadSocioMapper;
         }
 
         @Override
@@ -43,8 +45,7 @@ public class ActividadServiceImpl implements ActividadService {
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest) {
 
-                Movimiento movimiento = movimientoRepository.findById(idMovimiento)
-                        .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+                Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
 
                 List<ActividadSocio> nuevasActividades = new ArrayList<>();
 
@@ -66,20 +67,18 @@ public class ActividadServiceImpl implements ActividadService {
                 movimientoRepository.save(movimiento);
 
                 return nuevasActividades.stream()
-                        .map(actividadSocioMapper::actividadSocioToActividadSocioResponseDTO)
-                        .toList();
+                                .map(actividadSocioMapper::actividadSocioToActividadSocioResponseDTO)
+                                .toList();
         }
 
         @Override
         @Transactional()
         public void delete(Long idMovimiento, ArrayList<Long> idActividades) {
 
-                Movimiento movimiento = movimientoRepository.findById(idMovimiento)
-                        .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+                Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
 
                 for (Long idActividad : idActividades) {
-                        movimiento.removeActividadSocio(actividadSocioRepository.findById(idActividad)
-                        .orElseThrow(() -> new ActividadSocioNoEncontradaException(idActividad)));
+                        movimiento.removeActividadSocio(actividadSocioHelper.findByIdOrThrow(idActividad));
                 }
 
                 movimientoRepository.save(movimiento);

@@ -5,9 +5,7 @@ import com.business95.api.business95_api.entities.Inversion;
 
 public interface InversionService {
 
-    Inversion findById(Long idInversion);
-
-    InversionResponse inversionFindById(Long idInversion);
+    InversionResponse inversionPorId(Long idInversion);
 
     Inversion save(Inversion inversion);
 

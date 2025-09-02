@@ -5,7 +5,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.responses.InversionResponse;
 import com.business95.api.business95_api.entities.Inversion;
-import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
+import com.business95.api.business95_api.helpers.InversionHelper;
+import com.business95.api.business95_api.mappers.InversionMapper;
 import com.business95.api.business95_api.repositories.InversionRepository;
 import com.business95.api.business95_api.servicies.interfaces.InversionService;
 
@@ -13,29 +14,23 @@ import com.business95.api.business95_api.servicies.interfaces.InversionService;
 public class InversionServiceImpl implements InversionService {
 
     private final InversionRepository inversionRepository;
+    private final InversionHelper inversionHelper;
+    private final InversionMapper inversionMapper;
 
-    public InversionServiceImpl(InversionRepository inversionRepository) {
+    public InversionServiceImpl(
+            InversionRepository inversionRepository,
+            InversionHelper inversionHelper,
+            InversionMapper inversionMapper) {
         this.inversionRepository = inversionRepository;
+        this.inversionHelper = inversionHelper;
+        this.inversionMapper = inversionMapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Inversion findById(Long idInversion) {
-        return inversionRepository.findById(idInversion)
-                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public InversionResponse inversionFindById(Long idInversion) {
-        Inversion inversion = findById(idInversion);
-
-        InversionResponse inversionResponse = new InversionResponse();
-
-        inversionResponse.setIdInversion(inversion.getIdInversion());
-        inversionResponse.setInversion(inversion.getInversion());
-
-        return inversionResponse;
+    public InversionResponse inversionPorId(Long idInversion) {
+        return inversionMapper.toInversionResponse(
+                inversionHelper.findByIdOrThrow(idInversion));
     }
 
     @Override
@@ -47,21 +42,14 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional()
     public Inversion update(Long idInversion, Inversion inversion) {
-
-        Inversion inversionUpdate = inversionRepository.findById(idInversion)
-                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
-
-        inversionUpdate.setInversion(inversion.getInversion());
-        return inversionRepository.save(inversionUpdate);
+        return inversionRepository.save(
+                inversionHelper.findByIdOrThrow(idInversion));
     }
 
     @Override
     @Transactional()
     public void delete(Long idInversion) {
-
-        inversionRepository.findById(idInversion)
-                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
-
+        inversionHelper.findByIdOrThrow(idInversion);
         inversionRepository.deleteById(idInversion);
     }
 

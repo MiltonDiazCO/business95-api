@@ -64,9 +64,11 @@ public class MovimientoServiceImpl implements MovimientoService {
 
                 Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
 
-                MovimientoConBalancesResponse movimientoResponse = movimientoMapper.toMovimientoConBalancesResponse(movimiento);
+                MovimientoConBalancesResponse movimientoResponse = movimientoMapper
+                                .toMovimientoConBalancesResponse(movimiento);
 
-                List<BalanceSocioResponse> balancesSocios = movimientoRepository.balanceSociosPorMovimiento(idMovimiento);
+                List<BalanceSocioResponse> balancesSocios = movimientoRepository
+                                .balanceSociosPorMovimiento(idMovimiento);
 
                 for (BalanceSocioResponse balanceSocio : balancesSocios) {
                         movimientoResponse.addBalanceSocio(balanceSocio);
@@ -131,4 +133,4 @@ public class MovimientoServiceImpl implements MovimientoService {
                 movimientoRepository.delete(movimientoHelper.findByIdOrThrow(idMovimiento));
         }
 
-};
+}

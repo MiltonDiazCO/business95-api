@@ -1,14 +1,14 @@
 package com.business95.api.business95_api.dtos.responses;
 
-public class InversionResponse {
+public class InversionRes {
 
     private Long idInversion;
     private String inversion;
 
-    public InversionResponse() {
+    public InversionRes() {
     }
 
-    public InversionResponse(Long idInversion, String inversion) {
+    public InversionRes(Long idInversion, String inversion) {
         this.idInversion = idInversion;
         this.inversion = inversion;
     }

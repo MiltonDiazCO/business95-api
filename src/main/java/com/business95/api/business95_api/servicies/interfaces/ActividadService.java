@@ -4,11 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
-import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
 
 public interface ActividadService {
 
-        List<ActividadSocioResponse> save(
+        List<ActividadSocioRes> save(
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest);
 

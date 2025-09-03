@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
-import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
+import com.business95.api.business95_api.dtos.responses.MovimientoRes;
 import com.business95.api.business95_api.entities.Movimiento;
 
 @Mapper(componentModel = "spring", uses = { ActividadSocioMapper.class })
@@ -19,5 +19,5 @@ public interface MovimientoMapper {
 
     @InheritConfiguration(name = "toDetalleMovimiento")
     @Mapping(source = "actividadesSocio", target = "actividades")
-    MovimientoResponse toMovimientoResponse(Movimiento movimiento);
+    MovimientoRes toMovimientoResponse(Movimiento movimiento);
 }

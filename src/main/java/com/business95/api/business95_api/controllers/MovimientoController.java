@@ -21,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
-import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
-import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
+import com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes;
+import com.business95.api.business95_api.dtos.responses.MovimientoRes;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
@@ -44,12 +44,12 @@ public class MovimientoController {
     private MessageSource messageSource;
 
     @GetMapping("/{idMovimiento}")
-    public ResponseEntity<MovimientoResponse> movimientoPorId(@PathVariable Long idMovimiento) {
+    public ResponseEntity<MovimientoRes> movimientoPorId(@PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.movimientoPorId(idMovimiento));
     }
 
     @GetMapping("/{idMovimiento}/actividades/balance")
-    public ResponseEntity<BalanceMovimientoResponse> balanceSociosPorMovimiento(
+    public ResponseEntity<BalanceMovimientoRes> balanceSociosPorMovimiento(
             @PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.balanceSociosPorMovimiento(idMovimiento));
     }

@@ -4,22 +4,22 @@ import java.math.BigDecimal;
 
 import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 
-public class BalanceSocioResponse extends DetalleMovimiento {
+public class BalanceSocioPorMovRes extends DetalleMovimiento {
 
     private String socio;
     private BigDecimal cantidadSocio;
     private BigDecimal balanceSocio;
 
-    public BalanceSocioResponse() {
+    public BalanceSocioPorMovRes() {
     }
 
-    public BalanceSocioResponse(String socio, BigDecimal cantidadSocio, BigDecimal balanceSocio) {
+    public BalanceSocioPorMovRes(String socio, BigDecimal cantidadSocio, BigDecimal balanceSocio) {
         this.socio = socio;
         this.cantidadSocio = cantidadSocio;
         this.balanceSocio = balanceSocio;
     }
 
-    public BalanceSocioResponse(
+    public BalanceSocioPorMovRes(
             Long idMovimiento,
             String inversion,
             String concepto,

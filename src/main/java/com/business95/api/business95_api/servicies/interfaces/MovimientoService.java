@@ -5,19 +5,19 @@ import java.util.List;
 import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
-import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
-import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesResponse;
-import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
+import com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes;
+import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
+import com.business95.api.business95_api.dtos.responses.MovimientoRes;
 
 public interface MovimientoService {
 
-    MovimientoResponse movimientoPorId(Long idMovimiento);
+    MovimientoRes movimientoPorId(Long idMovimiento);
 
-    List<BalanceMovimientoResponse> balanceMovimientosPorInversion(Long idInversion);
+    List<BalanceMovimientoRes> balanceMovimientosPorInversion(Long idInversion);
 
-    MovimientoConBalancesResponse balanceSociosPorMovimiento(Long idMovimiento);
+    MovConBalancesSociosRes balanceSociosPorMovimiento(Long idMovimiento);
 
-    MovimientoResponse save(MovimientoRequest movimientoRequest);
+    MovimientoRes save(MovimientoRequest movimientoRequest);
 
     DetalleMovimiento update(Long idMovimiento, MovimientoUpdateRequest MovimientoUpdateRequestDTO);
 

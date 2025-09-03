@@ -10,16 +10,16 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "idMovimiento", "inversion", "concepto", "categoria",
         "cantidadMovimiento", "medida", "balanceMovimiento", "moneda", "fechaUltimaActividad" })
-public class BalanceMovimientoResponse extends DetalleMovimiento {
+public class BalanceMovimientoRes extends DetalleMovimiento {
 
     private BigDecimal cantidadMovimiento;
     private BigDecimal balanceMovimiento;
     private LocalDateTime fechaUltimaActividad;
 
-    public BalanceMovimientoResponse() {
+    public BalanceMovimientoRes() {
     }
 
-    public BalanceMovimientoResponse(
+    public BalanceMovimientoRes(
             BigDecimal cantidadMovimiento,
             BigDecimal balanceMovimiento,
             LocalDateTime fechaUltimaActividad) {
@@ -28,7 +28,7 @@ public class BalanceMovimientoResponse extends DetalleMovimiento {
         this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
-    public BalanceMovimientoResponse(
+    public BalanceMovimientoRes(
             Long idMovimiento,
             String inversion,
             String concepto,

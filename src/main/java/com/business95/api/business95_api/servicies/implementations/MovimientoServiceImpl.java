@@ -9,11 +9,11 @@ import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
-import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
-import com.business95.api.business95_api.dtos.responses.BalanceSocioResponse;
-import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
-import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesResponse;
-import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
+import com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes;
+import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes;
+import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
+import com.business95.api.business95_api.dtos.responses.MovimientoRes;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
@@ -47,15 +47,15 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
-        public MovimientoResponse movimientoPorId(Long idMovimiento) {
+        public MovimientoRes movimientoPorId(Long idMovimiento) {
 
                 Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
 
-                MovimientoResponse movimientoResponse = movimientoMapper.toMovimientoResponse(movimiento);
+                MovimientoRes movimientoResponse = movimientoMapper.toMovimientoResponse(movimiento);
 
-                List<ActividadSocioResponse> actividades = movimientoRepository.actividadesPorMovimiento(idMovimiento);
+                List<ActividadSocioRes> actividades = movimientoRepository.actividadesPorMovimiento(idMovimiento);
 
-                for (ActividadSocioResponse actividadSocio : actividades) {
+                for (ActividadSocioRes actividadSocio : actividades) {
                         movimientoResponse.addActividadSocio(actividadSocio);
                 }
 
@@ -64,20 +64,20 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
-        public List<BalanceMovimientoResponse> balanceMovimientosPorInversion(Long idInversion) {
+        public List<BalanceMovimientoRes> balanceMovimientosPorInversion(Long idInversion) {
                 inversionHelper.findByIdOrThrow(idInversion);
                 return movimientoRepository.balanceMovimientosPorInversion(idInversion);
         }
 
         @Override
         @Transactional(readOnly = true)
-        public MovimientoConBalancesResponse balanceSociosPorMovimiento(Long idMovimiento) {
+        public MovConBalancesSociosRes balanceSociosPorMovimiento(Long idMovimiento) {
 
                 movimientoHelper.findByIdOrThrow(idMovimiento);
-                MovimientoConBalancesResponse movResponse = movimientoRepository.balanceMovimiento(idMovimiento);
-                List<BalanceSocioResponse> balances = movimientoRepository.balanceSociosPorMovimiento(idMovimiento);
+                MovConBalancesSociosRes movResponse = movimientoRepository.balanceMovimiento(idMovimiento);
+                List<BalanceSocioPorMovRes> balances = movimientoRepository.balanceSocioPorMovimiento(idMovimiento);
 
-                for (BalanceSocioResponse balanceSocio : balances) {
+                for (BalanceSocioPorMovRes balanceSocio : balances) {
                         movResponse.addBalanceSocio(balanceSocio);
                 }
 
@@ -86,7 +86,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional
-        public MovimientoResponse save(MovimientoRequest movimientoRequest) {
+        public MovimientoRes save(MovimientoRequest movimientoRequest) {
 
                 Movimiento movimiento = movimientoHelper.construirMovimiento(
                                 null,

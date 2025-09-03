@@ -5,18 +5,18 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovimientoConBalancesResponse extends BalanceMovimientoResponse {
+public class MovConBalancesSociosRes extends BalanceMovimientoRes {
 
-    private List<BalanceSocioResponse> balances = new ArrayList<>();
+    private List<BalanceSocioPorMovRes> balances = new ArrayList<>();
 
-    public MovimientoConBalancesResponse() {
+    public MovConBalancesSociosRes() {
     }
 
-    public MovimientoConBalancesResponse(List<BalanceSocioResponse> balances) {
+    public MovConBalancesSociosRes(List<BalanceSocioPorMovRes> balances) {
         this.balances = balances;
     }
 
-    public MovimientoConBalancesResponse(
+    public MovConBalancesSociosRes(
             Long idMovimiento,
             String inversion,
             String concepto,
@@ -37,15 +37,15 @@ public class MovimientoConBalancesResponse extends BalanceMovimientoResponse {
                 fechaUltimaActividad);
     }
 
-    public List<BalanceSocioResponse> getBalances() {
+    public List<BalanceSocioPorMovRes> getBalances() {
         return balances;
     }
 
-    public void setBalances(List<BalanceSocioResponse> balances) {
+    public void setBalances(List<BalanceSocioPorMovRes> balances) {
         this.balances = balances;
     }
 
-    public void addBalanceSocio(BalanceSocioResponse balanceSocioResponse) {
+    public void addBalanceSocio(BalanceSocioPorMovRes balanceSocioResponse) {
         this.balances.add(balanceSocioResponse);
     }
 

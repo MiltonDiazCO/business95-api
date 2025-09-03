@@ -11,6 +11,6 @@ public interface SocioMapper {
 
     @Mapping(target = "socio", expression = "java(socio.getNombresRazonsocial() + \" \" + socio.getApellidos())")
     @Mapping(source = "tipoPersona.tipoPersona", target = "tipoPersona")
-    SocioResponse socioToSocioResponseDTO(Socio socio);
+    SocioResponse toSocioResponseDTO(Socio socio);
 
 }

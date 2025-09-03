@@ -5,7 +5,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
-import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesResponse;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
 import com.business95.api.business95_api.entities.Movimiento;
 
@@ -21,8 +20,4 @@ public interface MovimientoMapper {
     @InheritConfiguration(name = "toDetalleMovimiento")
     @Mapping(source = "actividadesSocio", target = "actividades")
     MovimientoResponse toMovimientoResponse(Movimiento movimiento);
-
-    @InheritConfiguration(name = "toDetalleMovimiento")
-    @Mapping(target = "balances", ignore = true)
-    MovimientoConBalancesResponse toMovimientoConBalancesRes(Movimiento movimiento);
 }

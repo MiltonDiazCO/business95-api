@@ -67,7 +67,7 @@ public class ActividadServiceImpl implements ActividadService {
                 movimientoRepository.save(movimiento);
 
                 return nuevasActividades.stream()
-                                .map(actividadSocioMapper::actividadSocioToActividadSocioResponseDTO)
+                                .map(actividadSocioMapper::toActividadSocioResponseDTO)
                                 .toList();
         }
 

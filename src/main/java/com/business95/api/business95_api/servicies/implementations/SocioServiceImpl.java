@@ -22,7 +22,7 @@ public class SocioServiceImpl implements SocioService {
     @Override
     @Transactional(readOnly = true)
     public SocioResponse socioFindById(Long idSocio) {
-        return socioMapper.socioToSocioResponseDTO(socioHelper.findByIdOrThrow(idSocio));
+        return socioMapper.toSocioResponseDTO(socioHelper.findByIdOrThrow(idSocio));
     }
 
 }

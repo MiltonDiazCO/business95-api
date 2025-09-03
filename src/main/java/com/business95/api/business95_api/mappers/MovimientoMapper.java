@@ -24,5 +24,5 @@ public interface MovimientoMapper {
 
     @InheritConfiguration(name = "toDetalleMovimiento")
     @Mapping(target = "balances", ignore = true)
-    MovimientoConBalancesResponse toMovimientoConBalancesResponse(Movimiento movimiento);
+    MovimientoConBalancesResponse toMovimientoConBalancesRes(Movimiento movimiento);
 }

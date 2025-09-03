@@ -55,7 +55,8 @@ public class InversionController {
     }
 
     @PostMapping
-    public ResponseEntity<?> registrarInversion(@Valid @RequestBody Inversion inversion,
+    public ResponseEntity<?> registrarInversion(
+            @Valid @RequestBody Inversion inversion,
             BindingResult result,
             HttpServletRequest request) {
 
@@ -68,7 +69,8 @@ public class InversionController {
     }
 
     @PutMapping("/{idInversion}")
-    public ResponseEntity<?> actualizarInversion(@PathVariable Long idInversion,
+    public ResponseEntity<?> actualizarInversion(
+            @PathVariable Long idInversion,
             @Valid @RequestBody Inversion inversion,
             BindingResult result,
             HttpServletRequest request) {

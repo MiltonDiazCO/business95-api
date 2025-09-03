@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
+import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
 import com.business95.api.business95_api.dtos.responses.MovimientoConBalancesResponse;
 import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
@@ -49,14 +50,16 @@ public class MovimientoController {
     }
 
     @GetMapping("/{idMovimiento}/actividades/balance")
-    public ResponseEntity<MovimientoConBalancesResponse> balanceSociosPorMovimiento(
+    public ResponseEntity<BalanceMovimientoResponse> balanceSociosPorMovimiento(
             @PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.balanceSociosPorMovimiento(idMovimiento));
     }
 
     @PostMapping
-    public ResponseEntity<?> registrarMovimiento(@Valid @RequestBody MovimientoRequest movimientoRegistroDTO,
-            BindingResult result, HttpServletRequest request) {
+    public ResponseEntity<?> registrarMovimiento(
+            @Valid @RequestBody MovimientoRequest movimientoRegistroDTO,
+            BindingResult result,
+            HttpServletRequest request) {
 
         if (result.hasErrors()) {
             return ErrorUtils.construirRespuestaErrorValidacion(
@@ -68,7 +71,8 @@ public class MovimientoController {
     }
 
     @PutMapping("/{idMovimiento}")
-    public ResponseEntity<?> actualizarMovimiento(@PathVariable Long idMovimiento,
+    public ResponseEntity<?> actualizarMovimiento(
+            @PathVariable Long idMovimiento,
             @Valid @RequestBody MovimientoUpdateRequest movimientoUpdateRequest,
             BindingResult result,
             HttpServletRequest request) {
@@ -124,7 +128,8 @@ public class MovimientoController {
     }
 
     @DeleteMapping("/{idMovimiento}/actividades")
-    public ResponseEntity<Long> elimianrActividad(@PathVariable Long idMovimiento,
+    public ResponseEntity<Long> elimianrActividad(
+            @PathVariable Long idMovimiento,
             @RequestBody ArrayList<Long> idActividades) {
         actividadService.delete(idMovimiento, idActividades);
         return ResponseEntity.noContent().build();

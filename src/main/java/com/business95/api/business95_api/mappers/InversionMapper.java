@@ -5,7 +5,7 @@ import org.mapstruct.Mapper;
 import com.business95.api.business95_api.dtos.responses.InversionResponse;
 import com.business95.api.business95_api.entities.Inversion;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface InversionMapper {
 
     InversionResponse toInversionResponse(Inversion inversion);

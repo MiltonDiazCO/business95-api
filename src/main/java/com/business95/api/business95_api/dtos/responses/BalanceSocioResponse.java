@@ -2,19 +2,37 @@ package com.business95.api.business95_api.dtos.responses;
 
 import java.math.BigDecimal;
 
-public class BalanceSocioResponse {
+import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
+
+public class BalanceSocioResponse extends DetalleMovimiento {
 
     private String socio;
-    private BigDecimal cantidad;
-    private BigDecimal balanceMonetario;
+    private BigDecimal cantidadSocio;
+    private BigDecimal balanceSocio;
 
     public BalanceSocioResponse() {
     }
 
-    public BalanceSocioResponse(String socio, BigDecimal cantidad, BigDecimal balanceMonetario) {
+    public BalanceSocioResponse(String socio, BigDecimal cantidadSocio, BigDecimal balanceSocio) {
         this.socio = socio;
-        this.cantidad = cantidad;
-        this.balanceMonetario = balanceMonetario;
+        this.cantidadSocio = cantidadSocio;
+        this.balanceSocio = balanceSocio;
+    }
+
+    public BalanceSocioResponse(
+            Long idMovimiento,
+            String inversion,
+            String concepto,
+            String categoria,
+            String medida,
+            String moneda,
+            String socio,
+            BigDecimal cantidadSocio,
+            BigDecimal balanceSocio) {
+        super(idMovimiento, inversion, concepto, categoria, medida, moneda);
+        this.socio = socio;
+        this.cantidadSocio = cantidadSocio;
+        this.balanceSocio = balanceSocio;
     }
 
     public String getSocio() {
@@ -25,20 +43,20 @@ public class BalanceSocioResponse {
         this.socio = socio;
     }
 
-    public BigDecimal getCantidad() {
-        return cantidad;
+    public BigDecimal getCantidadSocio() {
+        return cantidadSocio;
     }
 
-    public void setCantidad(BigDecimal cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidadSocio(BigDecimal cantidadSocio) {
+        this.cantidadSocio = cantidadSocio;
     }
 
-    public BigDecimal getBalanceMonetario() {
-        return balanceMonetario;
+    public BigDecimal getBalanceSocio() {
+        return balanceSocio;
     }
 
-    public void setBalanceMonetario(BigDecimal balanceMonetario) {
-        this.balanceMonetario = balanceMonetario;
+    public void setBalanceSocio(BigDecimal balanceSocio) {
+        this.balanceSocio = balanceSocio;
     }
 
 }

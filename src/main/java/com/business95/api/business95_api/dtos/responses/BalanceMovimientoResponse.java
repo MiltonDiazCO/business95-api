@@ -5,23 +5,26 @@ import java.time.LocalDateTime;
 
 import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonPropertyOrder({ "idMovimiento", "inversion", "concepto", "categoria",
+        "cantidadMovimiento", "medida", "balanceMovimiento", "moneda", "fechaUltimaActividad" })
 public class BalanceMovimientoResponse extends DetalleMovimiento {
 
-    private BigDecimal cantidad;
-    private BigDecimal balance;
+    private BigDecimal cantidadMovimiento;
+    private BigDecimal balanceMovimiento;
     private LocalDateTime fechaUltimaActividad;
 
     public BalanceMovimientoResponse() {
     }
 
     public BalanceMovimientoResponse(
-            BigDecimal cantidad,
-            BigDecimal balance,
+            BigDecimal cantidadMovimiento,
+            BigDecimal balanceMovimiento,
             LocalDateTime fechaUltimaActividad) {
-        this.cantidad = cantidad;
-        this.balance = balance;
+        this.cantidadMovimiento = cantidadMovimiento;
+        this.balanceMovimiento = balanceMovimiento;
         this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
@@ -32,29 +35,29 @@ public class BalanceMovimientoResponse extends DetalleMovimiento {
             String categoria,
             String medida,
             String moneda,
-            BigDecimal cantidad,
-            BigDecimal balance,
+            BigDecimal cantidadMovimiento,
+            BigDecimal balanceMovimiento,
             LocalDateTime fechaUltimaActividad) {
         super(idMovimiento, inversion, concepto, categoria, medida, moneda);
-        this.cantidad = cantidad;
-        this.balance = balance;
+        this.cantidadMovimiento = cantidadMovimiento;
+        this.balanceMovimiento = balanceMovimiento;
         this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
-    public BigDecimal getCantidad() {
-        return cantidad;
+    public BigDecimal getCantidadMovimiento() {
+        return cantidadMovimiento;
     }
 
-    public void setCantidad(BigDecimal cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidadMovimiento(BigDecimal cantidadMovimiento) {
+        this.cantidadMovimiento = cantidadMovimiento;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public BigDecimal getBalanceMovimiento() {
+        return balanceMovimiento;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setBalanceMovimiento(BigDecimal balanceMovimiento) {
+        this.balanceMovimiento = balanceMovimiento;
     }
 
     public LocalDateTime getFechaUltimaActividad() {

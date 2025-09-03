@@ -1,11 +1,11 @@
 package com.business95.api.business95_api.dtos.responses;
 
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
-
-public class MovimientoConBalancesResponse extends DetalleMovimiento {
+public class MovimientoConBalancesResponse extends BalanceMovimientoResponse {
 
     private List<BalanceSocioResponse> balances = new ArrayList<>();
 
@@ -23,9 +23,18 @@ public class MovimientoConBalancesResponse extends DetalleMovimiento {
             String categoria,
             String medida,
             String moneda,
-            List<BalanceSocioResponse> balances) {
-        super(idMovimiento, inversion, concepto, categoria, medida, moneda);
-        this.balances = balances;
+            BigDecimal cantidadMovimiento,
+            BigDecimal balanceMovimiento,
+            LocalDateTime fechaUltimaActividad) {
+        super(idMovimiento,
+                inversion,
+                concepto,
+                categoria,
+                medida,
+                moneda,
+                cantidadMovimiento,
+                balanceMovimiento,
+                fechaUltimaActividad);
     }
 
     public List<BalanceSocioResponse> getBalances() {

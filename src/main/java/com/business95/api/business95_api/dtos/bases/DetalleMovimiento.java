@@ -15,7 +15,12 @@ public class DetalleMovimiento {
     public DetalleMovimiento() {
     }
 
-    public DetalleMovimiento(Long idMovimiento, String inversion, String concepto, String categoria, String medida,
+    public DetalleMovimiento(
+            Long idMovimiento,
+            String inversion,
+            String concepto,
+            String categoria,
+            String medida,
             String moneda) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;

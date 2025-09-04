@@ -9,7 +9,6 @@ import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
-import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes;
 import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
 import com.business95.api.business95_api.dtos.responses.MovimientoRes;
@@ -43,24 +42,12 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Override
         @Transactional(readOnly = true)
         public MovimientoRes movimientoPorId(Long idMovimiento) {
-
-                Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
-
-                MovimientoRes movimientoResponse = movimientoMapper.toMovimientoResponse(movimiento);
-
-                List<ActividadSocioRes> actividades = movimientoRepository.actividadesPorMovimiento(idMovimiento);
-
-                for (ActividadSocioRes actividadSocio : actividades) {
-                        movimientoResponse.addActividadSocio(actividadSocio);
-                }
-
-                return movimientoResponse;
+                return movimientoMapper.toMovimientoResponse(movimientoHelper.findByIdOrThrow(idMovimiento));
         }
 
         @Override
         @Transactional(readOnly = true)
         public MovConBalancesSociosRes balanceSociosPorMovimiento(Long idMovimiento) {
-
                 movimientoHelper.findByIdOrThrow(idMovimiento);
                 MovConBalancesSociosRes movResponse = movimientoRepository.balanceMovimiento(idMovimiento);
                 List<BalanceSocioPorMovRes> balances = movimientoRepository.balanceSocioPorMovimiento(idMovimiento);

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.business95.api.business95_api.dtos.responses.BalanceSocioRes;
 import com.business95.api.business95_api.dtos.responses.SocioRes;
 import com.business95.api.business95_api.servicies.interfaces.SocioService;
 
@@ -20,6 +21,11 @@ public class SocioController {
     @GetMapping("/{idSocio}")
     public ResponseEntity<SocioRes> socioFindById(@PathVariable Long idSocio) {
         return ResponseEntity.ok().body(socioService.socioFindById(idSocio));
+    }
+
+    @GetMapping("/{idSocio}/balance")
+    public ResponseEntity<BalanceSocioRes> balanceSocio(@PathVariable Long idSocio) {
+        return ResponseEntity.ok().body(socioService.balanceSocio(idSocio));
     }
 
 }

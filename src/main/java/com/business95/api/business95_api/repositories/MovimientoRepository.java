@@ -39,7 +39,7 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                         "SUM(a.cantidad) AS cantidadMovimiento, md.medida AS medida, " +
                         "SUM(a.monto) AS balanceMovimiento, m.moneda.idMoneda AS moneda) " +
                         "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
-                        "WHERE m.idMovimiento = :idMovimiento GROUP BY m.idMovimiento ")
+                        "WHERE m.idMovimiento = :idMovimiento GROUP BY m.idMovimiento")
         MovConBalancesSociosRes balanceMovimiento(@Param("idMovimiento") Long idMovimiento);
 
         @Query("SELECT new com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes(" +
@@ -49,7 +49,7 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                         "SUM(a.monto) AS balanceMovimiento, m.moneda.idMoneda AS moneda, " +
                         "MAX(a.fecha) AS fechaUltimaActividad) " +
                         "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
-                        "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento ")
+                        "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento")
         List<BalanceMovimientoRes> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
 
 }

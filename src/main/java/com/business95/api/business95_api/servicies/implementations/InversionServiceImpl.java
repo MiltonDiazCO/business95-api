@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.responses.BalanceInversionRes;
+import com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorInvRes;
 import com.business95.api.business95_api.dtos.responses.InversionRes;
 import com.business95.api.business95_api.entities.Inversion;
@@ -47,9 +48,16 @@ public class InversionServiceImpl implements InversionService {
                 .stream()
                 .map(inversionMapper::toBalanceSocioPorInvRes)
                 .toList();
-        
+
         invResponse.setBalances(balances);
         return invResponse;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<BalanceMovsPorInvRes> balanceMovimientosPorInversion(Long idInversion) {
+        inversionHelper.findByIdOrThrow(idInversion);
+        return inversionRepository.balanceMovimientosPorInversion(idInversion);
     }
 
     @Override

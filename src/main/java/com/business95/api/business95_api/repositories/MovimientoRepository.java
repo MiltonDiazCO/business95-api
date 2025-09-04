@@ -8,7 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
-import com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes;
 import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
 import com.business95.api.business95_api.entities.Movimiento;
@@ -25,14 +24,6 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                         "WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha DESC")
         List<ActividadSocioRes> actividadesPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
-        @Query("SELECT new com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes(" +
-                        "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
-                        "SUM(a.cantidad) AS cantidadSocio, SUM(a.monto) AS balanceSocio) " +
-                        "FROM Movimiento m LEFT JOIN m.medida md LEFT JOIN m.moneda mo " +
-                        "LEFT JOIN m.actividadesSocio a WHERE m.idMovimiento = :idMovimiento " +
-                        "GROUP BY m.idMovimiento, a.socio.idSocio")
-        List<BalanceSocioPorMovRes> balanceSocioPorMovimiento(@Param("idMovimiento") Long idMovimiento);
-
         @Query("SELECT new com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes(" +
                         "m.idMovimiento AS idMovimiento, m.inversion.inversion AS inversion, " +
                         "m.concepto AS concepto, m.categoria.categoria AS categoria, " +
@@ -42,14 +33,12 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                         "WHERE m.idMovimiento = :idMovimiento GROUP BY m.idMovimiento")
         MovConBalancesSociosRes balanceMovimiento(@Param("idMovimiento") Long idMovimiento);
 
-        @Query("SELECT new com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes(" +
-                        "m.idMovimiento AS idMovimiento, m.concepto AS concepto, " +
-                        "m.categoria.categoria AS categoria, " +
-                        "SUM(a.cantidad) AS cantidadMovimiento, md.medida AS medida, " +
-                        "SUM(a.monto) AS balanceMovimiento, m.moneda.idMoneda AS moneda, " +
-                        "MAX(a.fecha) AS fechaUltimaActividad) " +
-                        "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
-                        "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento")
-        List<BalanceMovimientoRes> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
+        @Query("SELECT new com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes(" +
+                        "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
+                        "SUM(a.cantidad) AS cantidadSocio, SUM(a.monto) AS balanceSocio) " +
+                        "FROM Movimiento m LEFT JOIN m.medida md LEFT JOIN m.moneda mo " +
+                        "LEFT JOIN m.actividadesSocio a WHERE m.idMovimiento = :idMovimiento " +
+                        "GROUP BY m.idMovimiento, a.socio.idSocio")
+        List<BalanceSocioPorMovRes> balanceSocioPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
 }

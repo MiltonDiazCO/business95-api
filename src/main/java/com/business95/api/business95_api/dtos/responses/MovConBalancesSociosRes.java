@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovConBalancesSociosRes extends BalanceMovimientoRes {
+public class MovConBalancesSociosRes extends BalanceMovsPorInvRes {
 
     private List<BalanceSocioPorMovRes> balances = new ArrayList<>();
 

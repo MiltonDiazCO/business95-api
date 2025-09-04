@@ -10,14 +10,12 @@ import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
 import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
-import com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes;
 import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
 import com.business95.api.business95_api.dtos.responses.MovimientoRes;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
-import com.business95.api.business95_api.helpers.InversionHelper;
 import com.business95.api.business95_api.helpers.MovimientoHelper;
 import com.business95.api.business95_api.mappers.MovimientoMapper;
 import com.business95.api.business95_api.repositories.MovimientoRepository;
@@ -30,19 +28,16 @@ public class MovimientoServiceImpl implements MovimientoService {
         private final MovimientoMapper movimientoMapper;
         private final MovimientoHelper movimientoHelper;
         private final ActividadSocioHelper actividadSocioHelper;
-        private final InversionHelper inversionHelper;
 
         public MovimientoServiceImpl(
                         MovimientoRepository movimientoRepository,
                         MovimientoMapper movimientoMapper,
                         MovimientoHelper movimientoHelper,
-                        ActividadSocioHelper actividadSocioHelper,
-                        InversionHelper inversionHelper) {
+                        ActividadSocioHelper actividadSocioHelper) {
                 this.movimientoRepository = movimientoRepository;
                 this.movimientoMapper = movimientoMapper;
                 this.movimientoHelper = movimientoHelper;
                 this.actividadSocioHelper = actividadSocioHelper;
-                this.inversionHelper = inversionHelper;
         }
 
         @Override
@@ -60,13 +55,6 @@ public class MovimientoServiceImpl implements MovimientoService {
                 }
 
                 return movimientoResponse;
-        }
-
-        @Override
-        @Transactional(readOnly = true)
-        public List<BalanceMovimientoRes> balanceMovimientosPorInversion(Long idInversion) {
-                inversionHelper.findByIdOrThrow(idInversion);
-                return movimientoRepository.balanceMovimientosPorInversion(idInversion);
         }
 
         @Override

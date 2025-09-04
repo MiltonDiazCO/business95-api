@@ -18,10 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.business95_api.dtos.responses.InversionRes;
 import com.business95.api.business95_api.dtos.responses.BalanceInversionRes;
-import com.business95.api.business95_api.dtos.responses.BalanceMovimientoRes;
+import com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.servicies.interfaces.InversionService;
-import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -33,15 +32,10 @@ public class InversionController {
 
     private final InversionService inversionService;
     private final MessageSource messageSource;
-    private final MovimientoService movimientoService;
 
-    public InversionController(
-            InversionService inversionService,
-            MessageSource messageSource,
-            MovimientoService movimientoService) {
+    public InversionController(InversionService inversionService, MessageSource messageSource) {
         this.inversionService = inversionService;
         this.messageSource = messageSource;
-        this.movimientoService = movimientoService;
     }
 
     @GetMapping("/{idInversion}")
@@ -55,9 +49,9 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}/movimientos")
-    public ResponseEntity<List<BalanceMovimientoRes>> findMovimientosPorInversion(
+    public ResponseEntity<List<BalanceMovsPorInvRes>> findMovimientosPorInversion(
             @PathVariable Long idInversion) {
-        return ResponseEntity.ok().body(movimientoService.balanceMovimientosPorInversion(idInversion));
+        return ResponseEntity.ok().body(inversionService.balanceMovimientosPorInversion(idInversion));
     }
 
     @PostMapping

@@ -1,6 +1,7 @@
 package com.business95.api.business95_api.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -23,7 +24,7 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "MAX(a.fecha) AS fechaUltimaActividad) " +
                         "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
                         "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento")
-        List<BalanceMovsPorInvRes> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
+        Optional<List<BalanceMovsPorInvRes>> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
 
         @Query(value = "SELECT inv.inversion AS inversion, " +
                         "SUM(CASE WHEN resumen.total_inversion > 0 " +
@@ -40,7 +41,7 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "resumen ON inv.id_inversion = resumen.id_inversion " +
                         "WHERE inv.id_inversion = :idInversion " +
                         "GROUP BY resumen.id_inversion", nativeQuery = true)
-        BalanceInversionProjection balanceInversion(@Param("idInversion") Long idInversion);
+        Optional<BalanceInversionProjection> balanceInversion(@Param("idInversion") Long idInversion);
 
         @Query(value = "SELECT CONCAT(s.nombres_razonsocial, ' ', s.apellidos) AS socio, " +
                         "SUM(CASE WHEN resumen.total_socio > 0 " +

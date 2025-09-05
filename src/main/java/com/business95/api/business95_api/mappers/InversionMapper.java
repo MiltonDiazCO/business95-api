@@ -16,8 +16,8 @@ public interface InversionMapper {
     InversionRes toInversionResponse(Inversion inversion);
 
     @Mapping(target = "balances", ignore = true)
-    BalanceInversionRes toBalanceInversionRes(BalanceInversionProjection balanceInversionProjection);
+    BalanceInversionRes toBalanceInversionResponse(BalanceInversionProjection balanceInversionProjection);
 
-    BalanceSocioPorInvRes toBalanceSocioPorInvRes(BalanceSocioPorInvProjection balanceSocioPorInvProjection);
+    BalanceSocioPorInvRes toBalanceSocioPorInvResponse(BalanceSocioPorInvProjection balanceSocioPorInvProjection);
 
 }

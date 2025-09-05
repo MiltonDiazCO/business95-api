@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.business95_api.dtos.responses.BalanceAnualSocioRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioRes;
 import com.business95.api.business95_api.dtos.responses.SocioRes;
+import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.helpers.SocioHelper;
 import com.business95.api.business95_api.mappers.SocioMapper;
+import com.business95.api.business95_api.projections.BalanceSocioProjection;
 import com.business95.api.business95_api.repositories.SocioRepository;
 import com.business95.api.business95_api.servicies.interfaces.SocioService;
 
@@ -35,8 +37,10 @@ public class SocioServiceImpl implements SocioService {
     @Override
     public BalanceSocioRes balanceSocio(Long idSocio) {
 
-        socioHelper.findByIdOrThrow(idSocio);
-        BalanceSocioRes socioResponse = socioMapper.toBalanceSocioResponse(socioRepository.balanceSocio(idSocio));
+        BalanceSocioProjection socioProjection = socioRepository.balanceSocio(idSocio)
+                .orElseThrow(() -> new SocioNoEncontradoException(idSocio));
+
+        BalanceSocioRes socioResponse = socioMapper.toBalanceSocioResponse(socioProjection);
 
         List<BalanceAnualSocioRes> balances = socioRepository.balanceAnualSocio(idSocio)
                 .stream()

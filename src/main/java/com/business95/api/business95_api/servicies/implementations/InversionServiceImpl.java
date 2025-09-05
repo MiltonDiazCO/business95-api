@@ -10,8 +10,10 @@ import com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorInvRes;
 import com.business95.api.business95_api.dtos.responses.InversionRes;
 import com.business95.api.business95_api.entities.Inversion;
+import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.helpers.InversionHelper;
 import com.business95.api.business95_api.mappers.InversionMapper;
+import com.business95.api.business95_api.projections.BalanceInversionProjection;
 import com.business95.api.business95_api.repositories.InversionRepository;
 import com.business95.api.business95_api.servicies.interfaces.InversionService;
 
@@ -34,19 +36,19 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional(readOnly = true)
     public InversionRes inversionPorId(Long idInversion) {
-        return inversionMapper.toInversionResponse(
-                inversionHelper.findByIdOrThrow(idInversion));
+        return inversionMapper.toInversionResponse(inversionHelper.findByIdOrThrow(idInversion));
     }
 
     @Override
     public BalanceInversionRes balanceInversion(Long idInversion) {
-        inversionHelper.findByIdOrThrow(idInversion);
-        BalanceInversionRes invResponse = inversionMapper
-                .toBalanceInversionRes(inversionRepository.balanceInversion(idInversion));
+        BalanceInversionProjection inversionsocioProjection = inversionRepository.balanceInversion(idInversion)
+                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+
+        BalanceInversionRes invResponse = inversionMapper.toBalanceInversionResponse(inversionsocioProjection);
 
         List<BalanceSocioPorInvRes> balances = inversionRepository.balanceSocioPorInversion(idInversion)
                 .stream()
-                .map(inversionMapper::toBalanceSocioPorInvRes)
+                .map(inversionMapper::toBalanceSocioPorInvResponse)
                 .toList();
 
         invResponse.setBalances(balances);
@@ -56,8 +58,8 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional(readOnly = true)
     public List<BalanceMovsPorInvRes> balanceMovimientosPorInversion(Long idInversion) {
-        inversionHelper.findByIdOrThrow(idInversion);
-        return inversionRepository.balanceMovimientosPorInversion(idInversion);
+        return inversionRepository.balanceMovimientosPorInversion(idInversion)
+                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
     }
 
     @Override
@@ -69,15 +71,13 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional()
     public Inversion update(Long idInversion, Inversion inversion) {
-        return inversionRepository.save(
-                inversionHelper.findByIdOrThrow(idInversion));
+        return inversionRepository.save(inversionHelper.findByIdOrThrow(idInversion));
     }
 
     @Override
     @Transactional()
     public void delete(Long idInversion) {
-        inversionHelper.findByIdOrThrow(idInversion);
-        inversionRepository.deleteById(idInversion);
+        inversionRepository.delete(inversionHelper.findByIdOrThrow(idInversion));
     }
 
 }

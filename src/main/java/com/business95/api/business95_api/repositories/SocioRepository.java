@@ -1,6 +1,7 @@
 package com.business95.api.business95_api.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -30,7 +31,7 @@ public interface SocioRepository extends CrudRepository<Socio, Long> {
             "ON s.id_socio = sub_query.idSocio " +
             "WHERE s.id_socio = :idSocio " +
             "GROUP BY s.id_socio", nativeQuery = true)
-    BalanceSocioProjection balanceSocio(@Param("idSocio") Long idSocio);
+    Optional<BalanceSocioProjection> balanceSocio(@Param("idSocio") Long idSocio);
 
     @Query(value = "SELECT resumen.annio as annio, " +
             "SUM(CASE WHEN resumen.totalMovimientoAnual > 0 " +

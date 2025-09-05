@@ -1,6 +1,7 @@
 package com.business95.api.business95_api.repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
@@ -31,7 +32,7 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                         "SUM(a.monto) AS balanceMovimiento, m.moneda.idMoneda AS moneda) " +
                         "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
                         "WHERE m.idMovimiento = :idMovimiento GROUP BY m.idMovimiento")
-        MovConBalancesSociosRes balanceMovimiento(@Param("idMovimiento") Long idMovimiento);
+        Optional<MovConBalancesSociosRes> balanceMovimiento(@Param("idMovimiento") Long idMovimiento);
 
         @Query("SELECT new com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes(" +
                         "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +

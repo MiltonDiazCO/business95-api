@@ -14,6 +14,7 @@ import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
 import com.business95.api.business95_api.dtos.responses.MovimientoRes;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
+import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
 import com.business95.api.business95_api.helpers.MovimientoHelper;
 import com.business95.api.business95_api.mappers.MovimientoMapper;
@@ -48,8 +49,9 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Override
         @Transactional(readOnly = true)
         public MovConBalancesSociosRes balanceSociosPorMovimiento(Long idMovimiento) {
-                movimientoHelper.findByIdOrThrow(idMovimiento);
-                MovConBalancesSociosRes movResponse = movimientoRepository.balanceMovimiento(idMovimiento);
+                MovConBalancesSociosRes movResponse = movimientoRepository.balanceMovimiento(idMovimiento)
+                                .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+
                 List<BalanceSocioPorMovRes> balances = movimientoRepository.balanceSocioPorMovimiento(idMovimiento);
 
                 for (BalanceSocioPorMovRes balanceSocio : balances) {

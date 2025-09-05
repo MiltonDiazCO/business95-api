@@ -11,6 +11,7 @@ import com.business95.api.business95_api.dtos.responses.BalanceSocioPorInvRes;
 import com.business95.api.business95_api.dtos.responses.InversionRes;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
+import com.business95.api.business95_api.exceptions.handlers.InversionConMovimientosException;
 import com.business95.api.business95_api.helpers.InversionHelper;
 import com.business95.api.business95_api.mappers.InversionMapper;
 import com.business95.api.business95_api.projections.BalanceInversionProjection;
@@ -77,7 +78,14 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional()
     public void delete(Long idInversion) {
-        inversionRepository.delete(inversionHelper.findByIdOrThrow(idInversion));
+
+        Inversion inversion = inversionHelper.findByIdOrThrow(idInversion);
+
+        if (!inversionRepository.balanceMovimientosPorInversion(idInversion).isEmpty()) {
+            throw new InversionConMovimientosException(idInversion);
+        }
+
+        inversionRepository.delete(inversion);
     }
 
 }

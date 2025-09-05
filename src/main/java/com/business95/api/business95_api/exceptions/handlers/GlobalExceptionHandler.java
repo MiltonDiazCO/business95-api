@@ -67,6 +67,16 @@ public class GlobalExceptionHandler {
                 HttpStatus.BAD_REQUEST.value(), request);
     }
 
+    @ExceptionHandler(InversionConMovimientosException.class)
+    public ResponseEntity<ErrorResponse> manejarViolacionRestriccionForanea(
+            RuntimeException exc,
+            HttpServletRequest request) {
+
+        return ErrorUtils.construirRespuestaErrorExcepcion(
+                mensajeErrorHttpService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                exc.getMessage(), HttpStatus.CONFLICT.value(), request);
+    }
+
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> manejarFormatoEntradaInvalido(
             HttpMessageNotReadableException exc,

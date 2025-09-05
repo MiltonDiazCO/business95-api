@@ -9,7 +9,9 @@ import com.business95.api.business95_api.entities.ActividadSocio;
 @Mapper(componentModel = "spring")
 public interface ActividadSocioMapper {
 
-    @Mapping(target = "socio", expression = "java(actividadSocio.getSocio().getNombresRazonsocial() + \" \" + actividadSocio.getSocio().getApellidos())")
+    @Mapping(target = "socio", expression = "java(actividadSocio.getSocio().getApellidos() != null ? " +
+            "actividadSocio.getSocio().getNombresRazonsocial() + \" \" + actividadSocio.getSocio().getApellidos() : " +
+            "actividadSocio.getSocio().getNombresRazonsocial())")
     @Mapping(source = "tipoActividad.tipoActividad", target = "tipoActividad")
     ActividadSocioRes toActividadSocioResponseDTO(ActividadSocio actividadSocio);
 

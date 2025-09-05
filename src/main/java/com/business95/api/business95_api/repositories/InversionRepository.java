@@ -43,7 +43,7 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "GROUP BY resumen.id_inversion", nativeQuery = true)
         Optional<BalanceInversionProjection> balanceInversion(@Param("idInversion") Long idInversion);
 
-        @Query(value = "SELECT CONCAT(s.nombres_razonsocial, ' ', s.apellidos) AS socio, " +
+        @Query(value = "SELECT CONCAT_WS(' ', s.nombres_razonsocial, s.apellidos) AS socio, " +
                         "SUM(CASE WHEN resumen.total_socio > 0 " +
                         "THEN resumen.total_socio ELSE 0 END) AS ingresos, " +
                         "SUM(CASE WHEN resumen.total_socio < 0 " +

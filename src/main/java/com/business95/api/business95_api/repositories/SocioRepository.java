@@ -15,7 +15,7 @@ import com.business95.api.business95_api.projections.BalanceSocioProjection;
 @Repository
 public interface SocioRepository extends CrudRepository<Socio, Long> {
 
-    @Query(value = "SELECT CONCAT(s.nombres_razonsocial, ' ', s.apellidos) AS socio, " +
+    @Query(value = "SELECT CONCAT_WS(' ', s.nombres_razonsocial, s.apellidos) AS socio, " +
             "SUM(CASE WHEN sub_query.totalPorSocioMovimiento > 0 " +
             "THEN sub_query.totalPorSocioMovimiento ELSE 0 END) AS ingresos, " +
             "SUM(CASE WHEN sub_query.totalPorSocioMovimiento < 0 " +

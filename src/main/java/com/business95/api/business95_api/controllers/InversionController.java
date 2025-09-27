@@ -44,7 +44,7 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}/balance")
-    public ResponseEntity<BalanceInversionRes> balanceInversion(@PathVariable Long idInversion) {
+    public ResponseEntity<BalanceInversionRes> balanceInversionesPorSocio(@PathVariable Long idInversion) {
         return ResponseEntity.ok().body(inversionService.balanceInversion(idInversion));
     }
 

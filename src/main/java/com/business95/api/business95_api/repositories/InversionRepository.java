@@ -31,7 +31,8 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "       THEN resumen.total_inversion ELSE 0 END) AS ingresos, " +
                         "SUM(CASE WHEN resumen.total_inversion < 0 " +
                         "       THEN resumen.total_inversion ELSE 0 END) AS gastos, " +
-                        "SUM(resumen.total_inversion) AS balanceInversion FROM inversiones inv " +
+                        "COALESCE(SUM(resumen.total_inversion), 0) " +
+                        "       AS balanceInversion FROM inversiones inv " +
                         "LEFT JOIN (" +
                         "       SELECT inv.id_inversion AS id_inversion, " +
                         "       SUM(act_soc.monto) AS total_inversion FROM inversiones inv " +

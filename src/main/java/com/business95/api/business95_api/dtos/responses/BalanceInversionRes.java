@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class BalanceInversionRes {
 
     private String inversion;
@@ -15,7 +18,10 @@ public class BalanceInversionRes {
     public BalanceInversionRes() {
     }
 
-    public BalanceInversionRes(String inversion, BigDecimal ingresos, BigDecimal gastos, BigDecimal balanceInversion) {
+    public BalanceInversionRes(String inversion,
+            BigDecimal ingresos,
+            BigDecimal gastos,
+            BigDecimal balanceInversion) {
         this.inversion = inversion;
         this.ingresos = ingresos;
         this.gastos = gastos;

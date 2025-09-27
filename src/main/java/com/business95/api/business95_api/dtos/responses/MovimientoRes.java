@@ -30,16 +30,16 @@ public class MovimientoRes extends DetalleMovimiento {
         this.actividades = actividades;
     }
 
-    public void addActividadSocio(ActividadSocioRes actividadSocioResponse) {
-        this.actividades.add(actividadSocioResponse);
-    }
-
     public List<ActividadSocioRes> getActividades() {
         return actividades;
     }
 
     public void setActividades(List<ActividadSocioRes> actividades) {
         this.actividades = actividades;
+    }
+
+    public void addActividadSocio(ActividadSocioRes actividadSocioResponse) {
+        this.actividades.add(actividadSocioResponse);
     }
 
 }

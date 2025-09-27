@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.business95_api.dtos.responses.InversionRes;
+import com.business95.api.business95_api.dtos.requests.InversionRequest;
 import com.business95.api.business95_api.dtos.responses.BalanceInversionRes;
 import com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes;
 import com.business95.api.business95_api.entities.Inversion;
@@ -56,7 +57,7 @@ public class InversionController {
 
     @PostMapping
     public ResponseEntity<?> registrarInversion(
-            @Valid @RequestBody Inversion inversion,
+            @Valid @RequestBody InversionRequest inversionRequest,
             BindingResult result,
             HttpServletRequest request) {
 
@@ -65,7 +66,7 @@ public class InversionController {
                     messageSource.getMessage("error.registro", null, Locale.getDefault()),
                     result, HttpStatus.BAD_REQUEST.value(), request);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(inversionService.save(inversion));
+        return ResponseEntity.status(HttpStatus.CREATED).body(inversionService.save(inversionRequest));
     }
 
     @PutMapping("/{idInversion}")

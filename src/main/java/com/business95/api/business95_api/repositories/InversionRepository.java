@@ -36,10 +36,10 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "LEFT JOIN (" +
                         "       SELECT inv.id_inversion AS id_inversion, " +
                         "       SUM(act_soc.monto) AS total_inversion FROM inversiones inv " +
-                        "       JOIN movimientos mov ON inv.id_inversion = mov.id_inversion " +
+                        "       LEFT JOIN movimientos mov ON inv.id_inversion = mov.id_inversion " +
                         "       LEFT JOIN actividades_socios act_soc " +
                         "       ON mov.id_movimiento = act_soc.id_movimiento " +
-                        "       GROUP BY act_soc.id_movimiento) " +
+                        "       GROUP BY act_soc.id_movimiento, inv.id_inversion) " +
                         "resumen ON inv.id_inversion = resumen.id_inversion " +
                         "WHERE inv.id_inversion IN " +
                         "(SELECT DISTINCT id_inversion FROM inversiones_socios " +

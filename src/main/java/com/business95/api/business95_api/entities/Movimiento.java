@@ -50,8 +50,13 @@ public class Movimiento {
     public Movimiento() {
     }
 
-    public Movimiento(Long idMovimiento, Inversion inversion, String concepto, Categoria categoria, Moneda moneda,
-            Medida medida, List<ActividadSocio> actividadesSocio) {
+    public Movimiento(Long idMovimiento,
+            Inversion inversion,
+            String concepto,
+            Categoria categoria,
+            Moneda moneda,
+            Medida medida,
+            List<ActividadSocio> actividadesSocio) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;
         this.concepto = concepto;

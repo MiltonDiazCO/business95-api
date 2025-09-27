@@ -42,8 +42,16 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     public BalanceInversionRes balanceInversion(Long idInversion) {
-        BalanceInversionProjection inversionsocioProjection = inversionRepository.balanceInversion(idInversion)
-                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+
+        BalanceInversionProjection inversionsocioProjection;
+
+        if (inversionRepository.findById(idInversion).isPresent()) {
+            inversionsocioProjection = inversionRepository
+                    .balanceInversion(null, idInversion)
+                    .get(0);
+        } else {
+            throw new InversionNoEncontradaException(idInversion);
+        }
 
         BalanceInversionRes invResponse = inversionMapper.toBalanceInversionResponse(inversionsocioProjection);
 

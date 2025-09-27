@@ -2,7 +2,6 @@ package com.business95.api.business95_api.mappers;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.business95.api.business95_api.dtos.responses.BalanceInversionRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorInvRes;

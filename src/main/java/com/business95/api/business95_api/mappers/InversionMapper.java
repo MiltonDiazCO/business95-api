@@ -16,7 +16,6 @@ public interface InversionMapper {
 
     InversionRes toInversionResponse(Inversion inversion);
 
-    @Mapping(source = "socios", target = "sociosResponse")
     InversionSociosRes toInversionSociosRes(Inversion inversion);
 
     @Mapping(target = "balances", ignore = true)

@@ -79,7 +79,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionSociosRes save(InversionRequest inversionRequest) {
+    public InversionSociosRes guardarInversionConSocios(InversionRequest inversionRequest) {
 
         Inversion inversion = new Inversion(null, inversionRequest.getInversion());
 
@@ -92,8 +92,14 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public Inversion update(Long idInversion, Inversion inversion) {
-        return inversionRepository.save(inversionHelper.findByIdOrThrow(idInversion));
+    public InversionRes update(Long idInversion, Inversion inversion) {
+
+        Inversion inversionUpdate = inversionRepository.findById(idInversion)
+                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+
+        inversionUpdate.setInversion(inversion.getInversion());
+
+        return inversionMapper.toInversionResponse(inversionRepository.save(inversionUpdate));
     }
 
     @Override

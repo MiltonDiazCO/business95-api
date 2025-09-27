@@ -17,9 +17,9 @@ public interface InversionService {
 
     List<BalanceMovsPorInvRes> balanceMovimientosPorInversion(Long idInversion);
 
-    InversionSociosRes save(InversionRequest incInversionRequest);
+    InversionSociosRes guardarInversionConSocios(InversionRequest inversionRequest);
 
-    Inversion update(Long idInversion, Inversion inversion);
+    InversionRes update(Long idInversion, Inversion inversion);
 
     void delete(Long idInversion);
 

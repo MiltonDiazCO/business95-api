@@ -66,7 +66,8 @@ public class InversionController {
                     messageSource.getMessage("error.registro", null, Locale.getDefault()),
                     result, HttpStatus.BAD_REQUEST.value(), request);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(inversionService.save(inversionRequest));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(inversionService.guardarInversionConSocios(inversionRequest));
     }
 
     @PutMapping("/{idInversion}")

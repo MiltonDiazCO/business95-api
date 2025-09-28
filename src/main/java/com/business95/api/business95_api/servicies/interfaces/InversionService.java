@@ -13,6 +13,8 @@ public interface InversionService {
 
     InversionRes inversionPorId(Long idInversion);
 
+    InversionSociosRes sociosPorInversion(Long idInversion);
+
     BalanceInversionRes balanceInversion(Long idInversion);
 
     List<BalanceMovsPorInvRes> balanceMovimientosPorInversion(Long idInversion);

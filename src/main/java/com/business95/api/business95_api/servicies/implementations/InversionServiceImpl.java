@@ -48,6 +48,12 @@ public class InversionServiceImpl implements InversionService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public InversionSociosRes sociosPorInversion(Long idInversion) {
+        return inversionMapper.toInversionSociosRes(inversionHelper.findByIdOrThrow(idInversion));
+    }
+
+    @Override
     public BalanceInversionRes balanceInversion(Long idInversion) {
 
         BalanceInversionProjection inversionsocioProjection;

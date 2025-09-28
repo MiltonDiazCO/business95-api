@@ -25,4 +25,6 @@ public interface InversionService {
 
     void delete(Long idInversion);
 
+    void eliminarSociosDeInversion(Long idInversion, List<Long> socios);
+
 }

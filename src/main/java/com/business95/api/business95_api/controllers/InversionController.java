@@ -100,4 +100,12 @@ public class InversionController {
         return ResponseEntity.noContent().build();
     }
 
+    @DeleteMapping("/{idInversion}/socios")
+    public ResponseEntity<?> eliminarSociosDeInversion(
+            @PathVariable Long idInversion,
+            @RequestBody List<Long> socios) {
+        inversionService.eliminarSociosDeInversion(idInversion, socios);
+        return ResponseEntity.noContent().build();
+    }
+
 }

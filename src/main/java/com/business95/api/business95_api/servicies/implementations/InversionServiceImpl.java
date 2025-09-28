@@ -134,4 +134,22 @@ public class InversionServiceImpl implements InversionService {
         inversionRepository.delete(inversion);
     }
 
+    @Override
+    @Transactional()
+    public void eliminarSociosDeInversion(Long idInversion, List<Long> socios) {
+
+        Inversion inversion = inversionRepository.findById(idInversion)
+                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+
+        if (socios.size() <= 0 || socios.isEmpty()) {
+            throw new SociosRequeridosException();
+        }
+
+        for (Long socio : socios) {
+            inversion.removeSocio(socioHelper.findByIdOrThrow(socio));
+        }
+
+        inversionRepository.save(inversion);
+    }
+
 }

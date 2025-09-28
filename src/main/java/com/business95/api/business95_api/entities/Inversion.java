@@ -29,7 +29,7 @@ public class Inversion {
     @Column(name = "inversion", nullable = false, length = 80)
     private String inversion;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "inversiones_socios",
         joinColumns = @JoinColumn(name = "id_inversion", referencedColumnName = "id_inversion"),
@@ -71,6 +71,10 @@ public class Inversion {
 
     public void addSocio(Socio socio) {
         this.socios.add(socio);
+    }
+
+    public void removeSocio(Socio socio) {
+        this.socios.remove(socio);
     }
 
 }

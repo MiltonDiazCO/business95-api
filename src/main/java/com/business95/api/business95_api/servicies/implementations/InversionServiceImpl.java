@@ -13,6 +13,7 @@ import com.business95.api.business95_api.dtos.responses.InversionRes;
 import com.business95.api.business95_api.dtos.responses.InversionSociosRes;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
+import com.business95.api.business95_api.exceptions.SociosRequeridosException;
 import com.business95.api.business95_api.exceptions.handlers.InversionConMovimientosException;
 import com.business95.api.business95_api.helpers.InversionHelper;
 import com.business95.api.business95_api.helpers.SocioHelper;
@@ -100,6 +101,24 @@ public class InversionServiceImpl implements InversionService {
         inversionUpdate.setInversion(inversion.getInversion());
 
         return inversionMapper.toInversionResponse(inversionRepository.save(inversionUpdate));
+    }
+
+    @Override
+    @Transactional()
+    public InversionSociosRes agregarSociosAInversion(Long idInversion, List<Long> socios) {
+
+        Inversion inversion = inversionRepository.findById(idInversion)
+                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+
+        if (socios.size() <= 0 || socios.isEmpty()) {
+            throw new SociosRequeridosException();
+        }
+
+        for (Long socio : socios) {
+            inversion.addSocio(socioHelper.findByIdOrThrow(socio));
+        }
+
+        return inversionMapper.toInversionSociosRes(inversionRepository.save(inversion));
     }
 
     @Override

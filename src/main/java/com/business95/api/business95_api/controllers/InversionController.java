@@ -70,6 +70,14 @@ public class InversionController {
                 .body(inversionService.guardarInversionConSocios(inversionRequest));
     }
 
+    @PostMapping("/{idInversion}/socios")
+    public ResponseEntity<?> agregarSociosAInversion(
+            @PathVariable Long idInversion,
+            @RequestBody List<Long> socios) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(inversionService.agregarSociosAInversion(idInversion, socios));
+    }
+
     @PutMapping("/{idInversion}")
     public ResponseEntity<?> actualizarInversion(
             @PathVariable Long idInversion,

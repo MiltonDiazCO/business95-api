@@ -21,6 +21,8 @@ public interface InversionService {
 
     InversionRes update(Long idInversion, Inversion inversion);
 
+    InversionSociosRes agregarSociosAInversion(Long idInversion, List<Long> socios);
+
     void delete(Long idInversion);
 
 }

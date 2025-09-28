@@ -20,6 +20,7 @@ import com.business95.api.business95_api.exceptions.MedidaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MonedaNoEncontradaException;
 import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
+import com.business95.api.business95_api.exceptions.SociosRequeridosException;
 import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
 import com.business95.api.business95_api.utils.ErrorUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -56,7 +57,7 @@ public class GlobalExceptionHandler {
                 HttpStatus.NOT_FOUND.value(), request);
     }
 
-    @ExceptionHandler(IdActividadRequeridaException.class)
+    @ExceptionHandler({ IdActividadRequeridaException.class, SociosRequeridosException.class })
     public ResponseEntity<ErrorResponse> manejarExcepcionesRecursoObligatorio(
             RuntimeException exc,
             HttpServletRequest request) {

@@ -26,7 +26,7 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento")
         Optional<List<BalanceMovsPorInvRes>> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
 
-        @Query(value = "SELECT inv.inversion AS inversion, " +
+        @Query(value = "SELECT inv.id_inversion as idInversion, inv.inversion AS inversion, " +
                         "SUM(CASE WHEN resumen.total_inversion > 0 " +
                         "       THEN resumen.total_inversion ELSE 0 END) AS ingresos, " +
                         "SUM(CASE WHEN resumen.total_inversion < 0 " +

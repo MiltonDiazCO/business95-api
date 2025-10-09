@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class BalanceInversionRes {
 
+    private Long idInversion;
     private String inversion;
     private BigDecimal ingresos;
     private BigDecimal gastos;
@@ -18,14 +19,25 @@ public class BalanceInversionRes {
     public BalanceInversionRes() {
     }
 
-    public BalanceInversionRes(String inversion,
+    public BalanceInversionRes(
+            Long idInversion,
+            String inversion,
             BigDecimal ingresos,
             BigDecimal gastos,
             BigDecimal balanceInversion) {
+        this.idInversion = idInversion;
         this.inversion = inversion;
         this.ingresos = ingresos;
         this.gastos = gastos;
         this.balanceInversion = balanceInversion;
+    }
+
+    public Long getIdInversion() {
+        return idInversion;
+    }
+
+    public void setIdInversion(Long idInversion) {
+        this.idInversion = idInversion;
     }
 
     public String getInversion() {
@@ -71,5 +83,4 @@ public class BalanceInversionRes {
     public void addBalanceInvSocio(BalanceSocioPorInvRes balanceInvSocio) {
         this.balances.add(balanceInvSocio);
     }
-
 }

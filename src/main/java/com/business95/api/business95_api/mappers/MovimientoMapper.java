@@ -18,6 +18,10 @@ public interface MovimientoMapper {
     DetalleMovimiento toDetalleMovimiento(Movimiento movimiento);
 
     @InheritConfiguration(name = "toDetalleMovimiento")
+    @Mapping(source = "inversion.idInversion", target = "idInversion")
+    @Mapping(source = "categoria.idCategoria", target = "idCategoria")
+    @Mapping(source = "medida.idMedida", target = "idMedida")
+    @Mapping(source = "moneda.idMoneda", target = "idMoneda")
     @Mapping(source = "actividadesSocio", target = "actividades")
     MovimientoRes toMovimientoResponse(Movimiento movimiento);
 }

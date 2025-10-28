@@ -6,22 +6,32 @@ import java.time.LocalDateTime;
 public class ActividadSocioRes {
 
     private Long idActividad;
+    private Long idSocio;
     private String socio;
     private BigDecimal cantidad;
     private BigDecimal monto;
     private LocalDateTime fecha;
+    private Long idTipoActividad;
     private String tipoActividad;
 
     public ActividadSocioRes() {
     }
 
-    public ActividadSocioRes(Long idActividad, String socio, BigDecimal cantidad, BigDecimal monto,
-            LocalDateTime fecha, String tipoActividad) {
+    public ActividadSocioRes(Long idActividad,
+            Long idSocio,
+            String socio,
+            BigDecimal cantidad,
+            BigDecimal monto,
+            LocalDateTime fecha,
+            Long idTipoActividad,
+            String tipoActividad) {
         this.idActividad = idActividad;
+        this.idSocio = idSocio;
         this.socio = socio;
         this.cantidad = cantidad;
         this.monto = monto;
         this.fecha = fecha;
+        this.idTipoActividad = idTipoActividad;
         this.tipoActividad = tipoActividad;
     }
 
@@ -31,6 +41,14 @@ public class ActividadSocioRes {
 
     public void setIdActividad(Long idActividad) {
         this.idActividad = idActividad;
+    }
+
+    public Long getIdSocio() {
+        return idSocio;
+    }
+
+    public void setIdSocio(Long idSocio) {
+        this.idSocio = idSocio;
     }
 
     public String getSocio() {
@@ -63,6 +81,14 @@ public class ActividadSocioRes {
 
     public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
+    }
+
+    public Long getIdTipoActividad() {
+        return idTipoActividad;
+    }
+
+    public void setIdTipoActividad(Long idTipoActividad) {
+        this.idTipoActividad = idTipoActividad;
     }
 
     public String getTipoActividad() {

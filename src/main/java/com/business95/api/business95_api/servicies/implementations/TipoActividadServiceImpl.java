@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.entities.TipoActividad;
+import com.business95.api.business95_api.exceptions.TipoActividadNoEncontradoException;
 import com.business95.api.business95_api.repositories.TipoActividadRepository;
 import com.business95.api.business95_api.servicies.interfaces.TipoActividadService;
 
@@ -20,6 +21,13 @@ public class TipoActividadServiceImpl implements TipoActividadService {
     @Transactional(readOnly = true)
     public List<TipoActividad> findAll() {
         return (List<TipoActividad>) tipoActividadRepository.findAll();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public TipoActividad findByIdOrThrow(Long idTipoActividad) {
+        return (TipoActividad) tipoActividadRepository.findById(idTipoActividad)
+                .orElseThrow(() -> new TipoActividadNoEncontradoException(idTipoActividad));
     }
 
 }

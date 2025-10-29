@@ -8,4 +8,6 @@ public interface TipoActividadService {
 
     List<TipoActividad> findAll();
 
+    TipoActividad findByIdOrThrow(Long idTipoActividad);
+
 }

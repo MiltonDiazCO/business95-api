@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,17 +35,27 @@ public class Socio {
     @JoinColumn(name = "id_tipo_persona", nullable = false)
     private TipoPersona tipoPersona;
 
+    @OneToOne
+    @JoinColumn(name = "id_usuario", nullable = false)
+    private Usuario usuario;
+
     public Socio() {
     }
 
-    public Socio(Long idSocio, String nombresRazonsocial, String apellidos, String telefono, String correoElectronico,
-            TipoPersona tipoPersona) {
+    public Socio(Long idSocio,
+            String nombresRazonsocial,
+            String apellidos,
+            String telefono,
+            String correoElectronico,
+            TipoPersona tipoPersona,
+            Usuario usuario) {
         this.idSocio = idSocio;
         this.nombresRazonsocial = nombresRazonsocial;
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.correoElectronico = correoElectronico;
         this.tipoPersona = tipoPersona;
+        this.usuario = usuario;
     }
 
     public Long getIdSocio() {
@@ -93,6 +104,14 @@ public class Socio {
 
     public void setTipoPersona(TipoPersona tipoPersona) {
         this.tipoPersona = tipoPersona;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 
 }

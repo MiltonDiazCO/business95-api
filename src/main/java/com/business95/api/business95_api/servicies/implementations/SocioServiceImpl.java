@@ -48,8 +48,6 @@ public class SocioServiceImpl implements SocioService {
     @Override
     public BalanceSocioRes balanceSocio(Long idSocio) {
 
-        System.out.print("====================");
-
         BalanceSocioProjection socioProjection = socioRepository.balanceSocio(idSocio)
                 .orElseThrow(() -> new SocioNoEncontradoException(idSocio));
 

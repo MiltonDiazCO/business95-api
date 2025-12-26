@@ -1,6 +1,5 @@
 package com.business95.api.business95_api.dtos.responses;
 
-import com.business95.api.business95_api.entities.Usuario;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -11,7 +10,7 @@ public class SocioRes {
     private String telefono;
     private String correoElectronico;
     private String tipoPersona;
-    private Usuario usuario;
+    private UsuarioResponse usuario;
 
     public SocioRes() {
     }
@@ -21,7 +20,7 @@ public class SocioRes {
             String telefono,
             String correoElectronico,
             String tipoPersona,
-            Usuario usuario) {
+            UsuarioResponse usuario) {
         this.idSocio = idSocio;
         this.socio = socio;
         this.telefono = telefono;
@@ -70,11 +69,11 @@ public class SocioRes {
         this.tipoPersona = tipoPersona;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioResponse getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioResponse usuario) {
         this.usuario = usuario;
     }
 

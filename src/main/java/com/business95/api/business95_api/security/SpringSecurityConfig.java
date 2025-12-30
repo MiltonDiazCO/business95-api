@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 import com.business95.api.business95_api.security.filters.JwtAuthenticationFilter;
+import com.business95.api.business95_api.security.filters.JwtValidationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -45,6 +46,7 @@ public class SpringSecurityConfig {
                         .requestMatchers(HttpMethod.POST, "/login").permitAll()
                         .anyRequest().authenticated())
                 .addFilter(new JwtAuthenticationFilter(authenticationManager()))
+                .addFilter(new JwtValidationFilter(authenticationManager()))
                 .build();
     }
 

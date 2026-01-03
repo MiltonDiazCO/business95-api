@@ -21,8 +21,8 @@ public class Usuario {
     @Column(name = "id_usuario")
     private Long idUsuario;
 
-    @Column(name = "usuario", nullable = false, unique = true, length = 45)
-    private String usuario;
+    @Column(name = "correo_electronico", nullable = true, length = 150)
+    private String correoElectronico;
 
     @Column(name = "contrasena", nullable = false, length = 255)
     private String contrasena;
@@ -37,9 +37,9 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, String usuario, String contrasena, Boolean habilitado, Set<Rol> roles) {
+    public Usuario(Long idUsuario, String correoElectronico, String contrasena, Boolean habilitado, Set<Rol> roles) {
         this.idUsuario = idUsuario;
-        this.usuario = usuario;
+        this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
         this.habilitado = habilitado;
         this.roles = roles;
@@ -53,13 +53,13 @@ public class Usuario {
         this.idUsuario = idUsuario;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getCorreoElectronico() {
+        return correoElectronico;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }    
 
     public String getContrasena() {
         return contrasena;

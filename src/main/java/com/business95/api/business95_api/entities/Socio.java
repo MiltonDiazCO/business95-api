@@ -28,9 +28,6 @@ public class Socio {
     @Column(name = "telefono", nullable = false, length = 30)
     private String telefono;
 
-    @Column(name = "correo_electronico", nullable = true, length = 120)
-    private String correoElectronico;
-
     @ManyToOne
     @JoinColumn(name = "id_tipo_persona", nullable = false)
     private TipoPersona tipoPersona;
@@ -46,14 +43,12 @@ public class Socio {
             String nombresRazonsocial,
             String apellidos,
             String telefono,
-            String correoElectronico,
             TipoPersona tipoPersona,
             Usuario usuario) {
         this.idSocio = idSocio;
         this.nombresRazonsocial = nombresRazonsocial;
         this.apellidos = apellidos;
         this.telefono = telefono;
-        this.correoElectronico = correoElectronico;
         this.tipoPersona = tipoPersona;
         this.usuario = usuario;
     }
@@ -88,14 +83,6 @@ public class Socio {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
     }
 
     public TipoPersona getTipoPersona() {

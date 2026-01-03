@@ -27,9 +27,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Transactional(readOnly = true)
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String correoElectronico) throws UsernameNotFoundException {
 
-        Optional<Usuario> usuarioOptional = usuarioRepository.findByUsuario(username);
+        Optional<Usuario> usuarioOptional = usuarioRepository.findByCorreoElectronico(correoElectronico);
 
         if (usuarioOptional.isEmpty()) {
             throw new UsernameNotFoundException("Usuario no encontrado!");
@@ -40,7 +40,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<GrantedAuthority> authorities = usuario.getRoles().stream()
                 .map(rol -> new SimpleGrantedAuthority(rol.getRol())).collect(Collectors.toList());
 
-        return new User(usuario.getUsuario(), usuario.getContrasena(), usuario.getHabilitado(), true, true, true,
+        return new User(
+                usuario.getCorreoElectronico(),
+                usuario.getContrasena(),
+                usuario.getHabilitado(),
+                true,
+                true,
+                true,
                 authorities);
     }
 

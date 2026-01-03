@@ -8,7 +8,6 @@ public class SocioRes {
     private Long idSocio;
     private String socio;
     private String telefono;
-    private String correoElectronico;
     private String tipoPersona;
     private UsuarioResponse usuario;
 
@@ -18,13 +17,11 @@ public class SocioRes {
     public SocioRes(Long idSocio,
             String socio,
             String telefono,
-            String correoElectronico,
             String tipoPersona,
             UsuarioResponse usuario) {
         this.idSocio = idSocio;
         this.socio = socio;
         this.telefono = telefono;
-        this.correoElectronico = correoElectronico;
         this.tipoPersona = tipoPersona;
         this.usuario = usuario;
     }
@@ -51,14 +48,6 @@ public class SocioRes {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
-    }
-
-    public String getCorreoElectronico() {
-        return correoElectronico;
-    }
-
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
     }
 
     public String getTipoPersona() {

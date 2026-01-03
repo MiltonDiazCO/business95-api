@@ -10,6 +10,6 @@ import com.business95.api.business95_api.entities.Usuario;
 @Repository
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
-    Optional<Usuario> findByUsuario(String usuario);
+    Optional<Usuario> findByCorreoElectronico(String correoElectronico);
 
 }

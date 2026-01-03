@@ -30,10 +30,10 @@ public class MovConBalancesSociosRes extends BalanceMovsPorInvRes {
                 inversion,
                 concepto,
                 categoria,
-                medida,
-                moneda,
                 cantidadMovimiento,
+                medida,
                 balanceMovimiento,
+                moneda,
                 fechaUltimaActividad);
     }
 

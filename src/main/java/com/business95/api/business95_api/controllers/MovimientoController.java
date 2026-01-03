@@ -22,7 +22,7 @@ import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
 import com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes;
-import com.business95.api.business95_api.dtos.responses.MovimientoRes;
+import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
 import com.business95.api.business95_api.servicies.interfaces.ActividadService;
 import com.business95.api.business95_api.servicies.interfaces.MovimientoService;
 import com.business95.api.business95_api.utils.ErrorUtils;
@@ -44,7 +44,7 @@ public class MovimientoController {
     private MessageSource messageSource;
 
     @GetMapping("/{idMovimiento}")
-    public ResponseEntity<MovimientoRes> movimientoPorId(@PathVariable Long idMovimiento) {
+    public ResponseEntity<MovimientoResponse> movimientoPorId(@PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.movimientoPorId(idMovimiento));
     }
 

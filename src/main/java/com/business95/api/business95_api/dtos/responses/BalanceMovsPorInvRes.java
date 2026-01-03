@@ -3,29 +3,22 @@ package com.business95.api.business95_api.dtos.responses;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonPropertyOrder({ "idMovimiento", "inversion", "concepto", "categoria",
-        "cantidadMovimiento", "medida", "balanceMovimiento", "moneda", "fechaUltimaActividad" })
-public class BalanceMovsPorInvRes extends DetalleMovimiento {
+public class BalanceMovsPorInvRes {
 
+    private Long idMovimiento;
+    private String inversion;
+    private String concepto;
+    private String categoria;
     private BigDecimal cantidadMovimiento;
+    private String medida;
     private BigDecimal balanceMovimiento;
+    private String moneda;
     private LocalDateTime fechaUltimaActividad;
 
     public BalanceMovsPorInvRes() {
-    }
-
-    public BalanceMovsPorInvRes(
-            BigDecimal cantidadMovimiento,
-            BigDecimal balanceMovimiento,
-            LocalDateTime fechaUltimaActividad) {
-        this.cantidadMovimiento = cantidadMovimiento;
-        this.balanceMovimiento = balanceMovimiento;
-        this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
     public BalanceMovsPorInvRes(
@@ -33,15 +26,52 @@ public class BalanceMovsPorInvRes extends DetalleMovimiento {
             String inversion,
             String concepto,
             String categoria,
-            String medida,
-            String moneda,
             BigDecimal cantidadMovimiento,
+            String medida,
             BigDecimal balanceMovimiento,
+            String moneda,
             LocalDateTime fechaUltimaActividad) {
-        super(idMovimiento, inversion, concepto, categoria, medida, moneda);
+        this.idMovimiento = idMovimiento;
+        this.inversion = inversion;
+        this.concepto = concepto;
+        this.categoria = categoria;
         this.cantidadMovimiento = cantidadMovimiento;
+        this.medida = medida;
         this.balanceMovimiento = balanceMovimiento;
+        this.moneda = moneda;
         this.fechaUltimaActividad = fechaUltimaActividad;
+    }
+
+    public Long getIdMovimiento() {
+        return idMovimiento;
+    }
+
+    public void setIdMovimiento(Long idMovimiento) {
+        this.idMovimiento = idMovimiento;
+    }
+
+    public String getInversion() {
+        return inversion;
+    }
+
+    public void setInversion(String inversion) {
+        this.inversion = inversion;
+    }
+
+    public String getConcepto() {
+        return concepto;
+    }
+
+    public void setConcepto(String concepto) {
+        this.concepto = concepto;
+    }
+
+    public String getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(String categoria) {
+        this.categoria = categoria;
     }
 
     public BigDecimal getCantidadMovimiento() {
@@ -52,12 +82,28 @@ public class BalanceMovsPorInvRes extends DetalleMovimiento {
         this.cantidadMovimiento = cantidadMovimiento;
     }
 
+    public String getMedida() {
+        return medida;
+    }
+
+    public void setMedida(String medida) {
+        this.medida = medida;
+    }
+
     public BigDecimal getBalanceMovimiento() {
         return balanceMovimiento;
     }
 
     public void setBalanceMovimiento(BigDecimal balanceMovimiento) {
         this.balanceMovimiento = balanceMovimiento;
+    }
+
+    public String getMoneda() {
+        return moneda;
+    }
+
+    public void setMoneda(String moneda) {
+        this.moneda = moneda;
     }
 
     public LocalDateTime getFechaUltimaActividad() {

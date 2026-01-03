@@ -5,13 +5,12 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dtos.bases.DetalleMovimiento;
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoRequest;
 import com.business95.api.business95_api.dtos.requests.MovimientoUpdateRequest;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes;
 import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
-import com.business95.api.business95_api.dtos.responses.MovimientoRes;
+import com.business95.api.business95_api.dtos.responses.MovimientoResponse;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.exceptions.MovimientoNoEncontradoException;
@@ -42,7 +41,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
-        public MovimientoRes movimientoPorId(Long idMovimiento) {
+        public MovimientoResponse movimientoPorId(Long idMovimiento) {
                 return movimientoMapper.toMovimientoResponse(movimientoHelper.findByIdOrThrow(idMovimiento));
         }
 
@@ -63,7 +62,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional
-        public MovimientoRes save(MovimientoRequest movimientoRequest) {
+        public MovimientoResponse save(MovimientoRequest movimientoRequest) {
 
                 Movimiento movimiento = movimientoHelper.construirMovimiento(
                                 null,
@@ -90,7 +89,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
-        public DetalleMovimiento update(
+        public MovimientoResponse update(
                         Long idMovimiento,
                         MovimientoUpdateRequest movimientoUpdateRequest) {
 
@@ -102,7 +101,7 @@ public class MovimientoServiceImpl implements MovimientoService {
                                 movimientoUpdateRequest.getMedida(),
                                 movimientoUpdateRequest.getMoneda());
 
-                return movimientoMapper.toDetalleMovimiento(movimientoRepository.save(movimiento));
+                return movimientoMapper.toMovimientoResponse(movimientoRepository.save(movimiento));
         }
 
         @Override

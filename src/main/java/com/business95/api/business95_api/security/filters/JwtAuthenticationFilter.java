@@ -52,8 +52,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
             usuario = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
             correoElectronico = usuario.getCorreoElectronico();
             contrasena = usuario.getContrasena();
-
-            System.out.println(correoElectronico);
         } catch (StreamReadException e) {
             e.printStackTrace();
         } catch (DatabindException e) {
@@ -106,7 +104,6 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
             AuthenticationException failed) throws IOException, ServletException {
         Map<String, String> body = new HashMap<>();
-        body.put("message", "Credenciales incorrectas!");
         body.put("error", failed.getMessage());
 
         response.getWriter().write(new ObjectMapper().writeValueAsString(body));

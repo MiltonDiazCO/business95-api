@@ -3,7 +3,7 @@ package com.business95.api.business95_api.dtos.responses;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class ActividadSocioRes {
+public class ActividadSocioResponse {
 
     private Long idActividad;
     private Long idSocio;
@@ -14,10 +14,11 @@ public class ActividadSocioRes {
     private Long idTipoActividad;
     private String tipoActividad;
 
-    public ActividadSocioRes() {
+    public ActividadSocioResponse() {
     }
 
-    public ActividadSocioRes(Long idActividad,
+    public ActividadSocioResponse(
+            Long idActividad,
             Long idSocio,
             String socio,
             BigDecimal cantidad,

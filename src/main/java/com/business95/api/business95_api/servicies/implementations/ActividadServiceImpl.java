@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.requests.ActividadSocioRequest;
-import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.entities.ActividadSocio;
 import com.business95.api.business95_api.entities.Movimiento;
 import com.business95.api.business95_api.helpers.ActividadSocioHelper;
@@ -41,7 +41,7 @@ public class ActividadServiceImpl implements ActividadService {
 
         @Override
         @Transactional()
-        public List<ActividadSocioRes> save(
+        public List<ActividadSocioResponse> save(
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest) {
 

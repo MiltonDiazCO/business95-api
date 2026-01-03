@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.business95.api.business95_api.dtos.responses.BalanceAnualSocioRes;
-import com.business95.api.business95_api.dtos.responses.BalanceInversionRes;
+import com.business95.api.business95_api.dtos.responses.BalanceAnualSocioResponse;
+import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioRes;
 import com.business95.api.business95_api.dtos.responses.SocioRes;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
@@ -53,7 +53,7 @@ public class SocioServiceImpl implements SocioService {
 
         BalanceSocioRes socioResponse = socioMapper.toBalanceSocioResponse(socioProjection);
 
-        List<BalanceAnualSocioRes> balances = socioRepository.balanceAnualSocio(idSocio)
+        List<BalanceAnualSocioResponse> balances = socioRepository.balanceAnualSocio(idSocio)
                 .stream()
                 .map(socioMapper::toBalanceAnualSocioResponse)
                 .toList();
@@ -63,7 +63,7 @@ public class SocioServiceImpl implements SocioService {
         return socioResponse;
     }
 
-    public List<BalanceInversionRes> balanceInversionesPorSocio(Long idSocio) {
+    public List<BalanceInversionResponse> balanceInversionesPorSocio(Long idSocio) {
         return inversionRepository.balanceInversion(idSocio, null)
                 .stream()
                 .map(inversionMapper::toBalanceInversionResponse)

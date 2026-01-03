@@ -10,7 +10,7 @@ public class BalanceSocioRes {
     private BigDecimal ingresos;
     private BigDecimal gastos;
     private BigDecimal balanceSocio;
-    private List<BalanceAnualSocioRes> balances = new ArrayList<>();
+    private List<BalanceAnualSocioResponse> balances = new ArrayList<>();
 
     public BalanceSocioRes() {
     }
@@ -54,15 +54,15 @@ public class BalanceSocioRes {
         this.balanceSocio = balanceSocio;
     }
 
-    public List<BalanceAnualSocioRes> getBalances() {
+    public List<BalanceAnualSocioResponse> getBalances() {
         return balances;
     }
 
-    public void setBalances(List<BalanceAnualSocioRes> balances) {
+    public void setBalances(List<BalanceAnualSocioResponse> balances) {
         this.balances = balances;
     }
 
-    public void addBalanceAnual(BalanceAnualSocioRes balanceAnual) {
+    public void addBalanceAnual(BalanceAnualSocioResponse balanceAnual) {
         this.balances.add(balanceAnual);
     }
 

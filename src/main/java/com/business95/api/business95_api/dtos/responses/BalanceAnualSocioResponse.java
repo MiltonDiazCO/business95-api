@@ -2,17 +2,21 @@ package com.business95.api.business95_api.dtos.responses;
 
 import java.math.BigDecimal;
 
-public class BalanceAnualSocioRes {
+public class BalanceAnualSocioResponse {
 
     private Integer annio;
     private BigDecimal ingresos;
     private BigDecimal gastos;
     private BigDecimal balanceAnual;
 
-    public BalanceAnualSocioRes() {
+    public BalanceAnualSocioResponse() {
     }
 
-    public BalanceAnualSocioRes(Integer annio, BigDecimal ingresos, BigDecimal gastos, BigDecimal balanceAnual) {
+    public BalanceAnualSocioResponse(
+            Integer annio,
+            BigDecimal ingresos,
+            BigDecimal gastos,
+            BigDecimal balanceAnual) {
         this.annio = annio;
         this.ingresos = ingresos;
         this.gastos = gastos;

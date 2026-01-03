@@ -3,7 +3,7 @@ package com.business95.api.business95_api.mappers;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.entities.ActividadSocio;
 
 @Mapper(componentModel = "spring")
@@ -15,6 +15,6 @@ public interface ActividadSocioMapper {
             "actividadSocio.getSocio().getNombresRazonsocial())")
     @Mapping(source = "tipoActividad.idTipoActividad", target = "idTipoActividad")
     @Mapping(source = "tipoActividad.tipoActividad", target = "tipoActividad")
-    ActividadSocioRes toActividadSocioResponseDTO(ActividadSocio actividadSocio);
+    ActividadSocioResponse toActividadSocioResponseDTO(ActividadSocio actividadSocio);
 
 }

@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.business95.api.business95_api.dtos.responses.ActividadSocioRes;
+import com.business95.api.business95_api.dtos.responses.ActividadSocioResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorMovRes;
 import com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes;
 import com.business95.api.business95_api.entities.Movimiento;
@@ -23,7 +23,7 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                         "a.tipoActividad.tipoActividad AS tipoActividad) FROM Movimiento m " +
                         "LEFT JOIN m.moneda mo LEFT JOIN m.medida md LEFT JOIN m.actividadesSocio a " +
                         "WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha DESC")
-        List<ActividadSocioRes> actividadesPorMovimiento(@Param("idMovimiento") Long idMovimiento);
+        List<ActividadSocioResponse> actividadesPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
         @Query("SELECT new com.business95.api.business95_api.dtos.responses.MovConBalancesSociosRes(" +
                         "m.idMovimiento AS idMovimiento, m.inversion.inversion AS inversion, " +

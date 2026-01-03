@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.business95_api.dtos.requests.InversionRequest;
-import com.business95.api.business95_api.dtos.responses.BalanceInversionRes;
+import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioPorInvRes;
 import com.business95.api.business95_api.dtos.responses.InversionRes;
@@ -54,7 +54,7 @@ public class InversionServiceImpl implements InversionService {
     }
 
     @Override
-    public BalanceInversionRes balanceInversion(Long idInversion) {
+    public BalanceInversionResponse balanceInversion(Long idInversion) {
 
         BalanceInversionProjection inversionsocioProjection;
 
@@ -66,15 +66,16 @@ public class InversionServiceImpl implements InversionService {
             throw new InversionNoEncontradaException(idInversion);
         }
 
-        BalanceInversionRes invResponse = inversionMapper.toBalanceInversionResponse(inversionsocioProjection);
+        BalanceInversionResponse inversionResponse = inversionMapper
+                .toBalanceInversionResponse(inversionsocioProjection);
 
         List<BalanceSocioPorInvRes> balances = inversionRepository.balanceSocioPorInversion(idInversion)
                 .stream()
                 .map(inversionMapper::toBalanceSocioPorInvResponse)
                 .toList();
 
-        invResponse.setBalances(balances);
-        return invResponse;
+        inversionResponse.setBalances(balances);
+        return inversionResponse;
     }
 
     @Override

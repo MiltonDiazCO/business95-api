@@ -7,7 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class BalanceInversionRes {
+public class BalanceInversionResponse {
 
     private Long idInversion;
     private String inversion;
@@ -16,10 +16,10 @@ public class BalanceInversionRes {
     private BigDecimal balanceInversion;
     private List<BalanceSocioPorInvRes> balances = new ArrayList<>();
 
-    public BalanceInversionRes() {
+    public BalanceInversionResponse() {
     }
 
-    public BalanceInversionRes(
+    public BalanceInversionResponse(
             Long idInversion,
             String inversion,
             BigDecimal ingresos,

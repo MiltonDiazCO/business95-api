@@ -18,7 +18,7 @@ public class MovimientoResponse {
     private String medida;
     private String idMoneda;
     private String moneda;
-    private List<ActividadSocioRes> actividades = new ArrayList<>();
+    private List<ActividadSocioResponse> actividades = new ArrayList<>();
 
     public MovimientoResponse() {
     }
@@ -34,7 +34,7 @@ public class MovimientoResponse {
             String medida,
             String idMoneda,
             String moneda,
-            List<ActividadSocioRes> actividades) {
+            List<ActividadSocioResponse> actividades) {
         this.idMovimiento = idMovimiento;
         this.idInversion = idInversion;
         this.inversion = inversion;
@@ -128,11 +128,11 @@ public class MovimientoResponse {
         this.moneda = moneda;
     }
 
-    public List<ActividadSocioRes> getActividades() {
+    public List<ActividadSocioResponse> getActividades() {
         return actividades;
     }
 
-    public void setActividades(List<ActividadSocioRes> actividades) {
+    public void setActividades(List<ActividadSocioResponse> actividades) {
         this.actividades = actividades;
     }
 

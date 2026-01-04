@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 
 import com.business95.api.business95_api.dtos.responses.BalanceAnualSocioResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioRes;
-import com.business95.api.business95_api.dtos.responses.SocioRes;
+import com.business95.api.business95_api.dtos.responses.SocioResponse;
 import com.business95.api.business95_api.entities.Socio;
 import com.business95.api.business95_api.projections.BalanceAnualSocioProjection;
 import com.business95.api.business95_api.projections.BalanceSocioProjection;
@@ -16,7 +16,7 @@ public interface SocioMapper {
     @Mapping(target = "socio", expression = "java(socio.getNombresRazonsocial() + (socio.getApellidos() != null ? \" \" + socio.getApellidos() : \"\"))")
     @Mapping(source = "tipoPersona.tipoPersona", target = "tipoPersona")
     @Mapping(source = "usuario", target = "usuario")
-    SocioRes toSocioResponseDTO(Socio socio);
+    SocioResponse toSocioResponseDTO(Socio socio);
 
     @Mapping(target = "historialAnual", ignore = true)
     BalanceSocioRes toBalanceSocioResponse(BalanceSocioProjection balanceSocioProjection);

@@ -3,7 +3,7 @@ package com.business95.api.business95_api.dtos.responses;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class SocioRes {
+public class SocioResponse {
 
     private Long idSocio;
     private String socio;
@@ -11,10 +11,10 @@ public class SocioRes {
     private String tipoPersona;
     private UsuarioResponse usuario;
 
-    public SocioRes() {
+    public SocioResponse() {
     }
 
-    public SocioRes(Long idSocio,
+    public SocioResponse(Long idSocio,
             String socio,
             String telefono,
             String tipoPersona,

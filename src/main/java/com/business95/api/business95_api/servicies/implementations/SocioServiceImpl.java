@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.business95_api.dtos.responses.BalanceAnualSocioResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioRes;
-import com.business95.api.business95_api.dtos.responses.SocioRes;
+import com.business95.api.business95_api.dtos.responses.SocioResponse;
 import com.business95.api.business95_api.exceptions.SocioNoEncontradoException;
 import com.business95.api.business95_api.helpers.SocioHelper;
 import com.business95.api.business95_api.mappers.InversionMapper;
@@ -41,7 +41,7 @@ public class SocioServiceImpl implements SocioService {
 
     @Override
     @Transactional(readOnly = true)
-    public SocioRes socioFindById(Long idSocio) {
+    public SocioResponse socioFindById(Long idSocio) {
         return socioMapper.toSocioResponseDTO(socioHelper.findByIdOrThrow(idSocio));
     }
 

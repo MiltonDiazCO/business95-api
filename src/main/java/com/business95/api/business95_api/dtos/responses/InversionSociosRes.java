@@ -6,12 +6,12 @@ public class InversionSociosRes {
 
     private Long idInversion;
     private String inversion;
-    private List<SocioRes> socios;
+    private List<SocioResponse> socios;
 
     public InversionSociosRes() {
     }
 
-    public InversionSociosRes(Long idInversion, String inversion, List<SocioRes> socios) {
+    public InversionSociosRes(Long idInversion, String inversion, List<SocioResponse> socios) {
         this.idInversion = idInversion;
         this.inversion = inversion;
         this.socios = socios;
@@ -33,15 +33,15 @@ public class InversionSociosRes {
         this.inversion = inversion;
     }
 
-    public List<SocioRes> getSocios() {
+    public List<SocioResponse> getSocios() {
         return socios;
     }
 
-    public void setSocios(List<SocioRes> socios) {
+    public void setSocios(List<SocioResponse> socios) {
         this.socios = socios;
     }
 
-    public void addSocio(SocioRes socioResponse) {
+    public void addSocio(SocioResponse socioResponse) {
         this.socios.add(socioResponse);
     }
 

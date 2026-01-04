@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioRes;
-import com.business95.api.business95_api.dtos.responses.SocioRes;
+import com.business95.api.business95_api.dtos.responses.SocioResponse;
 import com.business95.api.business95_api.servicies.interfaces.SocioService;
 
 @RestController()
@@ -24,7 +24,7 @@ public class SocioController {
     }
 
     @GetMapping("/{idSocio}")
-    public ResponseEntity<SocioRes> socioFindById(@PathVariable Long idSocio) {
+    public ResponseEntity<SocioResponse> socioFindById(@PathVariable Long idSocio) {
         return ResponseEntity.ok().body(socioService.socioFindById(idSocio));
     }
 

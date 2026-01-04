@@ -9,7 +9,7 @@ import com.business95.api.business95_api.dtos.requests.InversionRequest;
 import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioResponse;
-import com.business95.api.business95_api.dtos.responses.InversionRes;
+import com.business95.api.business95_api.dtos.responses.InversionResponse;
 import com.business95.api.business95_api.dtos.responses.InversionSociosRes;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
@@ -43,7 +43,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    public InversionRes inversionPorId(Long idInversion) {
+    public InversionResponse inversionPorId(Long idInversion) {
         return inversionMapper.toInversionResponse(inversionHelper.findByIdOrThrow(idInversion));
     }
 
@@ -100,7 +100,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionRes update(Long idInversion, Inversion inversion) {
+    public InversionResponse update(Long idInversion, Inversion inversion) {
 
         Inversion inversionUpdate = inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));

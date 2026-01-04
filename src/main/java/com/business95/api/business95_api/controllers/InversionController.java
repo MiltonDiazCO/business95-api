@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.business95.api.business95_api.dtos.responses.InversionRes;
+import com.business95.api.business95_api.dtos.responses.InversionResponse;
 import com.business95.api.business95_api.dtos.responses.InversionSociosRes;
 import com.business95.api.business95_api.dtos.requests.InversionRequest;
 import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
@@ -41,7 +41,7 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}")
-    public ResponseEntity<InversionRes> inversionFindById(@PathVariable Long idInversion) {
+    public ResponseEntity<InversionResponse> inversionFindById(@PathVariable Long idInversion) {
         return ResponseEntity.ok().body(inversionService.inversionPorId(idInversion));
     }
 

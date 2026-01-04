@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.business95.api.business95_api.dtos.responses.BalanceAnualSocioResponse;
-import com.business95.api.business95_api.dtos.responses.BalanceSocioRes;
+import com.business95.api.business95_api.dtos.responses.BalanceSocioResponse;
 import com.business95.api.business95_api.dtos.responses.SocioResponse;
 import com.business95.api.business95_api.entities.Socio;
 import com.business95.api.business95_api.projections.BalanceAnualSocioProjection;
@@ -19,7 +19,7 @@ public interface SocioMapper {
     SocioResponse toSocioResponseDTO(Socio socio);
 
     @Mapping(target = "historialAnual", ignore = true)
-    BalanceSocioRes toBalanceSocioResponse(BalanceSocioProjection balanceSocioProjection);
+    BalanceSocioResponse toBalanceSocioResponse(BalanceSocioProjection balanceSocioProjection);
 
     BalanceAnualSocioResponse toBalanceAnualSocioResponse(BalanceAnualSocioProjection balanceAnualSocioProjection);
 

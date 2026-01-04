@@ -2,16 +2,16 @@ package com.business95.api.business95_api.dtos.responses;
 
 import java.util.List;
 
-public class InversionSociosRes {
+public class InversionConSociosResponse {
 
     private Long idInversion;
     private String inversion;
     private List<SocioResponse> socios;
 
-    public InversionSociosRes() {
+    public InversionConSociosResponse() {
     }
 
-    public InversionSociosRes(Long idInversion, String inversion, List<SocioResponse> socios) {
+    public InversionConSociosResponse(Long idInversion, String inversion, List<SocioResponse> socios) {
         this.idInversion = idInversion;
         this.inversion = inversion;
         this.socios = socios;

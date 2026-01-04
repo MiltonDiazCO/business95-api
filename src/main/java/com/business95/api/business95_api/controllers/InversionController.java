@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.business95.api.business95_api.dtos.responses.InversionResponse;
-import com.business95.api.business95_api.dtos.responses.InversionSociosRes;
 import com.business95.api.business95_api.dtos.requests.InversionRequest;
 import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
+import com.business95.api.business95_api.dtos.responses.InversionResponse;
+import com.business95.api.business95_api.dtos.responses.InversionConSociosResponse;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.servicies.interfaces.InversionService;
 import com.business95.api.business95_api.utils.ErrorUtils;
@@ -46,7 +46,7 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}/socios")
-    public ResponseEntity<InversionSociosRes> sociosPorInversion(@PathVariable Long idInversion) {
+    public ResponseEntity<InversionConSociosResponse> sociosPorInversion(@PathVariable Long idInversion) {
         return ResponseEntity.ok().body(inversionService.sociosPorInversion(idInversion));
     }
 

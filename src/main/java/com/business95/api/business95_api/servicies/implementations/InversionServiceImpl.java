@@ -10,7 +10,7 @@ import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse
 import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
 import com.business95.api.business95_api.dtos.responses.BalanceSocioResponse;
 import com.business95.api.business95_api.dtos.responses.InversionResponse;
-import com.business95.api.business95_api.dtos.responses.InversionSociosRes;
+import com.business95.api.business95_api.dtos.responses.InversionConSociosResponse;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.exceptions.InversionNoEncontradaException;
 import com.business95.api.business95_api.exceptions.SociosRequeridosException;
@@ -49,8 +49,8 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    public InversionSociosRes sociosPorInversion(Long idInversion) {
-        return inversionMapper.toInversionSociosRes(inversionHelper.findByIdOrThrow(idInversion));
+    public InversionConSociosResponse sociosPorInversion(Long idInversion) {
+        return inversionMapper.toInversionConSociosResponse(inversionHelper.findByIdOrThrow(idInversion));
     }
 
     @Override
@@ -87,7 +87,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionSociosRes guardarInversionConSocios(InversionRequest inversionRequest) {
+    public InversionConSociosResponse guardarInversionConSocios(InversionRequest inversionRequest) {
 
         Inversion inversion = new Inversion(null, inversionRequest.getInversion());
 
@@ -95,7 +95,7 @@ public class InversionServiceImpl implements InversionService {
             inversion.addSocio(socioHelper.findByIdOrThrow(socio));
         }
 
-        return inversionMapper.toInversionSociosRes(inversionRepository.save(inversion));
+        return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
     }
 
     @Override
@@ -112,7 +112,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionSociosRes agregarSociosAInversion(Long idInversion, List<Long> socios) {
+    public InversionConSociosResponse agregarSociosAInversion(Long idInversion, List<Long> socios) {
 
         Inversion inversion = inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
@@ -125,7 +125,7 @@ public class InversionServiceImpl implements InversionService {
             inversion.addSocio(socioHelper.findByIdOrThrow(socio));
         }
 
-        return inversionMapper.toInversionSociosRes(inversionRepository.save(inversion));
+        return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
     }
 
     @Override

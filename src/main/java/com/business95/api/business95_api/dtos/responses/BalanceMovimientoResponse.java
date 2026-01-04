@@ -6,38 +6,30 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class BalanceMovsPorInvRes {
+public class BalanceMovimientoResponse {
 
     private Long idMovimiento;
     private String inversion;
     private String concepto;
     private String categoria;
-    private BigDecimal cantidadMovimiento;
+    private BigDecimal cantidad;
     private String medida;
-    private BigDecimal balanceMovimiento;
+    private BigDecimal balance;
     private String moneda;
     private LocalDateTime fechaUltimaActividad;
 
-    public BalanceMovsPorInvRes() {
+    public BalanceMovimientoResponse() {
     }
 
-    public BalanceMovsPorInvRes(
-            Long idMovimiento,
-            String inversion,
-            String concepto,
-            String categoria,
-            BigDecimal cantidadMovimiento,
-            String medida,
-            BigDecimal balanceMovimiento,
-            String moneda,
-            LocalDateTime fechaUltimaActividad) {
+    public BalanceMovimientoResponse(Long idMovimiento, String inversion, String concepto, String categoria,
+            BigDecimal cantidad, String medida, BigDecimal balance, String moneda, LocalDateTime fechaUltimaActividad) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
-        this.cantidadMovimiento = cantidadMovimiento;
+        this.cantidad = cantidad;
         this.medida = medida;
-        this.balanceMovimiento = balanceMovimiento;
+        this.balance = balance;
         this.moneda = moneda;
         this.fechaUltimaActividad = fechaUltimaActividad;
     }
@@ -74,12 +66,12 @@ public class BalanceMovsPorInvRes {
         this.categoria = categoria;
     }
 
-    public BigDecimal getCantidadMovimiento() {
-        return cantidadMovimiento;
+    public BigDecimal getCantidad() {
+        return cantidad;
     }
 
-    public void setCantidadMovimiento(BigDecimal cantidadMovimiento) {
-        this.cantidadMovimiento = cantidadMovimiento;
+    public void setCantidad(BigDecimal cantidad) {
+        this.cantidad = cantidad;
     }
 
     public String getMedida() {
@@ -90,12 +82,12 @@ public class BalanceMovsPorInvRes {
         this.medida = medida;
     }
 
-    public BigDecimal getBalanceMovimiento() {
-        return balanceMovimiento;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setBalanceMovimiento(BigDecimal balanceMovimiento) {
-        this.balanceMovimiento = balanceMovimiento;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public String getMoneda() {

@@ -8,7 +8,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes;
+import com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse;
 import com.business95.api.business95_api.entities.Inversion;
 import com.business95.api.business95_api.projections.BalanceInversionProjection;
 import com.business95.api.business95_api.projections.BalanceSocioPorInvProjection;
@@ -16,15 +16,15 @@ import com.business95.api.business95_api.projections.BalanceSocioPorInvProjectio
 @Repository
 public interface InversionRepository extends CrudRepository<Inversion, Long> {
 
-        @Query("SELECT new com.business95.api.business95_api.dtos.responses.BalanceMovsPorInvRes(" +
+        @Query("SELECT new com.business95.api.business95_api.dtos.responses.BalanceMovimientoResponse(" +
                         "m.idMovimiento AS idMovimiento, m.concepto AS concepto, " +
                         "m.categoria.categoria AS categoria, " +
-                        "SUM(a.cantidad) AS cantidadMovimiento, md.medida AS medida, " +
-                        "SUM(a.monto) AS balanceMovimiento, m.moneda.idMoneda AS moneda, " +
+                        "SUM(a.cantidad) AS cantidad, md.medida AS medida, " +
+                        "SUM(a.monto) AS balance, m.moneda.idMoneda AS moneda, " +
                         "MAX(a.fecha) AS fechaUltimaActividad) " +
                         "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
                         "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento")
-        Optional<List<BalanceMovsPorInvRes>> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
+        Optional<List<BalanceMovimientoResponse>> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
 
         @Query(value = "SELECT inv.id_inversion as idInversion, inv.inversion AS inversion, " +
                         "SUM(CASE WHEN resumen.total_inversion > 0 " +

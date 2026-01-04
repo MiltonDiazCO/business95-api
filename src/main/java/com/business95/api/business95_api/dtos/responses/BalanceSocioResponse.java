@@ -2,21 +2,21 @@ package com.business95.api.business95_api.dtos.responses;
 
 import java.math.BigDecimal;
 
-public class BalanceSocioPorInvRes {
+public class BalanceSocioResponse {
 
     private String socio;
     private BigDecimal ingresos;
     private BigDecimal gastos;
-    private BigDecimal balanceSocio;
+    private BigDecimal balance;
 
-    public BalanceSocioPorInvRes() {
+    public BalanceSocioResponse() {
     }
 
-    public BalanceSocioPorInvRes(String socio, BigDecimal ingresos, BigDecimal gastos, BigDecimal balanceSocio) {
+    public BalanceSocioResponse(String socio, BigDecimal ingresos, BigDecimal gastos, BigDecimal balance) {
         this.socio = socio;
         this.ingresos = ingresos;
         this.gastos = gastos;
-        this.balanceSocio = balanceSocio;
+        this.balance = balance;
     }
 
     public String getSocio() {
@@ -43,12 +43,12 @@ public class BalanceSocioPorInvRes {
         this.gastos = gastos;
     }
 
-    public BigDecimal getBalanceSocio() {
-        return balanceSocio;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setBalanceSocio(BigDecimal balanceSocio) {
-        this.balanceSocio = balanceSocio;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
 }

@@ -9,17 +9,19 @@ public class BalanceSocioRes {
     private String socio;
     private BigDecimal ingresos;
     private BigDecimal gastos;
-    private BigDecimal balanceSocio;
-    private List<BalanceAnualSocioResponse> balances = new ArrayList<>();
+    private BigDecimal balance;
+    private List<BalanceAnualSocioResponse> historialAnual = new ArrayList<>();
 
     public BalanceSocioRes() {
     }
 
-    public BalanceSocioRes(String socio, BigDecimal ingresos, BigDecimal gastos, BigDecimal balanceSocio) {
+    public BalanceSocioRes(String socio, BigDecimal ingresos, BigDecimal gastos, BigDecimal balance,
+            List<BalanceAnualSocioResponse> historialAnual) {
         this.socio = socio;
         this.ingresos = ingresos;
         this.gastos = gastos;
-        this.balanceSocio = balanceSocio;
+        this.balance = balance;
+        this.historialAnual = historialAnual;
     }
 
     public String getSocio() {
@@ -46,24 +48,24 @@ public class BalanceSocioRes {
         this.gastos = gastos;
     }
 
-    public BigDecimal getBalanceSocio() {
-        return balanceSocio;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setBalanceSocio(BigDecimal balanceSocio) {
-        this.balanceSocio = balanceSocio;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
-    public List<BalanceAnualSocioResponse> getBalances() {
-        return balances;
+    public List<BalanceAnualSocioResponse> getHistorialAnual() {
+        return historialAnual;
     }
 
-    public void setBalances(List<BalanceAnualSocioResponse> balances) {
-        this.balances = balances;
+    public void setHistorialAnual(List<BalanceAnualSocioResponse> historialAnual) {
+        this.historialAnual = historialAnual;
     }
 
-    public void addBalanceAnual(BalanceAnualSocioResponse balanceAnual) {
-        this.balances.add(balanceAnual);
+    public void addhistorialAnual(BalanceAnualSocioResponse balanceAnualSocio) {
+        this.historialAnual.add(balanceAnualSocio);
     }
 
 }

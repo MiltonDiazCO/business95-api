@@ -58,12 +58,13 @@ public class SocioServiceImpl implements SocioService {
                 .map(socioMapper::toBalanceAnualSocioResponse)
                 .toList();
 
-        socioResponse.setBalances(balances);
+        socioResponse.setHistorialAnual(balances);
 
         return socioResponse;
     }
 
-    public List<BalanceInversionResponse> balanceInversionesPorSocio(Long idSocio) {
+    @Override
+    public List<BalanceInversionResponse> balanceInversionPorSocio(Long idSocio) {
         return inversionRepository.balanceInversion(idSocio, null)
                 .stream()
                 .map(inversionMapper::toBalanceInversionResponse)

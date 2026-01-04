@@ -18,7 +18,7 @@ public interface SocioMapper {
     @Mapping(source = "usuario", target = "usuario")
     SocioRes toSocioResponseDTO(Socio socio);
 
-    @Mapping(target = "balances", ignore = true)
+    @Mapping(target = "historialAnual", ignore = true)
     BalanceSocioRes toBalanceSocioResponse(BalanceSocioProjection balanceSocioProjection);
 
     BalanceAnualSocioResponse toBalanceAnualSocioResponse(BalanceAnualSocioProjection balanceAnualSocioProjection);

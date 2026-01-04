@@ -4,7 +4,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.business95.api.business95_api.dtos.responses.BalanceInversionResponse;
-import com.business95.api.business95_api.dtos.responses.BalanceSocioPorInvRes;
+import com.business95.api.business95_api.dtos.responses.BalanceSocioResponse;
 import com.business95.api.business95_api.dtos.responses.InversionRes;
 import com.business95.api.business95_api.dtos.responses.InversionSociosRes;
 import com.business95.api.business95_api.entities.Inversion;
@@ -18,9 +18,9 @@ public interface InversionMapper {
 
     InversionSociosRes toInversionSociosRes(Inversion inversion);
 
-    @Mapping(target = "balances", ignore = true)
+    @Mapping(target = "balancesPorSocio", ignore = true)
     BalanceInversionResponse toBalanceInversionResponse(BalanceInversionProjection balanceInversionProjection);
 
-    BalanceSocioPorInvRes toBalanceSocioPorInvResponse(BalanceSocioPorInvProjection balanceSocioPorInvProjection);
+    BalanceSocioResponse toBalanceSocioPorInvResponse(BalanceSocioPorInvProjection balanceSocioPorInvProjection);
 
 }

@@ -13,23 +13,20 @@ public class BalanceInversionResponse {
     private String inversion;
     private BigDecimal ingresos;
     private BigDecimal gastos;
-    private BigDecimal balanceInversion;
-    private List<BalanceSocioPorInvRes> balances = new ArrayList<>();
+    private BigDecimal balance;
+    private List<BalanceSocioResponse> balancesPorSocio = new ArrayList<>();
 
     public BalanceInversionResponse() {
     }
 
-    public BalanceInversionResponse(
-            Long idInversion,
-            String inversion,
-            BigDecimal ingresos,
-            BigDecimal gastos,
-            BigDecimal balanceInversion) {
+    public BalanceInversionResponse(Long idInversion, String inversion, BigDecimal ingresos, BigDecimal gastos,
+            BigDecimal balance, List<BalanceSocioResponse> balancesPorSocio) {
         this.idInversion = idInversion;
         this.inversion = inversion;
         this.ingresos = ingresos;
         this.gastos = gastos;
-        this.balanceInversion = balanceInversion;
+        this.balance = balance;
+        this.balancesPorSocio = balancesPorSocio;
     }
 
     public Long getIdInversion() {
@@ -64,23 +61,24 @@ public class BalanceInversionResponse {
         this.gastos = gastos;
     }
 
-    public BigDecimal getBalanceInversion() {
-        return balanceInversion;
+    public BigDecimal getBalance() {
+        return balance;
     }
 
-    public void setBalanceInversion(BigDecimal balanceInversion) {
-        this.balanceInversion = balanceInversion;
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
-    public List<BalanceSocioPorInvRes> getBalances() {
-        return balances;
+    public List<BalanceSocioResponse> getBalancesPorSocio() {
+        return balancesPorSocio;
     }
 
-    public void setBalances(List<BalanceSocioPorInvRes> balances) {
-        this.balances = balances;
+    public void setBalancesPorSocio(List<BalanceSocioResponse> balancesPorSocio) {
+        this.balancesPorSocio = balancesPorSocio;
     }
 
-    public void addBalanceInvSocio(BalanceSocioPorInvRes balanceInvSocio) {
-        this.balances.add(balanceInvSocio);
+    public void addBalanceSocio(BalanceSocioResponse balanceSocio) {
+        this.balancesPorSocio.add(balanceSocio);
     }
+
 }

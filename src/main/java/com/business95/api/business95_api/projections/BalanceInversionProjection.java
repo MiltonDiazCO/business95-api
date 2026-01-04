@@ -12,6 +12,6 @@ public interface BalanceInversionProjection {
 
     BigDecimal getGastos();
 
-    BigDecimal getBalanceInversion();
+    BigDecimal getBalance();
 
 }

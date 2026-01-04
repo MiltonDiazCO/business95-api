@@ -16,7 +16,7 @@ import com.business95.api.business95_api.entities.Movimiento;
 @Repository
 public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
 
-        @Query("SELECT new com.business95.api.business95_api.dtos.responses.ActividadSocioRes(" +
+        @Query("SELECT new com.business95.api.business95_api.dtos.responses.ActividadSocioResponse(" +
                         "a.idActividad AS idActividad, " +
                         "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
                         "a.cantidad AS cantidad, a.monto AS monto, a.fecha AS fecha, " +

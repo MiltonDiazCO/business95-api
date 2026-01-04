@@ -9,5 +9,5 @@ public interface BalanceSocioProjection {
 
     BigDecimal getGastos();
 
-    BigDecimal getBalanceSocio();
+    BigDecimal getBalance();
 }

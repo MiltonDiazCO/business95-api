@@ -20,7 +20,7 @@ public interface SocioRepository extends CrudRepository<Socio, Long> {
             "THEN sub_query.totalPorSocioMovimiento ELSE 0 END) AS ingresos, " +
             "SUM(CASE WHEN sub_query.totalPorSocioMovimiento < 0 " +
             "THEN sub_query.totalPorSocioMovimiento ELSE 0 END) AS gastos, " +
-            "SUM(sub_query.totalPorSocioMovimiento) AS balanceSocio " +
+            "SUM(sub_query.totalPorSocioMovimiento) AS balance " +
             "FROM socios s " +
             "JOIN (SELECT sub_soc.id_socio AS idSocio, " +
             "sub_as.id_movimiento AS idMovimiento, " +

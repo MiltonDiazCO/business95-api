@@ -1,0 +1,9 @@
+package com.business95.api.exceptions;
+
+public class SocioNoEncontradoException extends RuntimeException {
+
+    public SocioNoEncontradoException(Long id) {
+        super("El socio con ID " + id + " no se encuentra registrado en el sistema.");
+    }
+
+}

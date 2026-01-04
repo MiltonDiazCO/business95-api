@@ -1,0 +1,23 @@
+package com.business95.api.helpers;
+
+import org.springframework.stereotype.Component;
+
+import com.business95.api.entities.Categoria;
+import com.business95.api.exceptions.CategoriaNoEncontradaException;
+import com.business95.api.repositories.CategoriaRepository;
+
+@Component
+public class CategoriaHelper {
+
+    private CategoriaRepository categoriaRepository;
+
+    public CategoriaHelper(CategoriaRepository categoriaRepository) {
+        this.categoriaRepository = categoriaRepository;
+    }
+
+    public Categoria findByIdOrThrow(Long idCategoria) {
+        return categoriaRepository.findById(idCategoria)
+                .orElseThrow(() -> new CategoriaNoEncontradaException(idCategoria));
+    }
+
+}

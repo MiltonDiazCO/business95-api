@@ -15,17 +15,16 @@ Este repositorio contiene la API de Business 95, desarrollada con Spring Boot. P
 ├── com
 │   └── business95
 │       └── api
-│          └── apibusiness95-api
-│              ├── Application.java
-│              ├── config              # Configuración (seguridad, beans, CORS, etc.)
-│              ├── controller          # Controladores REST
-│              ├── dto                 # Clases DTO para entrada/salida de datos
-│              ├── entity              # Entidades JPA (antes estaba como 'model')
-│              ├── exception           # Manejo de excepciones personalizadas
-│              ├── repository          # Interfaces de acceso a datos (CrudRepository, etc.)
-│              ├── service             # Interfaces y clases de lógica de negocio
-│              ├── util                # Clases utilitarias y helpers
-│              └── validator           # Validaciones personalizadas
+│          ├── Application.java
+│          ├── config              # Configuración (seguridad, beans, CORS, etc.)
+│          ├── controller          # Controladores REST
+│          ├── dto                 # Clases DTO para entrada/salida de datos
+│          ├── entity              # Entidades JPA (antes estaba como 'model')
+│          ├── exception           # Manejo de excepciones personalizadas
+│          ├── repository          # Interfaces de acceso a datos (CrudRepository, etc.)
+│          ├── service             # Interfaces y clases de lógica de negocio
+│          ├── util                # Clases utilitarias y helpers
+│          └── validator           # Validaciones personalizadas
 
 ```
 

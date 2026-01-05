@@ -12,8 +12,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
-import com.business95.api.security.filters.JwtAuthenticationFilter;
-import com.business95.api.security.filters.JwtValidationFilter;
+import com.business95.api.security.filter.JwtAuthenticationFilter;
+import com.business95.api.security.filter.JwtValidationFilter;
 
 @Configuration
 @EnableWebSecurity

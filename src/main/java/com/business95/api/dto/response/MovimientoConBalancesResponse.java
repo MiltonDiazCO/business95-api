@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MovConBalancesSociosRes {
+public class MovimientoConBalancesResponse {
 
     private Long idMovimiento;
     private String inversion;
@@ -15,13 +15,12 @@ public class MovConBalancesSociosRes {
     private String medida;
     private BigDecimal balanceMovimiento;
     private String moneda;
-    private LocalDateTime fechaUltimaActividad;
-    private List<BalanceSocioPorMovRes> balances = new ArrayList<>();
+    private List<BalanceSocioPorMovimientoResponse> balanceSocios = new ArrayList<>();
 
-    public MovConBalancesSociosRes() {
+    public MovimientoConBalancesResponse() {
     }
 
-    public MovConBalancesSociosRes(
+    public MovimientoConBalancesResponse(
             Long idMovimiento,
             String inversion,
             String concepto,
@@ -30,8 +29,7 @@ public class MovConBalancesSociosRes {
             String medida,
             BigDecimal balanceMovimiento,
             String moneda,
-            LocalDateTime fechaUltimaActividad,
-            List<BalanceSocioPorMovRes> balances) {
+            List<BalanceSocioPorMovimientoResponse> balanceSocios) {
         this.idMovimiento = idMovimiento;
         this.inversion = inversion;
         this.concepto = concepto;
@@ -40,8 +38,7 @@ public class MovConBalancesSociosRes {
         this.medida = medida;
         this.balanceMovimiento = balanceMovimiento;
         this.moneda = moneda;
-        this.fechaUltimaActividad = fechaUltimaActividad;
-        this.balances = balances;
+        this.balanceSocios = balanceSocios;
     }
 
     public Long getIdMovimiento() {
@@ -108,24 +105,16 @@ public class MovConBalancesSociosRes {
         this.moneda = moneda;
     }
 
-    public LocalDateTime getFechaUltimaActividad() {
-        return fechaUltimaActividad;
+    public List<BalanceSocioPorMovimientoResponse> getBalanceSocios() {
+        return balanceSocios;
     }
 
-    public void setFechaUltimaActividad(LocalDateTime fechaUltimaActividad) {
-        this.fechaUltimaActividad = fechaUltimaActividad;
+    public void setBalanceSocios(List<BalanceSocioPorMovimientoResponse> balanceSocios) {
+        this.balanceSocios = balanceSocios;
     }
 
-    public List<BalanceSocioPorMovRes> getBalances() {
-        return balances;
-    }
-
-    public void setBalances(List<BalanceSocioPorMovRes> balances) {
-        this.balances = balances;
-    }
-
-    public void addBalanceSocio(BalanceSocioPorMovRes balanceSocioResponse) {
-        this.balances.add(balanceSocioResponse);
+    public void addBalanceSocio(BalanceSocioPorMovimientoResponse balanceSocio) {
+        this.balanceSocios.add(balanceSocio);
     }
 
 }

@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.dto.request.ActividadSocioRequest;
 import com.business95.api.dto.request.MovimientoRequest;
 import com.business95.api.dto.request.MovimientoUpdateRequest;
-import com.business95.api.dto.response.BalanceSocioPorMovRes;
-import com.business95.api.dto.response.MovConBalancesSociosRes;
+import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
+import com.business95.api.dto.response.MovimientoConBalancesResponse;
 import com.business95.api.dto.response.MovimientoResponse;
 import com.business95.api.entity.ActividadSocio;
 import com.business95.api.entity.Movimiento;
@@ -47,13 +47,13 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
-        public MovConBalancesSociosRes balanceSociosPorMovimiento(Long idMovimiento) {
-                MovConBalancesSociosRes movResponse = movimientoRepository.balanceMovimiento(idMovimiento)
+        public MovimientoConBalancesResponse balanceSociosPorMovimiento(Long idMovimiento) {
+                MovimientoConBalancesResponse movResponse = movimientoRepository.balanceMovimiento(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 
-                List<BalanceSocioPorMovRes> balances = movimientoRepository.balanceSocioPorMovimiento(idMovimiento);
+                List<BalanceSocioPorMovimientoResponse> balances = movimientoRepository.balanceSocioPorMovimiento(idMovimiento);
 
-                for (BalanceSocioPorMovRes balanceSocio : balances) {
+                for (BalanceSocioPorMovimientoResponse balanceSocio : balances) {
                         movResponse.addBalanceSocio(balanceSocio);
                 }
 

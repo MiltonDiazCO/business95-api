@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.business95.api.dto.request.ActividadSocioRequest;
 import com.business95.api.dto.request.MovimientoRequest;
 import com.business95.api.dto.request.MovimientoUpdateRequest;
-import com.business95.api.dto.response.MovConBalancesSociosRes;
+import com.business95.api.dto.response.MovimientoConBalancesResponse;
 import com.business95.api.dto.response.MovimientoResponse;
 import com.business95.api.service.interfaces.ActividadService;
 import com.business95.api.service.interfaces.MovimientoService;
@@ -48,8 +48,8 @@ public class MovimientoController {
         return ResponseEntity.ok().body(movimientoService.movimientoPorId(idMovimiento));
     }
 
-    @GetMapping("/{idMovimiento}/actividades/balance")
-    public ResponseEntity<MovConBalancesSociosRes> balanceSociosPorMovimiento(
+    @GetMapping("/{idMovimiento}/balance")
+    public ResponseEntity<MovimientoConBalancesResponse> balanceSociosPorMovimiento(
             @PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.balanceSociosPorMovimiento(idMovimiento));
     }

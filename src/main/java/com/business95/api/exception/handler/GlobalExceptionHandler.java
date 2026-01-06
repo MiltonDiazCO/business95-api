@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Locale;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +11,11 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.business95.api.dto.response.ErrorHttpResponse;
 import com.business95.api.exception.ActividadSocioNoEncontradaException;
 import com.business95.api.exception.CategoriaNoEncontradaException;
 import com.business95.api.exception.IdActividadRequeridaException;
+import com.business95.api.exception.InversionConMovimientosException;
 import com.business95.api.exception.InversionNoEncontradaException;
 import com.business95.api.exception.MedidaNoEncontradaException;
 import com.business95.api.exception.MonedaNoEncontradaException;
@@ -22,6 +23,7 @@ import com.business95.api.exception.MovimientoNoEncontradoException;
 import com.business95.api.exception.SocioNoEncontradoException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.exception.TipoActividadNoEncontradoException;
+import com.business95.api.service.interfaces.ErroresService;
 import com.business95.api.util.ErrorUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
@@ -32,11 +34,13 @@ import jakarta.servlet.http.HttpServletRequest;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @Autowired
     private MessageSource messageSource;
+    private ErroresService erroresService;
 
-    @Autowired
-    private MensajeErrorHttpService mensajeErrorHttpService;
+    public GlobalExceptionHandler(MessageSource messageSource, ErroresService erroresService) {
+        this.messageSource = messageSource;
+        this.erroresService = erroresService;
+    }
 
     @ExceptionHandler({
             MovimientoNoEncontradoException.class,
@@ -48,38 +52,38 @@ public class GlobalExceptionHandler {
             TipoActividadNoEncontradoException.class,
             ActividadSocioNoEncontradaException.class
     })
-    public ResponseEntity<ErrorResponse> manejarExcepcionesRecursoNoEncontrado(RuntimeException exc,
+    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesRecursoNoEncontrado(RuntimeException exc,
             HttpServletRequest request) {
 
         return ErrorUtils.construirRespuestaErrorExcepcion(
-                mensajeErrorHttpService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 exc.getMessage(),
                 HttpStatus.NOT_FOUND.value(), request);
     }
 
     @ExceptionHandler({ IdActividadRequeridaException.class, SociosRequeridosException.class })
-    public ResponseEntity<ErrorResponse> manejarExcepcionesRecursoObligatorio(
+    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesRecursoObligatorio(
             RuntimeException exc,
             HttpServletRequest request) {
 
         return ErrorUtils.construirRespuestaErrorExcepcion(
-                mensajeErrorHttpService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 exc.getMessage(),
                 HttpStatus.BAD_REQUEST.value(), request);
     }
 
     @ExceptionHandler(InversionConMovimientosException.class)
-    public ResponseEntity<ErrorResponse> manejarViolacionRestriccionForanea(
+    public ResponseEntity<ErrorHttpResponse> manejarViolacionRestriccionForanea(
             RuntimeException exc,
             HttpServletRequest request) {
 
         return ErrorUtils.construirRespuestaErrorExcepcion(
-                mensajeErrorHttpService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 exc.getMessage(), HttpStatus.CONFLICT.value(), request);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ErrorResponse> manejarFormatoEntradaInvalido(
+    public ResponseEntity<ErrorHttpResponse> manejarFormatoEntradaInvalido(
             HttpMessageNotReadableException exc,
             HttpServletRequest request) {
 

@@ -1,9 +1,9 @@
-package com.business95.api.exception.handler;
+package com.business95.api.dto.response;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class ErrorResponse {
+public class ErrorHttpResponse {
 
     private String mensaje;
     private List<String> errores;
@@ -11,10 +11,10 @@ public class ErrorResponse {
     private String ruta;
     private LocalDateTime fecha;
 
-    public ErrorResponse() {
+    public ErrorHttpResponse() {
     }
 
-    public ErrorResponse(String mensaje, List<String> errores, int codigoEstado, String ruta, LocalDateTime fecha) {
+    public ErrorHttpResponse(String mensaje, List<String> errores, int codigoEstado, String ruta, LocalDateTime fecha) {
         this.mensaje = mensaje;
         this.errores = errores;
         this.codigoEstado = codigoEstado;

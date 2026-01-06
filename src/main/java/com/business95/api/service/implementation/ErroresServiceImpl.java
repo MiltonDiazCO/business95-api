@@ -1,17 +1,22 @@
-package com.business95.api.exception.handler;
+package com.business95.api.service.implementation;
 
 import java.util.Locale;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-@Service
-public class MensajeErrorHttpService {
+import com.business95.api.service.interfaces.ErroresService;
 
-    @Autowired
+@Service
+public class ErroresServiceImpl implements ErroresService {
+
     private MessageSource messageSource;
 
+    public ErroresServiceImpl(MessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
+
+    @Override
     public String obtenerMensajePorMetodoHttp(String metodo) {
         switch (metodo) {
             case "GET":

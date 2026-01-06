@@ -1,4 +1,4 @@
-package com.business95.api.exception.handler;
+package com.business95.api.exception;
 
 public class InversionConMovimientosException extends RuntimeException {
 

@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.response.BalanceInversionResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
+import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
@@ -69,9 +70,9 @@ public class InversionServiceImpl implements InversionService {
         BalanceInversionResponse inversionResponse = inversionMapper
                 .toBalanceInversionResponse(inversionsocioProjection);
 
-        List<BalanceSocioResponse> balances = inversionRepository.balanceSocioPorInversion(idInversion)
+        List<BalanceSocioPorInversionResponse> balances = inversionRepository.balanceSocioPorInversion(idInversion)
                 .stream()
-                .map(inversionMapper::toBalanceSocioPorInvResponse)
+                .map(inversionMapper::toBalanceSocioPorInversionResponse)
                 .toList();
 
         inversionResponse.setBalancesPorSocio(balances);

@@ -14,13 +14,18 @@ public class BalanceInversionResponse {
     private BigDecimal ingresos;
     private BigDecimal gastos;
     private BigDecimal balance;
-    private List<BalanceSocioResponse> balancesPorSocio = new ArrayList<>();
+    private List<BalanceSocioPorInversionResponse> balancesPorSocio = new ArrayList<>();
 
     public BalanceInversionResponse() {
     }
 
-    public BalanceInversionResponse(Long idInversion, String inversion, BigDecimal ingresos, BigDecimal gastos,
-            BigDecimal balance, List<BalanceSocioResponse> balancesPorSocio) {
+    public BalanceInversionResponse(
+            Long idInversion,
+            String inversion,
+            BigDecimal ingresos,
+            BigDecimal gastos,
+            BigDecimal balance,
+            List<BalanceSocioPorInversionResponse> balancesPorSocio) {
         this.idInversion = idInversion;
         this.inversion = inversion;
         this.ingresos = ingresos;
@@ -69,15 +74,15 @@ public class BalanceInversionResponse {
         this.balance = balance;
     }
 
-    public List<BalanceSocioResponse> getBalancesPorSocio() {
+    public List<BalanceSocioPorInversionResponse> getBalancesPorSocio() {
         return balancesPorSocio;
     }
 
-    public void setBalancesPorSocio(List<BalanceSocioResponse> balancesPorSocio) {
+    public void setBalancesPorSocio(List<BalanceSocioPorInversionResponse> balancesPorSocio) {
         this.balancesPorSocio = balancesPorSocio;
     }
 
-    public void addBalanceSocio(BalanceSocioResponse balanceSocio) {
+    public void addBalanceSocio(BalanceSocioPorInversionResponse balanceSocio) {
         this.balancesPorSocio.add(balanceSocio);
     }
 

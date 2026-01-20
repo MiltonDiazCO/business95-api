@@ -2,7 +2,7 @@ package com.business95.api.projection;
 
 import java.math.BigDecimal;
 
-public interface BalanceSocioPorInvProjection {
+public interface BalanceSocioPorInversionProjection {
 
     String getSocio();
 
@@ -10,6 +10,6 @@ public interface BalanceSocioPorInvProjection {
 
     BigDecimal getGastos();
 
-    BigDecimal getBalanceSocio();
+    BigDecimal getBalance();
 
 }

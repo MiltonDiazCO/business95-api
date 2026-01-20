@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.entity.Inversion;
 import com.business95.api.projection.BalanceInversionProjection;
-import com.business95.api.projection.BalanceSocioPorInvProjection;
+import com.business95.api.projection.BalanceSocioPorInversionProjection;
 
 @Repository
 public interface InversionRepository extends CrudRepository<Inversion, Long> {
@@ -57,7 +57,7 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "THEN resumen.total_socio ELSE 0 END) AS ingresos, " +
                         "SUM(CASE WHEN resumen.total_socio < 0 " +
                         "THEN resumen.total_socio ELSE 0 END) AS gastos, " +
-                        "SUM(resumen.total_socio) AS balanceSocio FROM inversiones inv " +
+                        "SUM(resumen.total_socio) AS balance FROM inversiones inv " +
                         "LEFT JOIN (SELECT inv.id_inversion AS id_inversion, " +
                         "act_soc.id_socio AS id_socio, SUM(act_soc.monto) AS total_socio " +
                         "FROM inversiones inv JOIN movimientos mov ON inv.id_inversion = mov.id_inversion " +
@@ -67,6 +67,6 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "JOIN socios s ON resumen.id_socio = s.id_socio " +
                         "WHERE inv.id_inversion = :idInversion " +
                         "GROUP BY resumen.id_socio, resumen.id_inversion", nativeQuery = true)
-        List<BalanceSocioPorInvProjection> balanceSocioPorInversion(@Param("idInversion") Long idInversion);
+        List<BalanceSocioPorInversionProjection> balanceSocioPorInversion(@Param("idInversion") Long idInversion);
 
 }

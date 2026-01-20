@@ -7,23 +7,27 @@ public class SocioResponse {
 
     private Long idSocio;
     private String socio;
+    private String correoElectronico;
     private String telefono;
     private String tipoPersona;
-    private UsuarioResponse usuario;
+    private UsuarioResponse detalleUsuario;
 
     public SocioResponse() {
     }
 
-    public SocioResponse(Long idSocio,
+    public SocioResponse(
+            Long idSocio,
             String socio,
+            String correoElectronico,
             String telefono,
             String tipoPersona,
-            UsuarioResponse usuario) {
+            UsuarioResponse detalleUsuario) {
         this.idSocio = idSocio;
         this.socio = socio;
+        this.correoElectronico = correoElectronico;
         this.telefono = telefono;
         this.tipoPersona = tipoPersona;
-        this.usuario = usuario;
+        this.detalleUsuario = detalleUsuario;
     }
 
     public Long getIdSocio() {
@@ -42,6 +46,14 @@ public class SocioResponse {
         this.socio = socio;
     }
 
+    public String getCorreoElectronico() {
+        return correoElectronico;
+    }
+
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
+    }
+
     public String getTelefono() {
         return telefono;
     }
@@ -58,12 +70,12 @@ public class SocioResponse {
         this.tipoPersona = tipoPersona;
     }
 
-    public UsuarioResponse getUsuario() {
-        return usuario;
+    public UsuarioResponse getDetalleUsuario() {
+        return detalleUsuario;
     }
 
-    public void setUsuario(UsuarioResponse usuario) {
-        this.usuario = usuario;
+    public void setDetalleUsuario(UsuarioResponse detalleUsuario) {
+        this.detalleUsuario = detalleUsuario;
     }
 
 }

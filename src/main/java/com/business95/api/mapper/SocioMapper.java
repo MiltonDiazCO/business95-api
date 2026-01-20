@@ -15,7 +15,8 @@ public interface SocioMapper {
 
     @Mapping(target = "socio", expression = "java(socio.getNombresRazonsocial() + (socio.getApellidos() != null ? \" \" + socio.getApellidos() : \"\"))")
     @Mapping(source = "tipoPersona.tipoPersona", target = "tipoPersona")
-    @Mapping(source = "usuario", target = "usuario")
+    @Mapping(source = "usuario.correoElectronico", target = "correoElectronico")
+    @Mapping(source = "usuario", target = "detalleUsuario")
     SocioResponse toSocioResponseDTO(Socio socio);
 
     @Mapping(target = "historialAnual", ignore = true)

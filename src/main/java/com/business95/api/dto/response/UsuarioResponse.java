@@ -5,26 +5,14 @@ import java.util.Set;
 public class UsuarioResponse {
 
     private Long idUsuario;
-
-    private String usuario;
-
-    private String contrasena;
-
     private Boolean habilitado;
-
     private Set<String> roles;
 
     public UsuarioResponse() {
     }
 
-    public UsuarioResponse(Long idUsuario,
-            String usuario,
-            String contrasena,
-            Boolean habilitado,
-            Set<String> roles) {
+    public UsuarioResponse(Long idUsuario, Boolean habilitado, Set<String> roles) {
         this.idUsuario = idUsuario;
-        this.usuario = usuario;
-        this.contrasena = contrasena;
         this.habilitado = habilitado;
         this.roles = roles;
     }
@@ -35,22 +23,6 @@ public class UsuarioResponse {
 
     public void setIdUsuario(Long idUsuario) {
         this.idUsuario = idUsuario;
-    }
-
-    public String getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
-    }
-
-    public String getContrasena() {
-        return contrasena;
-    }
-
-    public void setContrasena(String contrasena) {
-        this.contrasena = contrasena;
     }
 
     public Boolean getHabilitado() {

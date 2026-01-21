@@ -2,6 +2,8 @@ package com.business95.api.dto.response;
 
 import java.math.BigDecimal;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 public class BalanceSocioPorMovimientoResponse {
 
     private Long idSocio;
@@ -12,7 +14,11 @@ public class BalanceSocioPorMovimientoResponse {
     public BalanceSocioPorMovimientoResponse() {
     }
 
-    public BalanceSocioPorMovimientoResponse(Long idSocio, String socio, BigDecimal cantidadSocio, BigDecimal balanceSocio) {
+    public BalanceSocioPorMovimientoResponse(
+            Long idSocio,
+            String socio,
+            BigDecimal cantidadSocio,
+            BigDecimal balanceSocio) {
         this.idSocio = idSocio;
         this.socio = socio;
         this.cantidadSocio = cantidadSocio;

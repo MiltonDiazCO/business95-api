@@ -36,11 +36,11 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
 
         @Query("SELECT new com.business95.api.dto.response.BalanceSocioPorMovimientoResponse(" +
                         "a.socio.idSocio AS idSocio, " +
-                        "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
+                        "TRIM(CONCAT(a.socio.nombresRazonsocial, ' ', " +
+                        "COALESCE(a.socio.apellidos, ''))) AS socio, " +
                         "SUM(a.cantidad) AS cantidadSocio, SUM(a.monto) AS balanceSocio) " +
-                        "FROM Movimiento m " +
-                        "LEFT JOIN m.actividadesSocio a WHERE m.idMovimiento = :idMovimiento " +
-                        "GROUP BY m.idMovimiento, a.socio.idSocio")
+                        "FROM Movimiento m LEFT JOIN m.actividadesSocio a " +
+                        "WHERE m.idMovimiento = :idMovimiento GROUP BY a.socio.idSocio")
         List<BalanceSocioPorMovimientoResponse> balanceSocioPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
 }

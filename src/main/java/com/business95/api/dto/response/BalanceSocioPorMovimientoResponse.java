@@ -2,8 +2,6 @@ package com.business95.api.dto.response;
 
 import java.math.BigDecimal;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-
 public class BalanceSocioPorMovimientoResponse {
 
     private Long idSocio;

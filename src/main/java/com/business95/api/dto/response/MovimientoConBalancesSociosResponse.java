@@ -7,7 +7,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class MovimientoConBalancesResponse {
+public class MovimientoConBalancesSociosResponse {
 
     private Long idMovimiento;
     private String inversion;
@@ -19,10 +19,29 @@ public class MovimientoConBalancesResponse {
     private String moneda;
     private List<BalanceSocioPorMovimientoResponse> balanceSocios = new ArrayList<>();
 
-    public MovimientoConBalancesResponse() {
+    public MovimientoConBalancesSociosResponse() {
     }
 
-    public MovimientoConBalancesResponse(
+    public MovimientoConBalancesSociosResponse(
+            Long idMovimiento,
+            String inversion,
+            String concepto,
+            String categoria,
+            BigDecimal cantidadMovimiento,
+            String medida,
+            BigDecimal balanceMovimiento,
+            String moneda) {
+        this.idMovimiento = idMovimiento;
+        this.inversion = inversion;
+        this.concepto = concepto;
+        this.categoria = categoria;
+        this.cantidadMovimiento = cantidadMovimiento;
+        this.medida = medida;
+        this.balanceMovimiento = balanceMovimiento;
+        this.moneda = moneda;
+    }
+
+    public MovimientoConBalancesSociosResponse(
             Long idMovimiento,
             String inversion,
             String concepto,

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.business95.api.dto.response.ActividadSocioResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
-import com.business95.api.dto.response.MovimientoConBalancesResponse;
+import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
 import com.business95.api.entity.Movimiento;
 
 @Repository
@@ -26,14 +26,14 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                         "WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha DESC")
         List<ActividadSocioResponse> actividadesPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
-        @Query("SELECT new com.business95.api.dto.response.MovimientoConBalancesResponse    (" +
+        @Query("SELECT new com.business95.api.dto.response.MovimientoConBalancesSociosResponse    (" +
                         "m.idMovimiento AS idMovimiento, m.inversion.inversion AS inversion, " +
                         "m.concepto AS concepto, m.categoria.categoria AS categoria, " +
                         "SUM(a.cantidad) AS cantidadMovimiento, md.medida AS medida, " +
                         "SUM(a.monto) AS balanceMovimiento, m.moneda.idMoneda AS moneda) " +
                         "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
                         "WHERE m.idMovimiento = :idMovimiento GROUP BY m.idMovimiento")
-        Optional<MovimientoConBalancesResponse> balanceMovimiento(@Param("idMovimiento") Long idMovimiento);
+        Optional<MovimientoConBalancesSociosResponse> balanceMovimiento(@Param("idMovimiento") Long idMovimiento);
 
         @Query("SELECT new com.business95.api.dto.response.BalanceSocioPorMovimientoResponse(" +
                         "a.socio.idSocio AS idSocio, " +

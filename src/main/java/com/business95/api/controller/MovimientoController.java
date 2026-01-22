@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.business95.api.dto.request.ActividadSocioRequest;
 import com.business95.api.dto.request.MovimientoRequest;
 import com.business95.api.dto.request.MovimientoUpdateRequest;
-import com.business95.api.dto.response.MovimientoConBalancesResponse;
+import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoResponse;
 import com.business95.api.service.interfaces.ActividadService;
 import com.business95.api.service.interfaces.MovimientoService;
@@ -34,22 +33,26 @@ import jakarta.validation.Valid;
 @RequestMapping("/movimientos")
 public class MovimientoController {
 
-    @Autowired
     private MovimientoService movimientoService;
-
-    @Autowired
     private ActividadService actividadService;
-
-    @Autowired
     private MessageSource messageSource;
+
+    public MovimientoController(
+            MovimientoService movimientoService,
+            ActividadService actividadService,
+            MessageSource messageSource) {
+        this.movimientoService = movimientoService;
+        this.actividadService = actividadService;
+        this.messageSource = messageSource;
+    }
 
     @GetMapping("/{idMovimiento}")
     public ResponseEntity<MovimientoResponse> movimientoPorId(@PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.movimientoPorId(idMovimiento));
     }
 
-    @GetMapping("/{idMovimiento}/balance")
-    public ResponseEntity<MovimientoConBalancesResponse> balanceSociosPorMovimiento(
+    @GetMapping("/{idMovimiento}/balance-socios")
+    public ResponseEntity<MovimientoConBalancesSociosResponse> balanceSociosPorMovimiento(
             @PathVariable Long idMovimiento) {
         return ResponseEntity.ok().body(movimientoService.balanceSociosPorMovimiento(idMovimiento));
     }

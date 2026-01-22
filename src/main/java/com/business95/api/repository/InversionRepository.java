@@ -1,14 +1,12 @@
 package com.business95.api.repository;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.entity.Inversion;
 import com.business95.api.projection.BalanceInversionProjection;
 import com.business95.api.projection.BalanceSocioPorInversionProjection;

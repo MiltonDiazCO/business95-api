@@ -9,7 +9,7 @@ import com.business95.api.dto.request.ActividadSocioRequest;
 import com.business95.api.dto.request.MovimientoRequest;
 import com.business95.api.dto.request.MovimientoUpdateRequest;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
-import com.business95.api.dto.response.MovimientoConBalancesResponse;
+import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoResponse;
 import com.business95.api.entity.ActividadSocio;
 import com.business95.api.entity.Movimiento;
@@ -47,17 +47,19 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
-        public MovimientoConBalancesResponse balanceSociosPorMovimiento(Long idMovimiento) {
-                MovimientoConBalancesResponse movResponse = movimientoRepository.balanceMovimiento(idMovimiento)
+        public MovimientoConBalancesSociosResponse balanceSociosPorMovimiento(Long idMovimiento) {
+                MovimientoConBalancesSociosResponse movimientoResponse = movimientoRepository
+                                .balanceMovimiento(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
 
-                List<BalanceSocioPorMovimientoResponse> balances = movimientoRepository.balanceSocioPorMovimiento(idMovimiento);
+                List<BalanceSocioPorMovimientoResponse> balances = movimientoRepository
+                                .balanceSocioPorMovimiento(idMovimiento);
 
                 for (BalanceSocioPorMovimientoResponse balanceSocio : balances) {
-                        movResponse.addBalanceSocio(balanceSocio);
+                        movimientoResponse.addBalanceSocio(balanceSocio);
                 }
 
-                return movResponse;
+                return movimientoResponse;
         }
 
         @Override

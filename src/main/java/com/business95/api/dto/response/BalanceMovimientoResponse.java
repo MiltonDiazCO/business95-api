@@ -9,28 +9,36 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class BalanceMovimientoResponse {
 
     private Long idMovimiento;
-    private String inversion;
     private String concepto;
     private String categoria;
     private BigDecimal cantidad;
     private String medida;
     private BigDecimal balance;
     private String moneda;
+    private LocalDateTime fechaApertura;
     private LocalDateTime fechaUltimaActividad;
 
     public BalanceMovimientoResponse() {
     }
 
-    public BalanceMovimientoResponse(Long idMovimiento, String inversion, String concepto, String categoria,
-            BigDecimal cantidad, String medida, BigDecimal balance, String moneda, LocalDateTime fechaUltimaActividad) {
+    public BalanceMovimientoResponse(
+            Long idMovimiento,
+            String concepto,
+            String categoria,
+            BigDecimal cantidad,
+            String medida,
+            BigDecimal balance,
+            String moneda,
+            LocalDateTime fechaApertura,
+            LocalDateTime fechaUltimaActividad) {
         this.idMovimiento = idMovimiento;
-        this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
         this.cantidad = cantidad;
         this.medida = medida;
         this.balance = balance;
         this.moneda = moneda;
+        this.fechaApertura = fechaApertura;
         this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
@@ -40,14 +48,6 @@ public class BalanceMovimientoResponse {
 
     public void setIdMovimiento(Long idMovimiento) {
         this.idMovimiento = idMovimiento;
-    }
-
-    public String getInversion() {
-        return inversion;
-    }
-
-    public void setInversion(String inversion) {
-        this.inversion = inversion;
     }
 
     public String getConcepto() {
@@ -96,6 +96,14 @@ public class BalanceMovimientoResponse {
 
     public void setMoneda(String moneda) {
         this.moneda = moneda;
+    }
+
+    public LocalDateTime getFechaApertura() {
+        return fechaApertura;
+    }
+
+    public void setFechaApertura(LocalDateTime fechaApertura) {
+        this.fechaApertura = fechaApertura;
     }
 
     public LocalDateTime getFechaUltimaActividad() {

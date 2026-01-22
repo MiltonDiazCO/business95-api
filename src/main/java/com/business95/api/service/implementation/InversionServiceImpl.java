@@ -20,22 +20,26 @@ import com.business95.api.helper.SocioHelper;
 import com.business95.api.mapper.InversionMapper;
 import com.business95.api.projection.BalanceInversionProjection;
 import com.business95.api.repository.InversionRepository;
+import com.business95.api.repository.MovimientoRepository;
 import com.business95.api.service.interfaces.InversionService;
 
 @Service
 public class InversionServiceImpl implements InversionService {
 
     private final InversionRepository inversionRepository;
+    private final MovimientoRepository movimientoRepository;
     private final InversionHelper inversionHelper;
     private final InversionMapper inversionMapper;
     private final SocioHelper socioHelper;
 
     public InversionServiceImpl(
             InversionRepository inversionRepository,
+            MovimientoRepository movimientoRepository,
             InversionHelper inversionHelper,
             InversionMapper inversionMapper,
             SocioHelper socioHelper) {
         this.inversionRepository = inversionRepository;
+        this.movimientoRepository = movimientoRepository;
         this.inversionHelper = inversionHelper;
         this.inversionMapper = inversionMapper;
         this.socioHelper = socioHelper;
@@ -81,7 +85,7 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional(readOnly = true)
     public List<BalanceMovimientoResponse> balanceMovimientosPorInversion(Long idInversion) {
-        return inversionRepository.balanceMovimientosPorInversion(idInversion)
+        return movimientoRepository.balanceMovimientosPorInversion(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
     }
 
@@ -134,7 +138,7 @@ public class InversionServiceImpl implements InversionService {
 
         Inversion inversion = inversionHelper.findByIdOrThrow(idInversion);
 
-        if (!inversionRepository.balanceMovimientosPorInversion(idInversion).isEmpty()) {
+        if (!movimientoRepository.balanceMovimientosPorInversion(idInversion).isEmpty()) {
             throw new InversionConMovimientosException(idInversion);
         }
 

@@ -16,16 +16,6 @@ import com.business95.api.projection.BalanceSocioPorInversionProjection;
 @Repository
 public interface InversionRepository extends CrudRepository<Inversion, Long> {
 
-        @Query("SELECT new com.business95.api.dto.response.BalanceMovimientoResponse(" +
-                        "m.idMovimiento AS idMovimiento, m.concepto AS concepto, " +
-                        "m.categoria.categoria AS categoria, " +
-                        "SUM(a.cantidad) AS cantidad, md.medida AS medida, " +
-                        "SUM(a.monto) AS balance, m.moneda.idMoneda AS moneda, " +
-                        "MAX(a.fecha) AS fechaUltimaActividad) " +
-                        "FROM Movimiento m LEFT JOIN m.actividadesSocio a LEFT JOIN m.medida md " +
-                        "WHERE m.inversion.idInversion = :idInversion GROUP BY m.idMovimiento")
-        Optional<List<BalanceMovimientoResponse>> balanceMovimientosPorInversion(@Param("idInversion") Long idInversion);
-
         @Query(value = "SELECT inv.id_inversion as idInversion, inv.inversion AS inversion, " +
                         "SUM(CASE WHEN resumen.total_inversion > 0 " +
                         "       THEN resumen.total_inversion ELSE 0 END) AS ingresos, " +

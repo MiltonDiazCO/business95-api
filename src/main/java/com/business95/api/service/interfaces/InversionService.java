@@ -3,7 +3,7 @@ package com.business95.api.service.interfaces;
 import java.util.List;
 
 import com.business95.api.dto.request.InversionRequest;
-import com.business95.api.dto.response.BalanceInversionResponse;
+import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
@@ -15,7 +15,7 @@ public interface InversionService {
 
     InversionConSociosResponse sociosPorInversion(Long idInversion);
 
-    BalanceInversionResponse balanceInversion(Long idInversion);
+    InversionConBalancesSociosResponse balanceSociosPorInversion(Long idInversion);
 
     List<BalanceMovimientoResponse> balanceMovimientosPorInversion(Long idInversion);
 

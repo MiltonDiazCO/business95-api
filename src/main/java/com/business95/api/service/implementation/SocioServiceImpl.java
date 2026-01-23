@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.dto.response.BalanceAnualSocioResponse;
-import com.business95.api.dto.response.BalanceInversionResponse;
+import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
 import com.business95.api.exception.SocioNoEncontradoException;
@@ -64,8 +64,9 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override
-    public List<BalanceInversionResponse> balanceInversionPorSocio(Long idSocio) {
-        return inversionRepository.balanceInversion(idSocio, null)
+    public List<InversionConBalancesSociosResponse> balanceInversionPorSocio(Long idSocio) {
+        return inversionRepository
+                .balanceInversionPorIdSocioOIdInversion(idSocio, null)
                 .stream()
                 .map(inversionMapper::toBalanceInversionResponse)
                 .toList();

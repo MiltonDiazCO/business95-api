@@ -3,7 +3,7 @@ package com.business95.api.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import com.business95.api.dto.response.BalanceInversionResponse;
+import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
@@ -19,7 +19,7 @@ public interface InversionMapper {
     InversionConSociosResponse toInversionConSociosResponse(Inversion inversion);
 
     @Mapping(target = "balancesPorSocio", ignore = true)
-    BalanceInversionResponse toBalanceInversionResponse(BalanceInversionProjection balanceInversionProjection);
+    InversionConBalancesSociosResponse toBalanceInversionResponse(BalanceInversionProjection balanceInversionProjection);
 
     BalanceSocioPorInversionResponse toBalanceSocioPorInversionResponse(BalanceSocioPorInversionProjection balanceSocioPorInvProjection);
 

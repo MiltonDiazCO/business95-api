@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.dto.request.InversionRequest;
-import com.business95.api.dto.response.BalanceInversionResponse;
+import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
@@ -50,9 +50,9 @@ public class InversionController {
         return ResponseEntity.ok().body(inversionService.sociosPorInversion(idInversion));
     }
 
-    @GetMapping("/{idInversion}/balance")
-    public ResponseEntity<BalanceInversionResponse> balanceInversionesPorSocio(@PathVariable Long idInversion) {
-        return ResponseEntity.ok().body(inversionService.balanceInversion(idInversion));
+    @GetMapping("/{idInversion}/balance-socios")
+    public ResponseEntity<InversionConBalancesSociosResponse> balanceInversionesPorSocio(@PathVariable Long idInversion) {
+        return ResponseEntity.ok().body(inversionService.balanceSociosPorInversion(idInversion));
     }
 
     @GetMapping("/{idInversion}/movimientos")

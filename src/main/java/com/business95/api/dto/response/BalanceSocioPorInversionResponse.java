@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class BalanceSocioPorInversionResponse {
 
+    private Long idSocio;
     private String socio;
     private BigDecimal ingresos;
     private BigDecimal gastos;
@@ -13,14 +14,24 @@ public class BalanceSocioPorInversionResponse {
     }
 
     public BalanceSocioPorInversionResponse(
+            Long idSocio,
             String socio,
             BigDecimal ingresos,
             BigDecimal gastos,
             BigDecimal balance) {
+        this.idSocio = idSocio;
         this.socio = socio;
         this.ingresos = ingresos;
         this.gastos = gastos;
         this.balance = balance;
+    }
+
+    public Long getIdSocio() {
+        return idSocio;
+    }
+
+    public void setIdSocio(Long idSocio) {
+        this.idSocio = idSocio;
     }
 
     public String getSocio() {

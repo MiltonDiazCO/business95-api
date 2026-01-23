@@ -8,7 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.business95.api.dto.response.ActividadSocioResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
 import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
@@ -16,15 +15,6 @@ import com.business95.api.entity.Movimiento;
 
 @Repository
 public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
-
-        @Query("SELECT new com.business95.api.dto.response.ActividadSocioResponse(" +
-                        "a.idActividad AS idActividad, " +
-                        "CONCAT(a.socio.nombresRazonsocial, ' ', a.socio.apellidos) AS socio, " +
-                        "a.cantidad AS cantidad, a.monto AS monto, a.fecha AS fecha, " +
-                        "a.tipoActividad.tipoActividad AS tipoActividad) FROM Movimiento m " +
-                        "LEFT JOIN m.moneda mo LEFT JOIN m.medida md LEFT JOIN m.actividadesSocio a " +
-                        "WHERE m.idMovimiento = :idMovimiento ORDER BY a.fecha DESC")
-        List<ActividadSocioResponse> actividadesPorMovimiento(@Param("idMovimiento") Long idMovimiento);
 
         @Query("SELECT new com.business95.api.dto.response.MovimientoConBalancesSociosResponse    (" +
                         "m.idMovimiento AS idMovimiento, m.inversion.inversion AS inversion, " +

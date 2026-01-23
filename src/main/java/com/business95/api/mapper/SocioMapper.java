@@ -5,6 +5,7 @@ import org.mapstruct.Mapping;
 
 import com.business95.api.dto.response.BalanceAnualSocioResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
+import com.business95.api.dto.response.SocioNombresResponse;
 import com.business95.api.dto.response.SocioResponse;
 import com.business95.api.entity.Socio;
 import com.business95.api.projection.BalanceAnualSocioProjection;
@@ -19,6 +20,9 @@ public interface SocioMapper {
     @Mapping(source = "usuario.correoElectronico", target = "correoElectronico")
     @Mapping(source = "usuario", target = "detalleUsuario")
     SocioResponse toSocioResponseDTO(Socio socio);
+
+    @Mapping(source = "socio", target = "socio", qualifiedByName = "nombreSocioCompleto")
+    SocioNombresResponse toSocioNombresResponse(Socio socio);
 
     @Mapping(target = "historialAnual", ignore = true)
     BalanceSocioResponse toBalanceSocioResponse(BalanceSocioProjection balanceSocioProjection);

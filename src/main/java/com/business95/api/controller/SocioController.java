@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
+import com.business95.api.dto.response.SocioNombresResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
 import com.business95.api.service.interfaces.SocioService;
@@ -26,6 +27,11 @@ public class SocioController {
     @GetMapping("/{idSocio}")
     public ResponseEntity<SocioResponse> socioFindById(@PathVariable Long idSocio) {
         return ResponseEntity.ok().body(socioService.socioFindById(idSocio));
+    }
+
+    @GetMapping("/{idSocio}/nombres")
+    public ResponseEntity<SocioNombresResponse> nombresSocioPorId(@PathVariable Long idSocio) {
+        return ResponseEntity.ok().body(socioService.nombresSocioPorId(idSocio));
     }
 
     @GetMapping("/{idSocio}/balance")

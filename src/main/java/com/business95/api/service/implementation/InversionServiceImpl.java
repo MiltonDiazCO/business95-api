@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
-import com.business95.api.dto.response.BalanceMovimientoResponse;
+import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
@@ -85,8 +85,8 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<BalanceMovimientoResponse> balanceMovimientosPorInversion(Long idInversion) {
-        return movimientoRepository.balanceMovimientosPorInversion(idInversion)
+    public List<ResumenMovimientoResponse> balanceMovimientosPorInversion(Long idInversion) {
+        return movimientoRepository.resumenMovimientosPorInversion(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
     }
 
@@ -139,7 +139,7 @@ public class InversionServiceImpl implements InversionService {
 
         Inversion inversion = inversionHelper.findByIdOrThrow(idInversion);
 
-        if (!movimientoRepository.balanceMovimientosPorInversion(idInversion).isEmpty()) {
+        if (!movimientoRepository.resumenMovimientosPorInversion(idInversion).isEmpty()) {
             throw new InversionConMovimientosException(idInversion);
         }
 

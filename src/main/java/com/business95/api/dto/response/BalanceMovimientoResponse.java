@@ -1,7 +1,6 @@
 package com.business95.api.dto.response;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -9,37 +8,34 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 public class BalanceMovimientoResponse {
 
     private Long idMovimiento;
+    private String inversion;
     private String concepto;
     private String categoria;
-    private BigDecimal cantidad;
+    private BigDecimal cantidadMovimiento;
     private String medida;
-    private BigDecimal balance;
+    private BigDecimal balanceMovimiento;
     private String moneda;
-    private LocalDateTime fechaApertura;
-    private LocalDateTime fechaUltimaActividad;
 
     public BalanceMovimientoResponse() {
     }
 
     public BalanceMovimientoResponse(
             Long idMovimiento,
+            String inversion,
             String concepto,
             String categoria,
-            BigDecimal cantidad,
+            BigDecimal cantidadMovimiento,
             String medida,
-            BigDecimal balance,
-            String moneda,
-            LocalDateTime fechaApertura,
-            LocalDateTime fechaUltimaActividad) {
+            BigDecimal balanceMovimiento,
+            String moneda) {
         this.idMovimiento = idMovimiento;
+        this.inversion = inversion;
         this.concepto = concepto;
         this.categoria = categoria;
-        this.cantidad = cantidad;
+        this.cantidadMovimiento = cantidadMovimiento;
         this.medida = medida;
-        this.balance = balance;
+        this.balanceMovimiento = balanceMovimiento;
         this.moneda = moneda;
-        this.fechaApertura = fechaApertura;
-        this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
     public Long getIdMovimiento() {
@@ -48,6 +44,14 @@ public class BalanceMovimientoResponse {
 
     public void setIdMovimiento(Long idMovimiento) {
         this.idMovimiento = idMovimiento;
+    }
+
+    public String getInversion() {
+        return inversion;
+    }
+
+    public void setInversion(String inversion) {
+        this.inversion = inversion;
     }
 
     public String getConcepto() {
@@ -66,12 +70,12 @@ public class BalanceMovimientoResponse {
         this.categoria = categoria;
     }
 
-    public BigDecimal getCantidad() {
-        return cantidad;
+    public BigDecimal getCantidadMovimiento() {
+        return cantidadMovimiento;
     }
 
-    public void setCantidad(BigDecimal cantidad) {
-        this.cantidad = cantidad;
+    public void setCantidadMovimiento(BigDecimal cantidadMovimiento) {
+        this.cantidadMovimiento = cantidadMovimiento;
     }
 
     public String getMedida() {
@@ -82,12 +86,12 @@ public class BalanceMovimientoResponse {
         this.medida = medida;
     }
 
-    public BigDecimal getBalance() {
-        return balance;
+    public BigDecimal getBalanceMovimiento() {
+        return balanceMovimiento;
     }
 
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
+    public void setBalanceMovimiento(BigDecimal balanceMovimiento) {
+        this.balanceMovimiento = balanceMovimiento;
     }
 
     public String getMoneda() {
@@ -96,22 +100,6 @@ public class BalanceMovimientoResponse {
 
     public void setMoneda(String moneda) {
         this.moneda = moneda;
-    }
-
-    public LocalDateTime getFechaApertura() {
-        return fechaApertura;
-    }
-
-    public void setFechaApertura(LocalDateTime fechaApertura) {
-        this.fechaApertura = fechaApertura;
-    }
-
-    public LocalDateTime getFechaUltimaActividad() {
-        return fechaUltimaActividad;
-    }
-
-    public void setFechaUltimaActividad(LocalDateTime fechaUltimaActividad) {
-        this.fechaUltimaActividad = fechaUltimaActividad;
     }
 
 }

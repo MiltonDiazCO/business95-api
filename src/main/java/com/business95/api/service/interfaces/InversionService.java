@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
-import com.business95.api.dto.response.BalanceMovimientoResponse;
+import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
 import com.business95.api.entity.Inversion;
@@ -17,7 +17,7 @@ public interface InversionService {
 
     InversionConBalancesSociosResponse balanceSociosPorInversion(Long idInversion);
 
-    List<BalanceMovimientoResponse> balanceMovimientosPorInversion(Long idInversion);
+    List<ResumenMovimientoResponse> balanceMovimientosPorInversion(Long idInversion);
 
     InversionConSociosResponse guardarInversionConSocios(InversionRequest inversionRequest);
 

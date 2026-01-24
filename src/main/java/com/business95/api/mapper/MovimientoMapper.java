@@ -3,6 +3,8 @@ package com.business95.api.mapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import com.business95.api.dto.response.BalanceMovimientoResponse;
+import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoResponse;
 import com.business95.api.entity.Movimiento;
 
@@ -19,4 +21,8 @@ public interface MovimientoMapper {
     @Mapping(source = "moneda.moneda", target = "moneda")
     @Mapping(source = "actividadesSocio", target = "actividades")
     MovimientoResponse toMovimientoResponse(Movimiento movimiento);
+
+    @Mapping(target = "balanceSocios", ignore = true)
+    MovimientoConBalancesSociosResponse toMovimientoConBalancesSociosResponse(
+            BalanceMovimientoResponse balanceMovimiento);
 }

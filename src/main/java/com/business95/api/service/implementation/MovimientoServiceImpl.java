@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.dto.request.ActividadSocioRequest;
 import com.business95.api.dto.request.MovimientoRequest;
 import com.business95.api.dto.request.MovimientoUpdateRequest;
+import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
 import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoResponse;
@@ -48,9 +49,12 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Override
         @Transactional(readOnly = true)
         public MovimientoConBalancesSociosResponse balanceSociosPorMovimiento(Long idMovimiento) {
-                MovimientoConBalancesSociosResponse movimientoResponse = movimientoRepository
+                BalanceMovimientoResponse balanceMovimiento = movimientoRepository
                                 .balanceMovimiento(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
+
+                MovimientoConBalancesSociosResponse movimientoResponse = movimientoMapper
+                                .toMovimientoConBalancesSociosResponse(balanceMovimiento);
 
                 List<BalanceSocioPorMovimientoResponse> balances = movimientoRepository
                                 .balanceSocioPorMovimiento(idMovimiento);

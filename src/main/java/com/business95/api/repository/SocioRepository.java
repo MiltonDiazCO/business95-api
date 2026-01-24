@@ -15,38 +15,48 @@ import com.business95.api.projection.BalanceSocioProjection;
 @Repository
 public interface SocioRepository extends CrudRepository<Socio, Long> {
 
-    @Query(value = "SELECT CONCAT_WS(' ', s.nombres_razonsocial, s.apellidos) AS socio, " +
-            "SUM(CASE WHEN sub_query.totalPorSocioMovimiento > 0 " +
-            "THEN sub_query.totalPorSocioMovimiento ELSE 0 END) AS ingresos, " +
-            "SUM(CASE WHEN sub_query.totalPorSocioMovimiento < 0 " +
-            "THEN sub_query.totalPorSocioMovimiento ELSE 0 END) AS gastos, " +
-            "SUM(sub_query.totalPorSocioMovimiento) AS balance " +
-            "FROM socios s " +
-            "JOIN (SELECT sub_soc.id_socio AS idSocio, " +
-            "sub_as.id_movimiento AS idMovimiento, " +
-            "SUM(sub_as.monto) AS totalPorSocioMovimiento " +
-            "FROM socios sub_soc " +
-            "JOIN actividades_socios sub_as ON sub_soc.id_socio = sub_as.id_socio " +
-            "GROUP BY sub_as.id_socio , sub_as.id_movimiento) sub_query " +
-            "ON s.id_socio = sub_query.idSocio " +
-            "WHERE s.id_socio = :idSocio " +
-            "GROUP BY s.id_socio", nativeQuery = true)
-    Optional<BalanceSocioProjection> balanceSocio(@Param("idSocio") Long idSocio);
+        @Query(value = """
+                        SELECT s.id_socio AS idSocio,
+                                TRIM(CONCAT_WS(' ', s.nombres_razonsocial, s.apellidos)) AS socio,
+                                SUM(CASE WHEN sub_query.total_socio_por_movimiento > 0
+                                        THEN sub_query.total_socio_por_movimiento ELSE 0 END) AS ingresos,
+                                SUM(CASE WHEN sub_query.total_socio_por_movimiento < 0
+                                        THEN sub_query.total_socio_por_movimiento ELSE 0 END) AS gastos,
+                                COALESCE(SUM(sub_query.total_socio_por_movimiento), 0) AS balance
+                        FROM socios s
+                        JOIN (
+                                SELECT
+                                    soc.id_socio AS id_socio, act_soc.id_movimiento AS id_movimiento,
+                                    SUM(act_soc.monto) AS total_socio_por_movimiento
+                                FROM socios soc
+                                LEFT JOIN actividades_socios act_soc
+                                    ON act_soc.id_socio = soc.id_socio
+                                GROUP BY soc.id_socio, act_soc.id_movimiento
+                        ) sub_query ON s.id_socio = sub_query.id_socio
+                        WHERE s.id_socio = :idSocio
+                        GROUP BY s.id_socio
+                        """, nativeQuery = true)
+        Optional<BalanceSocioProjection> balanceSocio(@Param("idSocio") Long idSocio);
 
-    @Query(value = "SELECT resumen.annio as annio, " +
-            "SUM(CASE WHEN resumen.totalMovimientoAnual > 0 " +
-            "THEN resumen.totalMovimientoAnual ELSE 0 END) AS ingresos, " +
-            "SUM(CASE WHEN resumen.totalMovimientoAnual < 0 " +
-            "THEN resumen.totalMovimientoAnual ELSE 0 END) AS gastos, " +
-            "SUM(resumen.totalMovimientoAnual) AS balanceAnual " +
-            "FROM socios soc " +
-            "JOIN (SELECT s.id_socio AS idSocio, " +
-            "YEAR(act_soc.fecha) AS annio, " +
-            "SUM(act_soc.monto) AS totalMovimientoAnual " +
-            "FROM socios s JOIN actividades_socios act_soc ON s.id_socio = act_soc.id_socio " +
-            "GROUP BY act_soc.id_socio, act_soc.id_movimiento, YEAR(act_soc.fecha)) " +
-            "resumen ON soc.id_socio = resumen.idSocio " +
-            "WHERE soc.id_socio = :idSocio GROUP BY soc.id_socio, resumen.annio", nativeQuery = true)
-    List<BalanceAnualSocioProjection> balanceAnualSocio(@Param("idSocio") Long idSocio);
+        @Query(value = """
+                        SELECT sub_query.annio as annio,
+                                SUM(CASE WHEN sub_query.total_movimiento_anual > 0
+                                        THEN sub_query.total_movimiento_anual ELSE 0 END) AS ingresos,
+                                SUM(CASE WHEN sub_query.total_movimiento_anual < 0
+                                        THEN sub_query.total_movimiento_anual ELSE 0 END) AS gastos,
+                                COALESCE(SUM(sub_query.total_movimiento_anual)) AS balanceAnual
+                        FROM (
+                                SELECT
+                                    s.id_socio AS id_socio, YEAR(act_soc.fecha) AS annio,
+                                    SUM(act_soc.monto) AS total_movimiento_anual
+                                FROM socios s JOIN actividades_socios act_soc
+                                    ON s.id_socio = act_soc.id_socio
+                                GROUP BY act_soc.id_socio,
+                                    act_soc.id_movimiento,
+                                    YEAR(act_soc.fecha)
+                        ) sub_query WHERE sub_query.id_socio = :idSocio
+                        GROUP BY sub_query.id_socio, sub_query.annio
+                        """, nativeQuery = true)
+        List<BalanceAnualSocioProjection> balanceAnualSocio(@Param("idSocio") Long idSocio);
 
 }

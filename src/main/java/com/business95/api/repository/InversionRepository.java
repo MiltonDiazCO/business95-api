@@ -48,7 +48,7 @@ public interface InversionRepository extends CrudRepository<Inversion, Long> {
                         "       THEN sub_query.total_socio_por_movimiento ELSE 0 END) AS gastos, " +
                         "SUM(sub_query.total_socio_por_movimiento) AS balance " +
                         "FROM inversiones inv " +
-                        "LEFT JOIN ( " +
+                        "LEFT JOIN (" +
                         "       SELECT inv.id_inversion AS id_inversion, " +
                         "       act_soc.id_socio AS id_socio, " +
                         "       SUM(act_soc.monto) AS total_socio_por_movimiento " +

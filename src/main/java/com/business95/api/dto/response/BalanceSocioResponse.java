@@ -6,6 +6,7 @@ import java.util.List;
 
 public class BalanceSocioResponse {
 
+    private Long idSocio;
     private String socio;
     private BigDecimal ingresos;
     private BigDecimal gastos;
@@ -15,20 +16,40 @@ public class BalanceSocioResponse {
     public BalanceSocioResponse() {
     }
 
-    public BalanceSocioResponse(String socio, BigDecimal ingresos, BigDecimal gastos, BigDecimal balance) {
+    public BalanceSocioResponse(
+            Long idSocio,
+            String socio,
+            BigDecimal ingresos,
+            BigDecimal gastos,
+            BigDecimal balance) {
+        this.idSocio = idSocio;
         this.socio = socio;
         this.ingresos = ingresos;
         this.gastos = gastos;
         this.balance = balance;
     }
 
-    public BalanceSocioResponse(String socio, BigDecimal ingresos, BigDecimal gastos, BigDecimal balance,
+    public BalanceSocioResponse(
+            Long idSocio,
+            String socio,
+            BigDecimal ingresos,
+            BigDecimal gastos,
+            BigDecimal balance,
             List<BalanceAnualSocioResponse> historialAnual) {
+        this.idSocio = idSocio;
         this.socio = socio;
         this.ingresos = ingresos;
         this.gastos = gastos;
         this.balance = balance;
         this.historialAnual = historialAnual;
+    }
+
+    public Long getIdSocio() {
+        return idSocio;
+    }
+
+    public void setIdSocio(Long idSocio) {
+        this.idSocio = idSocio;
     }
 
     public String getSocio() {

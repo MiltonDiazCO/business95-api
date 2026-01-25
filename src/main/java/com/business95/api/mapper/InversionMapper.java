@@ -4,12 +4,10 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
-import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
 import com.business95.api.entity.Inversion;
 import com.business95.api.projection.BalanceInversionProjection;
-import com.business95.api.projection.BalanceSocioPorInversionProjection;
 
 @Mapper(componentModel = "spring", uses = { SocioMapper.class })
 public interface InversionMapper {
@@ -19,8 +17,7 @@ public interface InversionMapper {
     InversionConSociosResponse toInversionConSociosResponse(Inversion inversion);
 
     @Mapping(target = "balancesPorSocio", ignore = true)
-    InversionConBalancesSociosResponse toBalanceInversionResponse(BalanceInversionProjection balanceInversionProjection);
-
-    BalanceSocioPorInversionResponse toBalanceSocioPorInversionResponse(BalanceSocioPorInversionProjection balanceSocioPorInvProjection);
+    InversionConBalancesSociosResponse toBalanceInversionResponse(
+            BalanceInversionProjection balanceInversionProjection);
 
 }

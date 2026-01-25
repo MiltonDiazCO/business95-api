@@ -18,6 +18,7 @@ import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.helper.InversionHelper;
 import com.business95.api.helper.SocioHelper;
 import com.business95.api.mapper.InversionMapper;
+import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceInversionProjection;
 import com.business95.api.repository.InversionRepository;
 import com.business95.api.repository.MovimientoRepository;
@@ -28,20 +29,23 @@ public class InversionServiceImpl implements InversionService {
 
     private final InversionRepository inversionRepository;
     private final MovimientoRepository movimientoRepository;
-    private final InversionHelper inversionHelper;
     private final InversionMapper inversionMapper;
+    private final InversionHelper inversionHelper;
+    private final SocioMapper socioMapper;
     private final SocioHelper socioHelper;
 
     public InversionServiceImpl(
             InversionRepository inversionRepository,
             MovimientoRepository movimientoRepository,
-            InversionHelper inversionHelper,
             InversionMapper inversionMapper,
+            InversionHelper inversionHelper,
+            SocioMapper socioMapper,
             SocioHelper socioHelper) {
         this.inversionRepository = inversionRepository;
         this.movimientoRepository = movimientoRepository;
-        this.inversionHelper = inversionHelper;
         this.inversionMapper = inversionMapper;
+        this.inversionHelper = inversionHelper;
+        this.socioMapper = socioMapper;
         this.socioHelper = socioHelper;
     }
 
@@ -76,7 +80,7 @@ public class InversionServiceImpl implements InversionService {
         List<BalanceSocioPorInversionResponse> balances = inversionRepository
                 .balanceSociosPorInversion(idInversion)
                 .stream()
-                .map(inversionMapper::toBalanceSocioPorInversionResponse)
+                .map(socioMapper::toBalanceSocioPorInversionResponse)
                 .toList();
 
         inversionResponse.setBalancesPorSocio(balances);

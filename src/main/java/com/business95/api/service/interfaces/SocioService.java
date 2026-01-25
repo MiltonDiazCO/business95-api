@@ -9,9 +9,9 @@ import com.business95.api.dto.response.SocioResponse;
 
 public interface SocioService {
 
-    SocioResponse socioFindById(Long idSocio);
+    SocioResponse socioPorId(Long idSocio);
 
-    SocioNombresResponse nombresSocioPorId(Long idSocio);
+    SocioNombresResponse nombresSocio(Long idSocio);
 
     BalanceSocioResponse balanceSocio(Long idSocio);
 

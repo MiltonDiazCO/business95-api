@@ -6,6 +6,6 @@ import com.business95.api.entity.TipoPersona;
 
 public interface TipoPersonaService {
 
-    List<TipoPersona> findAll();
+    List<TipoPersona> obtenerTodos();
 
 }

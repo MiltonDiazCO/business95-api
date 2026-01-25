@@ -11,10 +11,10 @@ public interface MovimientoService {
 
     MovimientoConBalancesSociosResponse balanceSociosPorMovimiento(Long idMovimiento);
 
-    MovimientoResponse save(MovimientoRequest movimientoRequest);
+    MovimientoResponse guardar(MovimientoRequest movimientoRequest);
 
-    MovimientoResponse update(Long idMovimiento, MovimientoUpdateRequest MovimientoUpdateRequestDTO);
+    MovimientoResponse actualizar(Long idMovimiento, MovimientoUpdateRequest MovimientoUpdateRequestDTO);
 
-    void delete(Long idMovimiento);
+    void eliminar(Long idMovimiento);
 
 }

@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.dto.request.InversionRequest;
-import com.business95.api.dto.response.InversionConBalancesSociosResponse;
-import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
+import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
+import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.entity.Inversion;
 import com.business95.api.exception.InversionConMovimientosException;
 import com.business95.api.exception.InversionNoEncontradaException;
@@ -89,7 +89,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResumenMovimientoResponse> balanceMovimientosPorInversion(Long idInversion) {
+    public List<ResumenMovimientoResponse> resumenMovimientosPorInversion(Long idInversion) {
         return movimientoRepository.resumenMovimientosPorInversion(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
     }
@@ -109,7 +109,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionResponse update(Long idInversion, Inversion inversion) {
+    public InversionResponse actualizarDetalleInversion(Long idInversion, Inversion inversion) {
 
         Inversion inversionUpdate = inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
@@ -139,7 +139,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public void delete(Long idInversion) {
+    public void eliminarInversion(Long idInversion) {
 
         Inversion inversion = inversionHelper.findByIdOrThrow(idInversion);
 

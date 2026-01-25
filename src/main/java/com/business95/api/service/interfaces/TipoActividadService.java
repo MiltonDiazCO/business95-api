@@ -6,8 +6,8 @@ import com.business95.api.entity.TipoActividad;
 
 public interface TipoActividadService {
 
-    List<TipoActividad> findAll();
+    List<TipoActividad> obtenerTodos();
 
-    TipoActividad findByIdOrThrow(Long idTipoActividad);
+    TipoActividad obtenerPorId(Long idTipoActividad);
 
 }

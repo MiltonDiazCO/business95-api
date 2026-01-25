@@ -41,7 +41,7 @@ public class ActividadServiceImpl implements ActividadService {
 
         @Override
         @Transactional()
-        public List<ActividadSocioResponse> save(
+        public List<ActividadSocioResponse> guardar(
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest) {
 
@@ -73,7 +73,7 @@ public class ActividadServiceImpl implements ActividadService {
 
         @Override
         @Transactional()
-        public void delete(Long idMovimiento, ArrayList<Long> idActividades) {
+        public void eliminar(Long idMovimiento, ArrayList<Long> idActividades) {
 
                 Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
 

@@ -19,7 +19,7 @@ public class MonedaController {
 
     @GetMapping
     public List<Moneda> monedas() {
-        return monedaService.findAll();
+        return monedaService.obtenerTodos();
     }
 
 }

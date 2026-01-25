@@ -17,15 +17,15 @@ public interface InversionService {
 
     InversionConBalancesSociosResponse balanceSociosPorInversion(Long idInversion);
 
-    List<ResumenMovimientoResponse> balanceMovimientosPorInversion(Long idInversion);
+    List<ResumenMovimientoResponse> resumenMovimientosPorInversion(Long idInversion);
 
     InversionConSociosResponse guardarInversionConSocios(InversionRequest inversionRequest);
 
-    InversionResponse update(Long idInversion, Inversion inversion);
-
     InversionConSociosResponse agregarSociosAInversion(Long idInversion, List<Long> socios);
 
-    void delete(Long idInversion);
+    InversionResponse actualizarDetalleInversion(Long idInversion, Inversion inversion);
+
+    void eliminarInversion(Long idInversion);
 
     void eliminarSociosDeInversion(Long idInversion, List<Long> socios);
 

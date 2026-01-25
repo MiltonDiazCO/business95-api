@@ -18,7 +18,7 @@ public class MedidaServiceImpl implements MedidaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Medida> findAll() {
+    public List<Medida> obtenerTodos() {
         return (List<Medida>) medidaRepository.findAll();
     }
 

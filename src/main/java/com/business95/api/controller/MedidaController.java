@@ -19,7 +19,7 @@ public class MedidaController {
 
     @GetMapping
     public List<Medida> medidas() {
-        return medidaService.findAll();
+        return medidaService.obtenerTodos();
     }
 
 }

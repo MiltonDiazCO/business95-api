@@ -18,7 +18,7 @@ public class TipoPersonaServiceImpl implements TipoPersonaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TipoPersona> findAll() {
+    public List<TipoPersona> obtenerTodos() {
         return (List<TipoPersona>) tipoPersonaRepository.findAll();
     }
 

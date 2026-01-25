@@ -6,6 +6,6 @@ import com.business95.api.entity.Medida;
 
 public interface MedidaService {
 
-    List<Medida> findAll();
+    List<Medida> obtenerTodos();
 
 }

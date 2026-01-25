@@ -51,14 +51,15 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}/balance-socios")
-    public ResponseEntity<InversionConBalancesSociosResponse> balanceInversionesPorSocio(@PathVariable Long idInversion) {
+    public ResponseEntity<InversionConBalancesSociosResponse> balanceInversionesPorSocio(
+            @PathVariable Long idInversion) {
         return ResponseEntity.ok().body(inversionService.balanceSociosPorInversion(idInversion));
     }
 
     @GetMapping("/{idInversion}/movimientos")
     public ResponseEntity<List<ResumenMovimientoResponse>> findMovimientosPorInversion(
             @PathVariable Long idInversion) {
-        return ResponseEntity.ok().body(inversionService.balanceMovimientosPorInversion(idInversion));
+        return ResponseEntity.ok().body(inversionService.resumenMovimientosPorInversion(idInversion));
     }
 
     @PostMapping
@@ -97,12 +98,13 @@ public class InversionController {
                     messageSource.getMessage("error.actualizacion", null, Locale.getDefault()),
                     result, HttpStatus.BAD_REQUEST.value(), request);
         }
-        return ResponseEntity.status(HttpStatus.CREATED).body(inversionService.update(idInversion, inversion));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(inversionService.actualizarDetalleInversion(idInversion, inversion));
     }
 
     @DeleteMapping("/{idInversion}")
     public ResponseEntity<?> eliminarInversion(@PathVariable Long idInversion) {
-        inversionService.delete(idInversion);
+        inversionService.eliminarInversion(idInversion);
         return ResponseEntity.noContent().build();
     }
 

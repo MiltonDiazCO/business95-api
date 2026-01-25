@@ -20,12 +20,12 @@ public class TipoActividadController {
 
     @GetMapping
     public List<TipoActividad> tipoActividades() {
-        return tipoActividadService.findAll();
+        return tipoActividadService.obtenerTodos();
     }
 
     @GetMapping({ "/{idTipoActividad}" })
     public TipoActividad tipoActividadPorID(@PathVariable Long idTipoActividad) {
-        return tipoActividadService.findByIdOrThrow(idTipoActividad);
+        return tipoActividadService.obtenerPorId(idTipoActividad);
     }
 
 }

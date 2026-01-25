@@ -19,13 +19,13 @@ public class TipoActividadServiceImpl implements TipoActividadService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<TipoActividad> findAll() {
+    public List<TipoActividad> obtenerTodos() {
         return (List<TipoActividad>) tipoActividadRepository.findAll();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public TipoActividad findByIdOrThrow(Long idTipoActividad) {
+    public TipoActividad obtenerPorId(Long idTipoActividad) {
         return (TipoActividad) tipoActividadRepository.findById(idTipoActividad)
                 .orElseThrow(() -> new TipoActividadNoEncontradoException(idTipoActividad));
     }

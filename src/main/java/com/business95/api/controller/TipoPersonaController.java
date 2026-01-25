@@ -19,7 +19,7 @@ public class TipoPersonaController {
 
     @GetMapping
     public List<TipoPersona> tipoPersonas() {
-        return tipoPersonaService.findAll();
+        return tipoPersonaService.obtenerTodos();
     }
 
 }

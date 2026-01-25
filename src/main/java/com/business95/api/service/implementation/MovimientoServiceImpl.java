@@ -68,7 +68,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional
-        public MovimientoResponse save(MovimientoRequest movimientoRequest) {
+        public MovimientoResponse guardar(MovimientoRequest movimientoRequest) {
 
                 Movimiento movimiento = movimientoHelper.construirMovimiento(
                                 null,
@@ -95,7 +95,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
-        public MovimientoResponse update(
+        public MovimientoResponse actualizar(
                         Long idMovimiento,
                         MovimientoUpdateRequest movimientoUpdateRequest) {
 
@@ -112,7 +112,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
-        public void delete(Long idMovimiento) {
+        public void eliminar(Long idMovimiento) {
                 movimientoRepository.delete(movimientoHelper.findByIdOrThrow(idMovimiento));
         }
 

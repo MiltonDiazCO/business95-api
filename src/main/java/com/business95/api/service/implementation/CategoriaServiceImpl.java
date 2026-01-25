@@ -19,7 +19,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Categoria> findAll() {
+    public List<Categoria> obtenerTodos() {
         return (List<Categoria>) categoriaRepository.findAll();
     }
 

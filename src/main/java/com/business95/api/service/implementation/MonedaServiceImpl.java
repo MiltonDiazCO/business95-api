@@ -18,7 +18,7 @@ public class MonedaServiceImpl implements MonedaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Moneda> findAll() {
+    public List<Moneda> obtenerTodos() {
         return (List<Moneda>) monedaRepository.findAll();
     }
 

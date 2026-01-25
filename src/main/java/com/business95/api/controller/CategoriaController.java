@@ -19,7 +19,7 @@ public class CategoriaController {
 
     @GetMapping
     public List<Categoria> categorias() {
-        return categoriaService.findAll();
+        return categoriaService.obtenerTodos();
     }
 
 }

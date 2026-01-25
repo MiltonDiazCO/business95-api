@@ -69,7 +69,8 @@ public class MovimientoController {
                     result, HttpStatus.BAD_REQUEST.value(), request);
         }
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(movimientoService.save(movimientoRegistroDTO));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(movimientoService.guardar(movimientoRegistroDTO));
     }
 
     @PutMapping("/{idMovimiento}")
@@ -86,12 +87,12 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(movimientoService.update(idMovimiento, movimientoUpdateRequest));
+                .body(movimientoService.actualizar(idMovimiento, movimientoUpdateRequest));
     }
 
     @DeleteMapping("/{idMovimiento}")
     public ResponseEntity<Long> elimianrMovimiento(@PathVariable Long idMovimiento) {
-        movimientoService.delete(idMovimiento);
+        movimientoService.eliminar(idMovimiento);
         return ResponseEntity.noContent().build();
     }
 
@@ -109,7 +110,7 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(actividadService.save(idMovimiento, actividadesSociosRequest));
+                .body(actividadService.guardar(idMovimiento, actividadesSociosRequest));
     }
 
     @PutMapping("/{idMovimiento}/actividades")
@@ -126,14 +127,14 @@ public class MovimientoController {
         }
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(actividadService.save(idMovimiento, actividadesSociosRequest));
+                .body(actividadService.guardar(idMovimiento, actividadesSociosRequest));
     }
 
     @DeleteMapping("/{idMovimiento}/actividades")
     public ResponseEntity<Long> elimianrActividad(
             @PathVariable Long idMovimiento,
             @RequestBody ArrayList<Long> idActividades) {
-        actividadService.delete(idMovimiento, idActividades);
+        actividadService.eliminar(idMovimiento, idActividades);
         return ResponseEntity.noContent().build();
     }
 

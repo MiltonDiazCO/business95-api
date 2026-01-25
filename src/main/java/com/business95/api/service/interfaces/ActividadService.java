@@ -8,10 +8,10 @@ import com.business95.api.dto.response.ActividadSocioResponse;
 
 public interface ActividadService {
 
-        List<ActividadSocioResponse> save(
+        List<ActividadSocioResponse> guardar(
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest);
 
-        void delete(Long idMovimiento, ArrayList<Long> idActividades);
+        void eliminar(Long idMovimiento, ArrayList<Long> idActividades);
 
 }

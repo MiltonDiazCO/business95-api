@@ -41,7 +41,7 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}")
-    public ResponseEntity<InversionResponse> inversionFindById(@PathVariable Long idInversion) {
+    public ResponseEntity<InversionResponse> buscarInversionPorId(@PathVariable Long idInversion) {
         return ResponseEntity.ok().body(inversionService.inversionPorId(idInversion));
     }
 
@@ -57,7 +57,7 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}/movimientos")
-    public ResponseEntity<List<ResumenMovimientoResponse>> findMovimientosPorInversion(
+    public ResponseEntity<List<ResumenMovimientoResponse>> encontrarMovimientosPorInversion(
             @PathVariable Long idInversion) {
         return ResponseEntity.ok().body(inversionService.resumenMovimientosPorInversion(idInversion));
     }

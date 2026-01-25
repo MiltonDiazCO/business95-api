@@ -25,12 +25,12 @@ public class SocioController {
     }
 
     @GetMapping("/{idSocio}")
-    public ResponseEntity<SocioResponse> socioFindById(@PathVariable Long idSocio) {
+    public ResponseEntity<SocioResponse> buscarSocioPorId(@PathVariable Long idSocio) {
         return ResponseEntity.ok().body(socioService.socioPorId(idSocio));
     }
 
     @GetMapping("/{idSocio}/nombres")
-    public ResponseEntity<SocioNombresResponse> nombresSocioPorId(@PathVariable Long idSocio) {
+    public ResponseEntity<SocioNombresResponse> obtenerNombresSocioPorId(@PathVariable Long idSocio) {
         return ResponseEntity.ok().body(socioService.nombresSocio(idSocio));
     }
 

@@ -24,16 +24,12 @@ public class Inversion {
     @Column(name = "id_inversion", nullable = false)
     private Long idInversion;
 
-    @NotBlank(message = "El nombre de la inversión es es requerido.")
+    @NotBlank(message = "El nombre de la inversión es requerida.")
     @Column(name = "inversion", nullable = false, length = 80)
     private String inversion;
 
     @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "inversiones_socios",
-        joinColumns = @JoinColumn(name = "id_inversion", referencedColumnName = "id_inversion"),
-        inverseJoinColumns = @JoinColumn(name = "id_socio", referencedColumnName = "id_socio")
-    )
+    @JoinTable(name = "inversiones_socios", joinColumns = @JoinColumn(name = "id_inversion", referencedColumnName = "id_inversion"), inverseJoinColumns = @JoinColumn(name = "id_socio", referencedColumnName = "id_socio"))
     private List<Socio> socios = new ArrayList<>();
 
     public Inversion() {

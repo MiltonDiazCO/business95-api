@@ -8,6 +8,8 @@ import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -42,6 +44,18 @@ public class GlobalExceptionHandler {
         this.erroresService = erroresService;
     }
 
+    @ExceptionHandler({MethodArgumentNotValidException.class})
+    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesDeValidacion(MethodArgumentNotValidException exc, HttpServletRequest request) {
+
+        BindingResult result = exc.getBindingResult();
+
+        return ErrorUtils.construirRespuestaDeErrorDeValidacion(
+                erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                result,
+                HttpStatus.NOT_FOUND.value(), request);
+        
+    }
+
     @ExceptionHandler({
             MovimientoNoEncontradoException.class,
             CategoriaNoEncontradaException.class,
@@ -55,7 +69,7 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorHttpResponse> manejarExcepcionesRecursoNoEncontrado(RuntimeException exc,
             HttpServletRequest request) {
 
-        return ErrorUtils.construirRespuestaErrorExcepcion(
+        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 exc.getMessage(),
                 HttpStatus.NOT_FOUND.value(), request);
@@ -66,7 +80,7 @@ public class GlobalExceptionHandler {
             RuntimeException exc,
             HttpServletRequest request) {
 
-        return ErrorUtils.construirRespuestaErrorExcepcion(
+        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 exc.getMessage(),
                 HttpStatus.BAD_REQUEST.value(), request);
@@ -77,7 +91,7 @@ public class GlobalExceptionHandler {
             RuntimeException exc,
             HttpServletRequest request) {
 
-        return ErrorUtils.construirRespuestaErrorExcepcion(
+        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 exc.getMessage(), HttpStatus.CONFLICT.value(), request);
     }
@@ -116,7 +130,7 @@ public class GlobalExceptionHandler {
             }
         }
 
-        return ErrorUtils.construirRespuestaErrorExcepcion(
+        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
                 messageSource.getMessage("error.formato.invalido", null, Locale.getDefault()),
                 error, HttpStatus.BAD_REQUEST.value(), request);
     }

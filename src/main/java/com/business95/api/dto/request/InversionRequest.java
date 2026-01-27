@@ -3,13 +3,13 @@ package com.business95.api.dto.request;
 import java.util.List;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public class InversionRequest {
 
-    @NotNull(message = "El nombre de la inversión es requerida")
+    @NotBlank(message = "El nombre de la inversión es requerida.")
     @Size(max = 80, message = "El nombre de la inversión debe ser de máximo 80 caracteres.")
     private String inversion;
 
@@ -21,7 +21,7 @@ public class InversionRequest {
     }
 
     public InversionRequest(
-            @NotNull(message = "El nombre de la inversión es requerida") @Size(max = 80, message = "El nombre de la inversión debe ser de máximo 80 caracteres.") String inversion,
+            @NotBlank(message = "El nombre de la inversión es requerida.") @Size(max = 80, message = "El nombre de la inversión debe ser de máximo 80 caracteres.") String inversion,
             @Valid @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión") List<Long> socios) {
         this.inversion = inversion;
         this.socios = socios;

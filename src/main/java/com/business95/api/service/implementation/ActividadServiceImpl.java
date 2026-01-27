@@ -45,7 +45,7 @@ public class ActividadServiceImpl implements ActividadService {
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest) {
 
-                Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
+                Movimiento movimiento = movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento);
 
                 List<ActividadSocio> nuevasActividades = new ArrayList<>();
 
@@ -75,10 +75,11 @@ public class ActividadServiceImpl implements ActividadService {
         @Transactional()
         public void eliminar(Long idMovimiento, ArrayList<Long> idActividades) {
 
-                Movimiento movimiento = movimientoHelper.findByIdOrThrow(idMovimiento);
+                Movimiento movimiento = movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento);
 
                 for (Long idActividad : idActividades) {
-                        movimiento.removeActividadSocio(actividadSocioHelper.findByIdOrThrow(idActividad));
+                        movimiento.removeActividadSocio(
+                                        actividadSocioHelper.buscarPorIdOLanzarExcepcion(idActividad));
                 }
 
                 movimientoRepository.save(movimiento);

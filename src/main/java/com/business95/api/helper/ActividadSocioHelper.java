@@ -25,7 +25,7 @@ public class ActividadSocioHelper {
         this.tipoActividadHelper = tipoActividadHelper;
     }
 
-    public ActividadSocio findByIdOrThrow(Long idActividad) {
+    public ActividadSocio buscarPorIdOLanzarExcepcion(Long idActividad) {
         return actividadSocioRepository.findById(idActividad)
                 .orElseThrow(() -> new ActividadSocioNoEncontradaException(idActividad));
     }
@@ -41,14 +41,14 @@ public class ActividadSocioHelper {
         ActividadSocio actividadSocio = new ActividadSocio();
 
         if (idActividad != null) {
-            actividadSocio = findByIdOrThrow(idActividad);
+            actividadSocio = buscarPorIdOLanzarExcepcion(idActividad);
         }
 
         actividadSocio.setMonto(monto);
         actividadSocio.setCantidad(cantidad);
         actividadSocio.setFecha(fecha);
-        actividadSocio.setSocio(socioHelper.findByIdOrThrow(idSocio));
-        actividadSocio.setTipoActividad(tipoActividadHelper.findByIdOrThrow(idTipoActividad));
+        actividadSocio.setSocio(socioHelper.buscarPorIdOLanzarExcepcion(idSocio));
+        actividadSocio.setTipoActividad(tipoActividadHelper.buscarPorIdOLanzarExcepcion(idTipoActividad));
 
         return actividadSocio;
     }

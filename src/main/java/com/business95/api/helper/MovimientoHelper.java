@@ -28,7 +28,7 @@ public class MovimientoHelper {
         this.monedaHelper = monedaHelper;
     }
 
-    public Movimiento findByIdOrThrow(Long idMovimiento) {
+    public Movimiento buscarPorIdOLanzarExcepcion(Long idMovimiento) {
         return movimientoRepository.findById(idMovimiento)
                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
     }
@@ -44,19 +44,19 @@ public class MovimientoHelper {
         Movimiento movimiento = new Movimiento();
 
         if (idMovimiento != null) {
-            movimiento = findByIdOrThrow(idMovimiento);
+            movimiento = buscarPorIdOLanzarExcepcion(idMovimiento);
         }
 
         movimiento.setConcepto(concepto);
-        movimiento.setInversion(inversionHelper.findByIdOrThrow(idInversion));
-        movimiento.setCategoria(categoriaHelper.findByIdOrThrow(idCategoria));
+        movimiento.setInversion(inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
+        movimiento.setCategoria(categoriaHelper.buscarPorIdOLanzarExcepcion(idCategoria));
 
         if (idMedida != null) {
-            movimiento.setMedida(medidaHelper.findByIdOrThrow(idMedida));
+            movimiento.setMedida(medidaHelper.buscarPorIdOLanzarExcepcion(idMedida));
         }
 
         if (idMoneda != null) {
-            movimiento.setMoneda(monedaHelper.findByIdOrThrow(idMoneda));
+            movimiento.setMoneda(monedaHelper.buscarPorIdOLanzarExcepcion(idMoneda));
         }
 
         return movimiento;

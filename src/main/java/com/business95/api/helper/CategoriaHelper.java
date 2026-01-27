@@ -15,7 +15,7 @@ public class CategoriaHelper {
         this.categoriaRepository = categoriaRepository;
     }
 
-    public Categoria findByIdOrThrow(Long idCategoria) {
+    public Categoria buscarPorIdOLanzarExcepcion(Long idCategoria) {
         return categoriaRepository.findById(idCategoria)
                 .orElseThrow(() -> new CategoriaNoEncontradaException(idCategoria));
     }

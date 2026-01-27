@@ -43,13 +43,13 @@ public class SocioServiceImpl implements SocioService {
     @Override
     @Transactional(readOnly = true)
     public SocioResponse socioPorId(Long idSocio) {
-        return socioMapper.toSocioResponseDTO(socioHelper.findByIdOrThrow(idSocio));
+        return socioMapper.toSocioResponseDTO(socioHelper.buscarPorIdOLanzarExcepcion(idSocio));
     }
 
     @Override
     @Transactional(readOnly = true)
     public SocioNombresResponse nombresSocio(Long idSocio) {
-        return socioMapper.toSocioNombresResponse(socioHelper.findByIdOrThrow(idSocio));
+        return socioMapper.toSocioNombresResponse(socioHelper.buscarPorIdOLanzarExcepcion(idSocio));
     }
 
     @Override

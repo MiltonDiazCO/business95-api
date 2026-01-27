@@ -15,7 +15,7 @@ public class SocioHelper {
         this.socioRepository = socioRepository;
     }
 
-    public Socio findByIdOrThrow(Long idSocio) {
+    public Socio buscarPorIdOLanzarExcepcion(Long idSocio) {
         return socioRepository.findById(idSocio)
                 .orElseThrow(() -> new SocioNoEncontradoException(idSocio));
     }

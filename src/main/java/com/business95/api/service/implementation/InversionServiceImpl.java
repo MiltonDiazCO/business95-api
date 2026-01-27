@@ -52,13 +52,15 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional(readOnly = true)
     public InversionResponse inversionPorId(Long idInversion) {
-        return inversionMapper.toInversionResponse(inversionHelper.findByIdOrThrow(idInversion));
+        return inversionMapper.toInversionResponse(
+                inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
     }
 
     @Override
     @Transactional(readOnly = true)
     public InversionConSociosResponse sociosPorInversion(Long idInversion) {
-        return inversionMapper.toInversionConSociosResponse(inversionHelper.findByIdOrThrow(idInversion));
+        return inversionMapper.toInversionConSociosResponse(
+                inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
     }
 
     @Override
@@ -101,7 +103,7 @@ public class InversionServiceImpl implements InversionService {
         Inversion inversion = new Inversion(null, inversionRequest.getInversion());
 
         for (Long socio : inversionRequest.getSocios()) {
-            inversion.addSocio(socioHelper.findByIdOrThrow(socio));
+            inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
         }
 
         return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
@@ -131,7 +133,7 @@ public class InversionServiceImpl implements InversionService {
         }
 
         for (Long socio : socios) {
-            inversion.addSocio(socioHelper.findByIdOrThrow(socio));
+            inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
         }
 
         return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
@@ -141,7 +143,7 @@ public class InversionServiceImpl implements InversionService {
     @Transactional()
     public void eliminarInversion(Long idInversion) {
 
-        Inversion inversion = inversionHelper.findByIdOrThrow(idInversion);
+        Inversion inversion = inversionHelper.buscarPorIdOLanzarExcepcion(idInversion);
 
         if (!movimientoRepository.resumenMovimientosPorInversion(idInversion).isEmpty()) {
             throw new InversionConMovimientosException(idInversion);
@@ -162,7 +164,7 @@ public class InversionServiceImpl implements InversionService {
         }
 
         for (Long socio : socios) {
-            inversion.removeSocio(socioHelper.findByIdOrThrow(socio));
+            inversion.removeSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
         }
 
         inversionRepository.save(inversion);

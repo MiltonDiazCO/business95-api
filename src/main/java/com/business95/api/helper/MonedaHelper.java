@@ -15,7 +15,7 @@ public class MonedaHelper {
         this.monedaRepository = monedaRepository;
     }
 
-    public Moneda findByIdOrThrow(String idMoneda) {
+    public Moneda buscarPorIdOLanzarExcepcion(String idMoneda) {
         return monedaRepository.findById(idMoneda)
                 .orElseThrow(() -> new MonedaNoEncontradaException(idMoneda));
     }

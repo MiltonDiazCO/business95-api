@@ -17,6 +17,23 @@ public class ErrorUtils {
 
     private static ErrorHttpResponse construirErrorResponse(
             String mensaje,
+            String errores,
+            int httpStatusCode,
+            HttpServletRequest request) {
+
+        ErrorHttpResponse errorHttpResponse = new ErrorHttpResponse();
+
+        errorHttpResponse.setMensaje(mensaje);
+        errorHttpResponse.setErrores(Arrays.asList(errores));
+        errorHttpResponse.setCodigoEstado(httpStatusCode);
+        errorHttpResponse.setRuta(request.getRequestURI());
+        errorHttpResponse.setFecha(LocalDateTime.now());
+
+        return errorHttpResponse;
+    }
+
+    private static ErrorHttpResponse construirErrorResponse(
+            String mensaje,
             List<String> errores,
             int httpStatusCode,
             HttpServletRequest request) {
@@ -32,6 +49,30 @@ public class ErrorUtils {
         return errorHttpResponse;
     }
 
+    private static ErrorHttpResponse construirErrorResponse(
+            String mensaje,
+            BindingResult result,
+            int httpStatusCode,
+            HttpServletRequest request) {
+
+        ErrorHttpResponse errorHttpResponse = new ErrorHttpResponse();
+
+        Map<String, String> errores = new HashMap<>();
+
+        result.getFieldErrors().forEach(error -> {
+            errores.put(error.getField(), error.getDefaultMessage());
+        });
+
+        errorHttpResponse.setMensaje(mensaje);
+        errorHttpResponse.setErrores(errores.ge);
+        errorHttpResponse.setCodigoEstado(httpStatusCode);
+        errorHttpResponse.setRuta(request.getRequestURI());
+        errorHttpResponse.setFecha(LocalDateTime.now());
+
+        return errorHttpResponse;
+    }
+
+    
     public static ResponseEntity<ErrorHttpResponse> construirRespuestaErrorExcepcion(
             String mensaje,
             String errorExcepcion,
@@ -45,6 +86,7 @@ public class ErrorUtils {
         return ResponseEntity.status(httpStatusCode).body(errorHttpResponse);
     }
 
+    
     public static ResponseEntity<ErrorHttpResponse> construirRespuestaErrorValidacion(
             String mensaje,
             BindingResult result,

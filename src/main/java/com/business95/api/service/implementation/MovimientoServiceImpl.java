@@ -43,7 +43,8 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Override
         @Transactional(readOnly = true)
         public MovimientoResponse movimientoPorId(Long idMovimiento) {
-                return movimientoMapper.toMovimientoResponse(movimientoHelper.findByIdOrThrow(idMovimiento));
+                return movimientoMapper.toMovimientoResponse(
+                                movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento));
         }
 
         @Override
@@ -113,7 +114,7 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Override
         @Transactional()
         public void eliminar(Long idMovimiento) {
-                movimientoRepository.delete(movimientoHelper.findByIdOrThrow(idMovimiento));
+                movimientoRepository.delete(movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento));
         }
 
 }

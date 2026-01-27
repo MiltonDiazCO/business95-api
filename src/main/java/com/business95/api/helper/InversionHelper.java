@@ -15,7 +15,7 @@ public class InversionHelper {
         this.inversionRepository = inversionRepository;
     }
 
-    public Inversion findByIdOrThrow(Long idInversion) {
+    public Inversion buscarPorIdOLanzarExcepcion(Long idInversion) {
         return inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
     }

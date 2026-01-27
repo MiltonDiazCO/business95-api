@@ -15,7 +15,7 @@ public class TipoActividadHelper {
         this.tipoActividadRepository = tipoActividadRepository;
     }
 
-    public TipoActividad findByIdOrThrow(Long idTipoActividad) {
+    public TipoActividad buscarPorIdOLanzarExcepcion(Long idTipoActividad) {
         return tipoActividadRepository.findById(idTipoActividad)
                 .orElseThrow(() -> new TipoActividadNoEncontradoException(idTipoActividad));
     }

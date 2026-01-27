@@ -15,7 +15,7 @@ public class TipoPersonaHelper {
         this.tipoPersonaRepository = tipoPersonaRepository;
     }
 
-    public TipoPersona findByIdOrThrow(Long idTipoPersona) {
+    public TipoPersona buscarPorIdOLanzarExcepcion(Long idTipoPersona) {
         return tipoPersonaRepository.findById(idTipoPersona)
                 .orElseThrow(() -> new TipoPersonaNoEncontradaException(idTipoPersona));
     }

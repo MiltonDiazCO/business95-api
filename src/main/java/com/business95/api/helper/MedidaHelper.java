@@ -15,7 +15,7 @@ public class MedidaHelper {
         this.medidaRepository = medidaRepository;
     }
 
-    public Medida findByIdOrThrow(Long idMedida) {
+    public Medida buscarPorIdOLanzarExcepcion(Long idMedida) {
         return medidaRepository.findById(idMedida)
                 .orElseThrow(() -> new MedidaNoEncontradaException(idMedida));
     }

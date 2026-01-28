@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.business95.api.dto.request.ActualizarInversionRequest;
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
-import com.business95.api.entity.Inversion;
 import com.business95.api.service.interfaces.InversionService;
 
 import jakarta.validation.Valid;
@@ -73,9 +73,9 @@ public class InversionController {
     @PutMapping("/{idInversion}")
     public ResponseEntity<?> actualizarInversion(
             @PathVariable Long idInversion,
-            @Valid @RequestBody Inversion inversion) {
+            @Valid @RequestBody ActualizarInversionRequest actualizarInversionRequest) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(inversionService.actualizarDetalleInversion(idInversion, inversion));
+                .body(inversionService.actualizarDetalleInversion(idInversion, actualizarInversionRequest));
     }
 
     @DeleteMapping("/{idInversion}")

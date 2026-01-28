@@ -1,7 +1,7 @@
 package com.business95.api.service.interfaces;
 
 import com.business95.api.dto.request.MovimientoRequest;
-import com.business95.api.dto.request.MovimientoUpdateRequest;
+import com.business95.api.dto.request.ActualizarMovimientoRequest;
 import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoResponse;
 
@@ -13,7 +13,7 @@ public interface MovimientoService {
 
     MovimientoResponse guardar(MovimientoRequest movimientoRequest);
 
-    MovimientoResponse actualizar(Long idMovimiento, MovimientoUpdateRequest MovimientoUpdateRequestDTO);
+    MovimientoResponse actualizar(Long idMovimiento, ActualizarMovimientoRequest actualizarMovimientoRequest);
 
     void eliminar(Long idMovimiento);
 

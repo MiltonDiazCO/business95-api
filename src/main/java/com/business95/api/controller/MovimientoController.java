@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.dto.request.ActividadSocioRequest;
 import com.business95.api.dto.request.MovimientoRequest;
-import com.business95.api.dto.request.MovimientoUpdateRequest;
+import com.business95.api.dto.request.ActualizarMovimientoRequest;
 import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoResponse;
 import com.business95.api.service.interfaces.ActividadService;
@@ -60,10 +60,10 @@ public class MovimientoController {
     @PutMapping("/{idMovimiento}")
     public ResponseEntity<?> actualizarMovimiento(
             @PathVariable Long idMovimiento,
-            @Valid @RequestBody MovimientoUpdateRequest movimientoUpdateRequest) {
+            @Valid @RequestBody ActualizarMovimientoRequest actualizarMovimientoRequest) {
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(movimientoService.actualizar(idMovimiento, movimientoUpdateRequest));
+                .body(movimientoService.actualizar(idMovimiento, actualizarMovimientoRequest));
     }
 
     @DeleteMapping("/{idMovimiento}")

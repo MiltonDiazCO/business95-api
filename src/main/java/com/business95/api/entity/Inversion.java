@@ -13,7 +13,6 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "inversiones")
@@ -24,7 +23,6 @@ public class Inversion {
     @Column(name = "id_inversion", nullable = false)
     private Long idInversion;
 
-    @NotBlank(message = "El nombre de la inversión es requerida.")
     @Column(name = "inversion", nullable = false, length = 80)
     private String inversion;
 

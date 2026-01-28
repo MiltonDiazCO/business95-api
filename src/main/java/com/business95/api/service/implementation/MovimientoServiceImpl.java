@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.dto.request.ActividadSocioRequest;
 import com.business95.api.dto.request.MovimientoRequest;
-import com.business95.api.dto.request.MovimientoUpdateRequest;
+import com.business95.api.dto.request.ActualizarMovimientoRequest;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
 import com.business95.api.dto.response.MovimientoConBalancesSociosResponse;
@@ -98,15 +98,15 @@ public class MovimientoServiceImpl implements MovimientoService {
         @Transactional()
         public MovimientoResponse actualizar(
                         Long idMovimiento,
-                        MovimientoUpdateRequest movimientoUpdateRequest) {
+                        ActualizarMovimientoRequest actualizarMovimientoRequest) {
 
                 Movimiento movimiento = movimientoHelper.construirMovimiento(
                                 idMovimiento,
-                                movimientoUpdateRequest.getInversion(),
-                                movimientoUpdateRequest.getConcepto(),
-                                movimientoUpdateRequest.getCategoria(),
-                                movimientoUpdateRequest.getMedida(),
-                                movimientoUpdateRequest.getMoneda());
+                                actualizarMovimientoRequest.getInversion(),
+                                actualizarMovimientoRequest.getConcepto(),
+                                actualizarMovimientoRequest.getCategoria(),
+                                actualizarMovimientoRequest.getMedida(),
+                                actualizarMovimientoRequest.getMoneda());
 
                 return movimientoMapper.toMovimientoResponse(movimientoRepository.save(movimiento));
         }

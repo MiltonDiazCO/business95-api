@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.business95.api.dto.request.ActualizarInversionRequest;
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
@@ -111,12 +112,14 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionResponse actualizarDetalleInversion(Long idInversion, Inversion inversion) {
+    public InversionResponse actualizarDetalleInversion(
+            Long idInversion,
+            ActualizarInversionRequest actualizarInversionRequest) {
 
         Inversion inversionUpdate = inversionRepository.findById(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
 
-        inversionUpdate.setInversion(inversion.getInversion());
+        inversionUpdate.setInversion(actualizarInversionRequest.getInversion());
 
         return inversionMapper.toInversionResponse(inversionRepository.save(inversionUpdate));
     }

@@ -2,12 +2,12 @@ package com.business95.api.service.interfaces;
 
 import java.util.List;
 
+import com.business95.api.dto.request.ActualizarInversionRequest;
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
-import com.business95.api.entity.Inversion;
 
 public interface InversionService {
 
@@ -23,7 +23,9 @@ public interface InversionService {
 
     InversionConSociosResponse agregarSociosAInversion(Long idInversion, List<Long> socios);
 
-    InversionResponse actualizarDetalleInversion(Long idInversion, Inversion inversion);
+    InversionResponse actualizarDetalleInversion(
+            Long idInversion,
+            ActualizarInversionRequest actualizarInversionRequest);
 
     void eliminarInversion(Long idInversion);
 

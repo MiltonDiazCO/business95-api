@@ -2,6 +2,7 @@ package com.business95.api.service.implementation;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -54,6 +55,7 @@ public class SocioServiceImpl implements SocioService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@userSecurity.esDueño(#idSocio, authentication.name)")
     public BalanceSocioResponse balanceSocio(Long idSocio) {
 
         BalanceSocioProjection socioProjection = socioRepository.balanceSocio(idSocio)
@@ -72,7 +74,9 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override
-    public List<InversionConBalancesSociosResponse> balanceInversionPorSocio(Long idSocio) {
+    @Transactional(readOnly = true)
+    @PreAuthorize("@userSecurity.esDueño(#idSocio, authentication.name)")
+    public List<InversionConBalancesSociosResponse> balanceInversionesPorSocio(Long idSocio) {
         return inversionRepository
                 .balanceInversionPorIdSocioOIdInversion(idSocio, null)
                 .stream()

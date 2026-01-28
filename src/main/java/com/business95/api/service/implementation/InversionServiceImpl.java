@@ -67,10 +67,10 @@ public class InversionServiceImpl implements InversionService {
     @Override
     public InversionConBalancesSociosResponse balanceSociosPorInversion(Long idInversion) {
 
-        BalanceInversionProjection inversionsocioProjection;
+        BalanceInversionProjection inversionProjection;
 
         if (inversionRepository.findById(idInversion).isPresent()) {
-            inversionsocioProjection = inversionRepository
+            inversionProjection = inversionRepository
                     .balanceInversionPorIdSocioOIdInversion(null, idInversion)
                     .get(0);
         } else {
@@ -78,7 +78,7 @@ public class InversionServiceImpl implements InversionService {
         }
 
         InversionConBalancesSociosResponse inversionResponse = inversionMapper
-                .toBalanceInversionResponse(inversionsocioProjection);
+                .toBalanceInversionResponse(inversionProjection);
 
         List<BalanceSocioPorInversionResponse> balances = inversionRepository
                 .balanceSociosPorInversion(idInversion)

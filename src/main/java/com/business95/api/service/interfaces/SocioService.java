@@ -15,6 +15,6 @@ public interface SocioService {
 
     BalanceSocioResponse balanceSocio(Long idSocio);
 
-    List<InversionConBalancesSociosResponse> balanceInversionPorSocio(Long idSocio);
+    List<InversionConBalancesSociosResponse> balanceInversionesPorSocio(Long idSocio);
 
 }

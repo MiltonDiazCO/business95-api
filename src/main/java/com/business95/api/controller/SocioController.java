@@ -42,7 +42,7 @@ public class SocioController {
     @GetMapping("/{idSocio}/inversiones")
     public ResponseEntity<List<InversionConBalancesSociosResponse>> balanceInversionesPorSocio(
             @PathVariable Long idSocio) {
-        return ResponseEntity.ok().body(socioService.balanceInversionPorSocio(idSocio));
+        return ResponseEntity.ok().body(socioService.balanceInversionesPorSocio(idSocio));
     }
 
 }

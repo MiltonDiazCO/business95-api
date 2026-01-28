@@ -44,16 +44,17 @@ public class GlobalExceptionHandler {
         this.erroresService = erroresService;
     }
 
-    @ExceptionHandler({MethodArgumentNotValidException.class})
-    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesDeValidacion(MethodArgumentNotValidException exc, HttpServletRequest request) {
+    @ExceptionHandler({ MethodArgumentNotValidException.class })
+    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesDeValidacion(
+            MethodArgumentNotValidException exc,
+            HttpServletRequest request) {
 
         BindingResult result = exc.getBindingResult();
 
-        return ErrorUtils.construirRespuestaDeErrorDeValidacion(
+        return ErrorUtils.construirErrorResponse(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
-                result,
+                ErrorUtils.construirErroresDeValidacion(result),
                 HttpStatus.NOT_FOUND.value(), request);
-        
     }
 
     @ExceptionHandler({
@@ -66,12 +67,13 @@ public class GlobalExceptionHandler {
             TipoActividadNoEncontradoException.class,
             ActividadSocioNoEncontradaException.class
     })
-    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesRecursoNoEncontrado(RuntimeException exc,
+    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesRecursoNoEncontrado(
+            RuntimeException exc,
             HttpServletRequest request) {
 
-        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
+        return ErrorUtils.construirErrorResponse(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
-                exc.getMessage(),
+                ErrorUtils.construirErroresDeExcepcion(exc.getMessage()),
                 HttpStatus.NOT_FOUND.value(), request);
     }
 
@@ -80,9 +82,9 @@ public class GlobalExceptionHandler {
             RuntimeException exc,
             HttpServletRequest request) {
 
-        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
+        return ErrorUtils.construirErrorResponse(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
-                exc.getMessage(),
+                ErrorUtils.construirErroresDeExcepcion(exc.getMessage()),
                 HttpStatus.BAD_REQUEST.value(), request);
     }
 
@@ -91,9 +93,10 @@ public class GlobalExceptionHandler {
             RuntimeException exc,
             HttpServletRequest request) {
 
-        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
+        return ErrorUtils.construirErrorResponse(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
-                exc.getMessage(), HttpStatus.CONFLICT.value(), request);
+                ErrorUtils.construirErroresDeExcepcion(exc.getMessage()),
+                HttpStatus.CONFLICT.value(), request);
     }
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
@@ -107,6 +110,7 @@ public class GlobalExceptionHandler {
 
             InvalidFormatException invalidExc = (InvalidFormatException) exc.getCause();
 
+            /* Número invalido */
             if (invalidExc.getTargetType().equals(BigDecimal.class) || invalidExc.getTargetType().equals(Long.class)) {
                 error = messageSource.getMessage("error.numero.invalido", null, Locale.getDefault());
             }
@@ -116,6 +120,7 @@ public class GlobalExceptionHandler {
 
             MismatchedInputException mismatchedExc = (MismatchedInputException) exc.getCause();
 
+            /* Fecha invalida */
             if (mismatchedExc.getTargetType().equals(LocalDateTime.class)) {
                 error = messageSource.getMessage("error.fecha.formato.invalido", null, Locale.getDefault());
             }
@@ -125,14 +130,16 @@ public class GlobalExceptionHandler {
 
             JsonProcessingException jsonProcessingExc = (JsonProcessingException) exc.getCause();
 
+            /* JSON invalido */
             if (jsonProcessingExc.getOriginalMessage().contains("Leading zeroes not allowed")) {
                 error = messageSource.getMessage("error.ceros.izquierda", null, Locale.getDefault());
             }
         }
 
-        return ErrorUtils.construirRespuestaDeErrorDeExcepcion(
+        return ErrorUtils.construirErrorResponse(
                 messageSource.getMessage("error.formato.invalido", null, Locale.getDefault()),
-                error, HttpStatus.BAD_REQUEST.value(), request);
+                ErrorUtils.construirErroresDeExcepcion(error),
+                HttpStatus.BAD_REQUEST.value(), request);
     }
 
 }

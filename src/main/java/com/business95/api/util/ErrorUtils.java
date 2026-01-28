@@ -15,7 +15,22 @@ import jakarta.servlet.http.HttpServletRequest;
 
 public class ErrorUtils {
 
-    private static ErrorHttpResponse construirErrorResponse(
+    public static List<String> construirErroresDeExcepcion(String errorExcepcion) {
+        return Arrays.asList(errorExcepcion);
+    }
+
+    public static List<String> construirErroresDeValidacion(BindingResult result) {
+
+        Map<String, String> errores = new HashMap<>();
+
+        result.getFieldErrors().forEach(error -> {
+            errores.put(error.getField(), error.getDefaultMessage());
+        });
+
+        return List.copyOf(errores.values());
+    }
+
+    public static ResponseEntity<ErrorHttpResponse> construirErrorResponse(
             String mensaje,
             List<String> errores,
             int httpStatusCode,
@@ -28,39 +43,6 @@ public class ErrorUtils {
         errorHttpResponse.setCodigoEstado(httpStatusCode);
         errorHttpResponse.setRuta(request.getRequestURI());
         errorHttpResponse.setFecha(LocalDateTime.now());
-
-        return errorHttpResponse;
-    }
-    
-    public static ResponseEntity<ErrorHttpResponse> construirRespuestaDeErrorDeExcepcion(
-            String mensaje,
-            String errorExcepcion,
-            int httpStatusCode,
-            HttpServletRequest request) {
-
-        ErrorHttpResponse errorHttpResponse = construirErrorResponse(mensaje,
-                Arrays.asList(errorExcepcion),
-                httpStatusCode, request);
-
-        return ResponseEntity.status(httpStatusCode).body(errorHttpResponse);
-    }
-
-    
-    public static ResponseEntity<ErrorHttpResponse> construirRespuestaDeErrorDeValidacion(
-            String mensaje,
-            BindingResult result,
-            int httpStatusCode,
-            HttpServletRequest request) {
-
-        Map<String, String> errores = new HashMap<>();
-
-        result.getFieldErrors().forEach(error -> {
-            errores.put(error.getField(), error.getDefaultMessage());
-        });
-
-        ErrorHttpResponse errorHttpResponse = construirErrorResponse(mensaje,
-                List.copyOf(errores.values()),
-                httpStatusCode, request);
 
         return ResponseEntity.status(httpStatusCode).body(errorHttpResponse);
     }

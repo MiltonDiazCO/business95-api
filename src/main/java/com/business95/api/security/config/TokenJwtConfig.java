@@ -1,4 +1,4 @@
-package com.business95.api.security;
+package com.business95.api.security.config;
 
 import javax.crypto.SecretKey;
 

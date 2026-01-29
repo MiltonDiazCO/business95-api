@@ -1,9 +1,9 @@
 package com.business95.api.security.filter;
 
-import static com.business95.api.security.TokenJwtConfig.CONTENT_TYPE;
-import static com.business95.api.security.TokenJwtConfig.HEADER_AUTHORIZATION;
-import static com.business95.api.security.TokenJwtConfig.PREFIX_TOKEN;
-import static com.business95.api.security.TokenJwtConfig.SECRET_KEY;
+import static com.business95.api.security.config.TokenJwtConfig.CONTENT_TYPE;
+import static com.business95.api.security.config.TokenJwtConfig.HEADER_AUTHORIZATION;
+import static com.business95.api.security.config.TokenJwtConfig.PREFIX_TOKEN;
+import static com.business95.api.security.config.TokenJwtConfig.SECRET_KEY;
 
 import java.io.IOException;
 import java.util.Collection;

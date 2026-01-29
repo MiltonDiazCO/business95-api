@@ -1,4 +1,4 @@
-package com.business95.api.security;
+package com.business95.api.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -17,7 +17,6 @@ import com.business95.api.exception.InversionConMovimientosException;
 import com.business95.api.exception.InversionNoEncontradaException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.helper.InversionHelper;
-import com.business95.api.helper.SocioHelper;
 import com.business95.api.mapper.InversionMapper;
 import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceInversionProjection;
@@ -33,21 +32,18 @@ public class InversionServiceImpl implements InversionService {
     private final InversionMapper inversionMapper;
     private final InversionHelper inversionHelper;
     private final SocioMapper socioMapper;
-    private final SocioHelper socioHelper;
 
     public InversionServiceImpl(
             InversionRepository inversionRepository,
             MovimientoRepository movimientoRepository,
             InversionMapper inversionMapper,
             InversionHelper inversionHelper,
-            SocioMapper socioMapper,
-            SocioHelper socioHelper) {
+            SocioMapper socioMapper) {
         this.inversionRepository = inversionRepository;
         this.movimientoRepository = movimientoRepository;
         this.inversionMapper = inversionMapper;
         this.inversionHelper = inversionHelper;
         this.socioMapper = socioMapper;
-        this.socioHelper = socioHelper;
     }
 
     @Override
@@ -103,9 +99,9 @@ public class InversionServiceImpl implements InversionService {
 
         Inversion inversion = new Inversion(null, inversionRequest.getInversion());
 
-        for (Long socio : inversionRequest.getSocios()) {
-            inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
-        }
+        // for (Long socio : inversionRequest.getSocios()) {
+        // inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
+        // }
 
         return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
     }
@@ -135,9 +131,9 @@ public class InversionServiceImpl implements InversionService {
             throw new SociosRequeridosException();
         }
 
-        for (Long socio : socios) {
-            inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
-        }
+        // for (Long socio : socios) {
+        // inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
+        // }
 
         return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
     }
@@ -166,9 +162,9 @@ public class InversionServiceImpl implements InversionService {
             throw new SociosRequeridosException();
         }
 
-        for (Long socio : socios) {
-            inversion.removeSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
-        }
+        // for (Long socio : socios) {
+        // inversion.removeSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
+        // }
 
         inversionRepository.save(inversion);
     }

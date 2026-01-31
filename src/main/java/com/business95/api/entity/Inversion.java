@@ -1,10 +1,17 @@
 package com.business95.api.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -19,7 +26,15 @@ public class Inversion {
     @Column(name = "inversion", nullable = false, length = 80)
     private String inversion;
 
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY, orphanRemoval = false)
+    @JoinColumn(name = "id_inversion", nullable = false)
+    private Set<InversionSocio> socios = new HashSet<>();
+
     public Inversion() {
+    }
+
+    public Inversion(String inversion) {
+        this.inversion = inversion;
     }
 
     public Inversion(Long idInversion, String inversion) {
@@ -41,6 +56,22 @@ public class Inversion {
 
     public void setInversion(String inversion) {
         this.inversion = inversion;
+    }
+
+    public Set<InversionSocio> getSocios() {
+        return socios;
+    }
+
+    public void setSocios(Set<InversionSocio> socios) {
+        this.socios = socios;
+    }
+
+    public void addSocio(InversionSocio socio) {
+        this.socios.add(socio);
+    }
+
+    public void removeSocio(InversionSocio socio) {
+        this.socios.remove(socio);
     }
 
 }

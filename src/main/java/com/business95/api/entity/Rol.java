@@ -17,14 +17,14 @@ public class Rol {
     private Long idRol;
 
     @Column(name = "rol", nullable = false, unique = true, length = 45)
-    private String Rol;
+    private String rol;
 
     public Rol() {
     }
 
     public Rol(Long idRol, String rol) {
         this.idRol = idRol;
-        Rol = rol;
+        this.rol = rol;
     }
 
     public Long getIdRol() {
@@ -36,11 +36,11 @@ public class Rol {
     }
 
     public String getRol() {
-        return Rol;
+        return rol;
     }
 
     public void setRol(String rol) {
-        Rol = rol;
+        this.rol = rol;
     }
 
 }

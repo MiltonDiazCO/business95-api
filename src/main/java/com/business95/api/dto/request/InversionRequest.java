@@ -14,15 +14,15 @@ public class InversionRequest {
     private String inversion;
 
     @Valid
-    @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión")
-    private List<Long> socios;
+    @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión.")
+    private List<SocioRolInversionRequest> socios;
 
     public InversionRequest() {
     }
 
     public InversionRequest(
             @NotBlank(message = "El nombre de la inversión es requerida.") @Size(max = 80, message = "El nombre de la inversión debe ser de máximo 80 caracteres.") String inversion,
-            @Valid @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión") List<Long> socios) {
+            @Valid @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión.") List<SocioRolInversionRequest> socios) {
         this.inversion = inversion;
         this.socios = socios;
     }
@@ -35,11 +35,11 @@ public class InversionRequest {
         this.inversion = inversion;
     }
 
-    public List<Long> getSocios() {
+    public List<SocioRolInversionRequest> getSocios() {
         return socios;
     }
 
-    public void setSocios(List<Long> socios) {
+    public void setSocios(List<SocioRolInversionRequest> socios) {
         this.socios = socios;
     }
 

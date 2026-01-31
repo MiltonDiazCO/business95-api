@@ -1,17 +1,17 @@
 package com.business95.api.dto.response;
 
-import java.util.List;
+import java.util.Set;
 
 public class InversionConSociosResponse {
 
     private Long idInversion;
     private String inversion;
-    private List<SocioNombresResponse> socios;
+    private Set<SocioRolInversionResponse> socios;
 
     public InversionConSociosResponse() {
     }
 
-    public InversionConSociosResponse(Long idInversion, String inversion, List<SocioNombresResponse> socios) {
+    public InversionConSociosResponse(Long idInversion, String inversion, Set<SocioRolInversionResponse> socios) {
         this.idInversion = idInversion;
         this.inversion = inversion;
         this.socios = socios;
@@ -33,15 +33,15 @@ public class InversionConSociosResponse {
         this.inversion = inversion;
     }
 
-    public List<SocioNombresResponse> getSocios() {
+    public Set<SocioRolInversionResponse> getSocios() {
         return socios;
     }
 
-    public void setSocios(List<SocioNombresResponse> socios) {
+    public void setSocios(Set<SocioRolInversionResponse> socios) {
         this.socios = socios;
     }
 
-    public void addSocio(SocioNombresResponse socioResponse) {
+    public void addSocio(SocioRolInversionResponse socioResponse) {
         this.socios.add(socioResponse);
     }
 

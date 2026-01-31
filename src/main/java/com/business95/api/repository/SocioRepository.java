@@ -15,6 +15,9 @@ import com.business95.api.projection.BalanceSocioProjection;
 @Repository
 public interface SocioRepository extends CrudRepository<Socio, Long> {
 
+        @Query(value = "SELECT s.idSocio FROM Socio s WHERE s.usuario.correoElectronico = :correoElectronico")
+        Long buscarIdSocioPorCorreoElectronico(@Param("correoElectronico") String correoElectronico);
+
         // @formatter:off
         @Query(value = """
                 SELECT s.id_socio AS idSocio,

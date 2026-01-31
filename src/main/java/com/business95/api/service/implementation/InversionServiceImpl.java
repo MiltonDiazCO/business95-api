@@ -7,21 +7,28 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.dto.request.ActualizarInversionRequest;
 import com.business95.api.dto.request.InversionRequest;
+import com.business95.api.dto.request.SocioRolInversionRequest;
 import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
 import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.entity.Inversion;
+import com.business95.api.entity.Rol;
+import com.business95.api.entity.Socio;
 import com.business95.api.exception.InversionConMovimientosException;
 import com.business95.api.exception.InversionNoEncontradaException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.helper.InversionHelper;
+import com.business95.api.helper.InversionSocioHelper;
+import com.business95.api.helper.SocioHelper;
 import com.business95.api.mapper.InversionMapper;
 import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceInversionProjection;
 import com.business95.api.repository.InversionRepository;
 import com.business95.api.repository.MovimientoRepository;
+import com.business95.api.repository.RolRepository;
+import com.business95.api.security.context.SocioActual;
 import com.business95.api.service.interfaces.InversionService;
 
 @Service
@@ -29,21 +36,32 @@ public class InversionServiceImpl implements InversionService {
 
     private final InversionRepository inversionRepository;
     private final MovimientoRepository movimientoRepository;
-    private final InversionMapper inversionMapper;
+    private final RolRepository rolRepository;
+    private final SocioHelper socioHelper;
     private final InversionHelper inversionHelper;
+    private final InversionSocioHelper inversionSocioHelper;
+    private final InversionMapper inversionMapper;
     private final SocioMapper socioMapper;
+    private final SocioActual socioActual;
 
-    public InversionServiceImpl(
-            InversionRepository inversionRepository,
+    public InversionServiceImpl(InversionRepository inversionRepository,
             MovimientoRepository movimientoRepository,
-            InversionMapper inversionMapper,
+            RolRepository rolRepository,
+            SocioHelper socioHelper,
             InversionHelper inversionHelper,
-            SocioMapper socioMapper) {
+            InversionSocioHelper inversionSocioHelper,
+            InversionMapper inversionMapper,
+            SocioMapper socioMapper,
+            SocioActual socioActual) {
         this.inversionRepository = inversionRepository;
         this.movimientoRepository = movimientoRepository;
-        this.inversionMapper = inversionMapper;
+        this.rolRepository = rolRepository;
+        this.socioHelper = socioHelper;
         this.inversionHelper = inversionHelper;
+        this.inversionSocioHelper = inversionSocioHelper;
+        this.inversionMapper = inversionMapper;
         this.socioMapper = socioMapper;
+        this.socioActual = socioActual;
     }
 
     @Override
@@ -95,13 +113,25 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionConSociosResponse guardarInversionConSocios(InversionRequest inversionRequest) {
+    public InversionConSociosResponse guardarInversionConSocios(
+            InversionRequest inversionRequest) {
 
-        Inversion inversion = new Inversion(null, inversionRequest.getInversion());
+        Inversion inversion = new Inversion(inversionRequest.getInversion());
 
-        // for (Long socio : inversionRequest.getSocios()) {
-        // inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
-        // }
+        Socio socioAuditor = socioHelper.buscarPorIdOLanzarExcepcion(socioActual.getIdSocioActual());
+        Socio socioCreacion = socioAuditor;
+        Socio socioModificacion = socioAuditor;
+
+        for (SocioRolInversionRequest socioRol : inversionRequest.getSocios()) {
+            Socio socio = socioHelper.buscarPorIdOLanzarExcepcion(socioRol.getIdSocio());
+            Rol rol = rolRepository.findByRol(socioRol.getRol()).get();
+
+            inversion.addSocio(inversionSocioHelper.construirInversionSocio(
+                    socio,
+                    rol,
+                    socioCreacion,
+                    socioModificacion));
+        }
 
         return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
     }

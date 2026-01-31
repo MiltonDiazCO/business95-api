@@ -26,10 +26,6 @@ public class InversionSocio {
     private Long idInversionSocio;
 
     @ManyToOne
-    @JoinColumn(name = "id_inversion", nullable = false)
-    private Inversion inversion;
-
-    @ManyToOne
     @JoinColumn(name = "id_socio", nullable = false)
     private Socio socio;
 
@@ -57,7 +53,6 @@ public class InversionSocio {
     }
 
     public InversionSocio(Long idInversionSocio,
-            Inversion inversion,
             Socio socio,
             Rol rol,
             LocalDateTime fechaRegistro,
@@ -65,7 +60,6 @@ public class InversionSocio {
             Socio socioCreacion,
             Socio socioModificacion) {
         this.idInversionSocio = idInversionSocio;
-        this.inversion = inversion;
         this.socio = socio;
         this.rol = rol;
         this.fechaRegistro = fechaRegistro;
@@ -80,14 +74,6 @@ public class InversionSocio {
 
     public void setIdInversionSocio(Long idInversionSocio) {
         this.idInversionSocio = idInversionSocio;
-    }
-
-    public Inversion getInversion() {
-        return inversion;
-    }
-
-    public void setInversion(Inversion inversion) {
-        this.inversion = inversion;
     }
 
     public Socio getSocio() {

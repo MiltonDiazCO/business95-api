@@ -1,6 +1,7 @@
 package com.business95.api.service.implementation;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,9 +27,9 @@ import com.business95.api.mapper.InversionMapper;
 import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceInversionProjection;
 import com.business95.api.repository.InversionRepository;
+import com.business95.api.repository.InversionSocioRepository;
 import com.business95.api.repository.MovimientoRepository;
 import com.business95.api.repository.RolRepository;
-import com.business95.api.security.context.SocioActual;
 import com.business95.api.service.interfaces.InversionService;
 
 @Service
@@ -42,17 +43,16 @@ public class InversionServiceImpl implements InversionService {
     private final InversionSocioHelper inversionSocioHelper;
     private final InversionMapper inversionMapper;
     private final SocioMapper socioMapper;
-    private final SocioActual socioActual;
 
     public InversionServiceImpl(InversionRepository inversionRepository,
+            InversionSocioRepository inversionSocioRepository,
             MovimientoRepository movimientoRepository,
             RolRepository rolRepository,
             SocioHelper socioHelper,
             InversionHelper inversionHelper,
             InversionSocioHelper inversionSocioHelper,
             InversionMapper inversionMapper,
-            SocioMapper socioMapper,
-            SocioActual socioActual) {
+            SocioMapper socioMapper) {
         this.inversionRepository = inversionRepository;
         this.movimientoRepository = movimientoRepository;
         this.rolRepository = rolRepository;
@@ -61,7 +61,6 @@ public class InversionServiceImpl implements InversionService {
         this.inversionSocioHelper = inversionSocioHelper;
         this.inversionMapper = inversionMapper;
         this.socioMapper = socioMapper;
-        this.socioActual = socioActual;
     }
 
     @Override
@@ -118,22 +117,42 @@ public class InversionServiceImpl implements InversionService {
 
         Inversion inversion = new Inversion(inversionRequest.getInversion());
 
-        Socio socioAuditor = socioHelper.buscarPorIdOLanzarExcepcion(socioActual.getIdSocioActual());
-        Socio socioCreacion = socioAuditor;
-        Socio socioModificacion = socioAuditor;
-
-        for (SocioRolInversionRequest socioRol : inversionRequest.getSocios()) {
-            Socio socio = socioHelper.buscarPorIdOLanzarExcepcion(socioRol.getIdSocio());
-            Rol rol = rolRepository.findByRol(socioRol.getRol()).get();
-
-            inversion.addSocio(inversionSocioHelper.construirInversionSocio(
-                    socio,
-                    rol,
-                    socioCreacion,
-                    socioModificacion));
-        }
+        guardarSocios(inversion, inversionRequest.getSocios());
 
         return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
+    }
+
+    @Override
+    @Transactional()
+    public InversionConSociosResponse agregarSociosAInversion(
+            Long idInversion,
+            Set<SocioRolInversionRequest> socios) {
+
+        Inversion inversion = inversionHelper.buscarPorIdOLanzarExcepcion(idInversion);
+
+        if (socios.size() <= 0 || socios.isEmpty()) {
+            throw new SociosRequeridosException();
+        }
+
+        guardarSocios(inversion, socios);
+
+        return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
+    }
+
+    @Override
+    @Transactional()
+    public void eliminarSociosDeInversion(Long idInversion, List<Long> socios) {
+
+        Inversion inversion = inversionRepository.findById(idInversion)
+                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+
+        if (socios.size() <= 0 || socios.isEmpty()) {
+            throw new SociosRequeridosException();
+        }
+
+        for (Long idSocio : socios) {
+            inversion.removeSocio(inversionSocioHelper.buscarPorIdOLanzarExcepcion(idInversion, idSocio));
+        }
     }
 
     @Override
@@ -152,24 +171,6 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    public InversionConSociosResponse agregarSociosAInversion(Long idInversion, List<Long> socios) {
-
-        Inversion inversion = inversionRepository.findById(idInversion)
-                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
-
-        if (socios.size() <= 0 || socios.isEmpty()) {
-            throw new SociosRequeridosException();
-        }
-
-        // for (Long socio : socios) {
-        // inversion.addSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
-        // }
-
-        return inversionMapper.toInversionConSociosResponse(inversionRepository.save(inversion));
-    }
-
-    @Override
-    @Transactional()
     public void eliminarInversion(Long idInversion) {
 
         Inversion inversion = inversionHelper.buscarPorIdOLanzarExcepcion(idInversion);
@@ -181,22 +182,15 @@ public class InversionServiceImpl implements InversionService {
         inversionRepository.delete(inversion);
     }
 
-    @Override
-    @Transactional()
-    public void eliminarSociosDeInversion(Long idInversion, List<Long> socios) {
+    private void guardarSocios(Inversion inversion, Set<SocioRolInversionRequest> socios) {
+        for (SocioRolInversionRequest socioRol : socios) {
 
-        Inversion inversion = inversionRepository.findById(idInversion)
-                .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
+            Socio socio = socioHelper.buscarPorIdOLanzarExcepcion(socioRol.getIdSocio());
+            Rol rol = rolRepository.findByRol(socioRol.getRol()).get();
 
-        if (socios.size() <= 0 || socios.isEmpty()) {
-            throw new SociosRequeridosException();
+            inversion.addSocio(inversionSocioHelper.construirInversionSocio(socio, rol));
+
         }
-
-        // for (Long socio : socios) {
-        // inversion.removeSocio(socioHelper.buscarPorIdOLanzarExcepcion(socio));
-        // }
-
-        inversionRepository.save(inversion);
     }
 
 }

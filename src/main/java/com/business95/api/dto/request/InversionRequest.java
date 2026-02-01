@@ -1,6 +1,6 @@
 package com.business95.api.dto.request;
 
-import java.util.List;
+import java.util.Set;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -15,14 +15,14 @@ public class InversionRequest {
 
     @Valid
     @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión.")
-    private List<SocioRolInversionRequest> socios;
+    private Set<SocioRolInversionRequest> socios;
 
     public InversionRequest() {
     }
 
     public InversionRequest(
             @NotBlank(message = "El nombre de la inversión es requerida.") @Size(max = 80, message = "El nombre de la inversión debe ser de máximo 80 caracteres.") String inversion,
-            @Valid @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión.") List<SocioRolInversionRequest> socios) {
+            @Valid @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión.") Set<SocioRolInversionRequest> socios) {
         this.inversion = inversion;
         this.socios = socios;
     }
@@ -35,11 +35,11 @@ public class InversionRequest {
         this.inversion = inversion;
     }
 
-    public List<SocioRolInversionRequest> getSocios() {
+    public Set<SocioRolInversionRequest> getSocios() {
         return socios;
     }
 
-    public void setSocios(List<SocioRolInversionRequest> socios) {
+    public void setSocios(Set<SocioRolInversionRequest> socios) {
         this.socios = socios;
     }
 

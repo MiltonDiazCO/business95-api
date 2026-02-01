@@ -3,14 +3,14 @@ package com.business95.api.dto.request;
 public class SocioRolInversionRequest {
 
     private Long idSocio;
-    private String Rol;
+    private String rol;
 
     public SocioRolInversionRequest() {
     }
 
     public SocioRolInversionRequest(Long idSocio, String rol) {
         this.idSocio = idSocio;
-        Rol = rol;
+        this.rol = rol;
     }
 
     public Long getIdSocio() {
@@ -22,11 +22,11 @@ public class SocioRolInversionRequest {
     }
 
     public String getRol() {
-        return Rol;
+        return rol;
     }
 
     public void setRol(String rol) {
-        Rol = rol;
+        this.rol = rol;
     }
 
 }

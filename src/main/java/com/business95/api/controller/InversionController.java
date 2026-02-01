@@ -1,6 +1,7 @@
 package com.business95.api.controller;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.dto.request.ActualizarInversionRequest;
 import com.business95.api.dto.request.InversionRequest;
+import com.business95.api.dto.request.SocioRolInversionRequest;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
@@ -65,7 +67,7 @@ public class InversionController {
     @PostMapping("/{idInversion}/socios")
     public ResponseEntity<?> agregarSociosAInversion(
             @PathVariable Long idInversion,
-            @RequestBody List<Long> socios) {
+            @RequestBody Set<SocioRolInversionRequest> socios) {
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(inversionService.agregarSociosAInversion(idInversion, socios));
     }

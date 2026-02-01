@@ -5,17 +5,35 @@ import org.springframework.stereotype.Component;
 import com.business95.api.entity.InversionSocio;
 import com.business95.api.entity.Rol;
 import com.business95.api.entity.Socio;
+import com.business95.api.repository.InversionSocioRepository;
+import com.business95.api.security.context.SocioActual;
 
 @Component
 public class InversionSocioHelper {
 
-    public InversionSocio construirInversionSocio(
-            Socio socio,
-            Rol rol,
-            Socio socioCreacion,
-            Socio socioModificacion) {
+    private InversionSocioRepository inversionSocioRepository;
+    private SocioHelper socioHelper;
+    private SocioActual socioActual;
+
+    public InversionSocioHelper(InversionSocioRepository inversionSocioRepository,
+            SocioHelper socioHelper,
+            SocioActual socioActual) {
+        this.inversionSocioRepository = inversionSocioRepository;
+        this.socioHelper = socioHelper;
+        this.socioActual = socioActual;
+    }
+
+    public InversionSocio buscarPorIdOLanzarExcepcion(Long idInversion, Long idSocio) {
+        return inversionSocioRepository.buscarSocioPorInversion(idInversion, idSocio).get();
+    }
+
+    public InversionSocio construirInversionSocio(Socio socio, Rol rol) {
 
         InversionSocio inversionSocio = new InversionSocio();
+
+        Socio socioAuditor = socioHelper.buscarPorIdOLanzarExcepcion(socioActual.getIdSocioActual());
+        Socio socioCreacion = socioAuditor;
+        Socio socioModificacion = socioAuditor;
 
         inversionSocio.setSocio(socio);
         inversionSocio.setRol(rol);

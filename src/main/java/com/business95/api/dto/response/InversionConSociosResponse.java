@@ -1,12 +1,13 @@
 package com.business95.api.dto.response;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class InversionConSociosResponse {
 
     private Long idInversion;
     private String inversion;
-    private Set<SocioRolInversionResponse> socios;
+    private Set<SocioRolInversionResponse> socios = new HashSet<>();
 
     public InversionConSociosResponse() {
     }

@@ -1,5 +1,6 @@
 package com.business95.api.dto.request;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import jakarta.validation.Valid;
@@ -15,7 +16,7 @@ public class InversionRequest {
 
     @Valid
     @NotEmpty(message = "Debe asociar por lo menos un socio a la nueva inversión.")
-    private Set<SocioRolInversionRequest> socios;
+    private Set<SocioRolInversionRequest> socios = new HashSet<>();
 
     public InversionRequest() {
     }

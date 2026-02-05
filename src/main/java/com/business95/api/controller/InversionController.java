@@ -22,6 +22,7 @@ import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
 import com.business95.api.service.interfaces.InversionService;
+import com.business95.api.service.interfaces.InversionSocioService;
 
 import jakarta.validation.Valid;
 
@@ -30,9 +31,13 @@ import jakarta.validation.Valid;
 public class InversionController {
 
     private final InversionService inversionService;
+    private final InversionSocioService inversionSocioService;
 
-    public InversionController(InversionService inversionService) {
+    public InversionController(
+            InversionService inversionService,
+            InversionSocioService inversionSocioService) {
         this.inversionService = inversionService;
+        this.inversionSocioService = inversionSocioService;
     }
 
     @GetMapping("/{idInversion}")
@@ -69,7 +74,7 @@ public class InversionController {
             @PathVariable Long idInversion,
             @RequestBody Set<SocioRolInversionRequest> socios) {
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(inversionService.agregarSociosAInversion(idInversion, socios));
+                .body(inversionSocioService.agregarSociosAInversion(idInversion, socios));
     }
 
     @PutMapping("/{idInversion}")
@@ -90,7 +95,7 @@ public class InversionController {
     public ResponseEntity<?> eliminarSociosDeInversion(
             @PathVariable Long idInversion,
             @RequestBody List<Long> socios) {
-        inversionService.eliminarSociosDeInversion(idInversion, socios);
+        inversionSocioService.eliminarSociosDeInversion(idInversion, socios);
         return ResponseEntity.noContent().build();
     }
 

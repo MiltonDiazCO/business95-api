@@ -69,14 +69,6 @@ public class InversionController {
                 .body(inversionService.guardarInversionConSocios(inversionRequest));
     }
 
-    @PostMapping("/{idInversion}/socios")
-    public ResponseEntity<?> agregarSociosAInversion(
-            @PathVariable Long idInversion,
-            @RequestBody Set<SocioRolInversionRequest> socios) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(inversionSocioService.agregarSociosAInversion(idInversion, socios));
-    }
-
     @PutMapping("/{idInversion}")
     public ResponseEntity<?> actualizarInversion(
             @PathVariable Long idInversion,
@@ -89,6 +81,23 @@ public class InversionController {
     public ResponseEntity<?> eliminarInversion(@PathVariable Long idInversion) {
         inversionService.eliminarInversion(idInversion);
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/{idInversion}/socios")
+    public ResponseEntity<?> agregarSociosAInversion(
+            @PathVariable Long idInversion,
+            @RequestBody Set<SocioRolInversionRequest> socios) {
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(inversionSocioService.agregarSociosAInversion(idInversion, socios));
+    }
+
+    @PutMapping("/{idInversion}/socios")
+    public ResponseEntity<?> modificarRolesDeSociosEnInversion(
+            @PathVariable Long idInversion,
+            @RequestBody Set<SocioRolInversionRequest> socios) {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(inversionSocioService.modificarRolesDeSociosEnInversion(idInversion, socios));
     }
 
     @DeleteMapping("/{idInversion}/socios")

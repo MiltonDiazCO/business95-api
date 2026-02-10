@@ -24,10 +24,6 @@ public class Inversion {
     @Column(name = "inversion", nullable = false, length = 80)
     private String inversion;
 
-    // @OneToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = false)
-    // @JoinColumn(name = "id_inversion", nullable = false)
-    // private Set<InversionSocio> socios = new HashSet<>();
-
     @OneToMany(mappedBy = "inversion", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, orphanRemoval = true)
     private Set<InversionSocio> socios = new HashSet<>();
 

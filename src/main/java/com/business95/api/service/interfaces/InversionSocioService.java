@@ -12,6 +12,11 @@ public interface InversionSocioService {
             Long idInversion,
             Set<SocioRolInversionRequest> socios);
 
+    InversionConSociosResponse modificarRolesDeSociosEnInversion(
+        Long idinversion,
+        Set<SocioRolInversionRequest> socios
+    );
+
     void eliminarSociosDeInversion(Long idInversion, List<Long> socios);
 
 }

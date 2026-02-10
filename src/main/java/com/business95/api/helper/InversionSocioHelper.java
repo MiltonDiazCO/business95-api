@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import com.business95.api.entity.InversionSocio;
 import com.business95.api.entity.Rol;
 import com.business95.api.entity.Socio;
+import com.business95.api.exception.InversionSocioNoEncontradoException;
 import com.business95.api.repository.InversionSocioRepository;
 import com.business95.api.security.context.SocioActual;
 
@@ -15,7 +16,8 @@ public class InversionSocioHelper {
     private SocioHelper socioHelper;
     private SocioActual socioActual;
 
-    public InversionSocioHelper(InversionSocioRepository inversionSocioRepository,
+    public InversionSocioHelper(
+            InversionSocioRepository inversionSocioRepository,
             SocioHelper socioHelper,
             SocioActual socioActual) {
         this.inversionSocioRepository = inversionSocioRepository;
@@ -23,8 +25,9 @@ public class InversionSocioHelper {
         this.socioActual = socioActual;
     }
 
-    public InversionSocio buscarPorIdOLanzarExcepcion(Long idInversion, Long idSocio) {
-        return inversionSocioRepository.buscarSocioPorInversion(idInversion, idSocio).get();
+    public InversionSocio buscarInversionSocioOLanzarExcepcion(Long idInversion, Long idSocio) {
+        return inversionSocioRepository.buscarPorInversionYSocio(idInversion, idSocio)
+                .orElseThrow(() -> new InversionSocioNoEncontradoException());
     }
 
     public InversionSocio construirInversionSocio(Socio socio, Rol rol) {

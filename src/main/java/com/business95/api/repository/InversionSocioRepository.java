@@ -15,7 +15,7 @@ public interface InversionSocioRepository extends CrudRepository<InversionSocio,
                 WHERE inv_soc.inversion.idInversion = :idInversion
                     AND inv_soc.socio.idSocio = :idSocio
             """)
-    Optional<InversionSocio> buscarSocioPorInversion(
+    Optional<InversionSocio> buscarPorInversionYSocio(
             @Param("idInversion") Long idInversion,
             @Param("idSocio") Long idSocio);
 

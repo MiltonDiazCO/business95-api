@@ -19,6 +19,7 @@ import com.business95.api.exception.CategoriaNoEncontradaException;
 import com.business95.api.exception.IdActividadRequeridaException;
 import com.business95.api.exception.InversionConMovimientosException;
 import com.business95.api.exception.InversionNoEncontradaException;
+import com.business95.api.exception.InversionSocioNoEncontradoException;
 import com.business95.api.exception.MedidaNoEncontradaException;
 import com.business95.api.exception.MonedaNoEncontradaException;
 import com.business95.api.exception.MovimientoNoEncontradoException;
@@ -67,7 +68,8 @@ public class GlobalExceptionHandler {
             SocioNoEncontradoException.class,
             TipoActividadNoEncontradoException.class,
             ActividadSocioNoEncontradaException.class,
-            RolNoEncontradoException.class
+            RolNoEncontradoException.class,
+            InversionSocioNoEncontradoException.class
     })
     public ResponseEntity<ErrorHttpResponse> manejarExcepcionesRecursoNoEncontrado(
             RuntimeException exc,

@@ -2,6 +2,7 @@ package com.business95.api.service.implementation;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,6 +51,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@inversionSecurity.esParticipante(#idInversion)")
     public InversionResponse inversionPorId(Long idInversion) {
         return inversionMapper.toInversionResponse(
                 inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
@@ -57,6 +59,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@inversionSecurity.esInversionAdmin(#idInversion)")
     public InversionConSociosResponse sociosPorInversion(Long idInversion) {
         return inversionMapper.toInversionConSociosResponse(
                 inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));

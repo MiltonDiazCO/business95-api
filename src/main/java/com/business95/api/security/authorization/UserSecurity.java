@@ -14,7 +14,6 @@ public class UserSecurity {
     }
 
     public boolean esDueño(Long idSocio, String correoDelToken) {
-
         return socioRepository.findById(idSocio)
                 .map(socio -> socio.getUsuario().getCorreoElectronico().equals(correoDelToken))
                 .orElse(false);

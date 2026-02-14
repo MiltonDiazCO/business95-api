@@ -51,7 +51,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    @PreAuthorize("@inversionSecurity.esParticipante(#idInversion)")
+    @PreAuthorize("@inversionSecurity.tienePermiso('VER_NOMBRE_INVERSION', #idInversion)")
     public InversionResponse inversionPorId(Long idInversion) {
         return inversionMapper.toInversionResponse(
                 inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
@@ -59,7 +59,6 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    @PreAuthorize("@inversionSecurity.esInversionAdmin(#idInversion)")
     public InversionConSociosResponse sociosPorInversion(Long idInversion) {
         return inversionMapper.toInversionConSociosResponse(
                 inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
@@ -111,6 +110,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
+    @PreAuthorize("@inversionSecurity.tienePermiso('MODIFICAR_INVERSIONES', #idInversion)")
     public InversionResponse actualizarDetalleInversion(
             Long idInversion,
             ActualizarInversionRequest actualizarInversionRequest) {

@@ -24,7 +24,7 @@ public class InversionSocioHelper {
         this.socioHelper = socioHelper;
         this.socioActual = socioActual;
     }
-
+    
     public InversionSocio buscarInversionSocioOLanzarExcepcion(Long idInversion, Long idSocio) {
         return inversionSocioRepository.buscarPorInversionYSocio(idInversion, idSocio)
                 .orElseThrow(() -> new InversionSocioNoEncontradoException());

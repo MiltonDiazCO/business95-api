@@ -3,6 +3,7 @@ package com.business95.api.service.implementation;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +42,8 @@ public class ActividadServiceImpl implements ActividadService {
 
         @Override
         @Transactional()
+        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('AGREGAR_ACTIVIDADES', #idMovimiento) " +
+                        "|| @inversionSecurity.tienePermisoSegunMovimiento('MODIFICAR_ACTIVIDADES', #idMovimiento)")
         public List<ActividadSocioResponse> guardar(
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest) {
@@ -73,6 +76,7 @@ public class ActividadServiceImpl implements ActividadService {
 
         @Override
         @Transactional()
+        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('ELIMINAR_ACTIVIDADES', #idMovimiento)")
         public void eliminar(Long idMovimiento, ArrayList<Long> idActividades) {
 
                 Movimiento movimiento = movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento);

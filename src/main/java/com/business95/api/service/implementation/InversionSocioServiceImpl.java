@@ -14,7 +14,6 @@ import com.business95.api.entity.Inversion;
 import com.business95.api.entity.InversionSocio;
 import com.business95.api.entity.Rol;
 import com.business95.api.entity.Socio;
-import com.business95.api.exception.InversionSocioNoEncontradoException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.helper.InversionHelper;
 import com.business95.api.helper.InversionSocioHelper;
@@ -60,9 +59,8 @@ public class InversionSocioServiceImpl implements InversionSocioService {
     @Override
     @Transactional(readOnly = true)
     public String obtenerRolSocioPorInversion(Long idInversion) {
-        return inversionSocioRepository
-                .buscarPorInversionYSocio(idInversion, socioActual.getIdSocioActual())
-                .orElseThrow(() -> new InversionSocioNoEncontradoException())
+        return inversionSocioHelper
+                .buscarInversionSocioOLanzarExcepcion(idInversion, socioActual.getIdSocioActual())
                 .getRol().getRol();
     }
 
@@ -93,7 +91,7 @@ public class InversionSocioServiceImpl implements InversionSocioService {
     @Transactional
     @PreAuthorize("@inversionSecurity.tienePermiso('MODIFICAR_ROL_SOCIO_POR_INVERSION', #idInversion)")
     public InversionConSociosResponse modificarRolesDeSociosEnInversion(
-            Long idinversion,
+            Long idInversion,
             Set<SocioRolInversionRequest> socios) {
 
         if (socios.isEmpty()) {
@@ -102,7 +100,7 @@ public class InversionSocioServiceImpl implements InversionSocioService {
 
         for (SocioRolInversionRequest socioRol : socios) {
             InversionSocio inversionSocio = inversionSocioHelper
-                    .buscarInversionSocioOLanzarExcepcion(idinversion, socioRol.getIdSocio());
+                    .buscarInversionSocioOLanzarExcepcion(idInversion, socioRol.getIdSocio());
 
             inversionSocio.setFechaModificacion(LocalDateTime.now());
 
@@ -116,7 +114,7 @@ public class InversionSocioServiceImpl implements InversionSocioService {
         }
 
         return inversionMapper.toInversionConSociosResponse(
-                inversionHelper.buscarPorIdOLanzarExcepcion(idinversion));
+                inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
     }
 
     @Override

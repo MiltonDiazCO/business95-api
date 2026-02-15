@@ -2,6 +2,7 @@ package com.business95.api.service.implementation;
 
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
+        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('VER_MOVIMIENTO', #idMovimiento)")
         public MovimientoResponse movimientoPorId(Long idMovimiento) {
                 return movimientoMapper.toMovimientoResponse(
                                 movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento));
@@ -49,7 +51,9 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional(readOnly = true)
+        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('BALANCES_SOCIOS_POR_MOVIMIENTO', #idMovimiento)")
         public MovimientoConBalancesSociosResponse balanceSociosPorMovimiento(Long idMovimiento) {
+
                 BalanceMovimientoResponse balanceMovimiento = movimientoRepository
                                 .balanceMovimiento(idMovimiento)
                                 .orElseThrow(() -> new MovimientoNoEncontradoException(idMovimiento));
@@ -69,6 +73,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional
+        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('AGREGAR_MOVIMIENTO', #movimientoRequest.inversion)")
         public MovimientoResponse guardar(MovimientoRequest movimientoRequest) {
 
                 Movimiento movimiento = movimientoHelper.construirMovimiento(
@@ -96,6 +101,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
+        @PreAuthorize("@inversionSecurity('MODIFICAR_MOVIMIENTO', #idMovimiento)")
         public MovimientoResponse actualizar(
                         Long idMovimiento,
                         ActualizarMovimientoRequest actualizarMovimientoRequest) {
@@ -113,6 +119,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
+        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('ELIMINAR_MOVIMIENTO', #idMovimiento)")
         public void eliminar(Long idMovimiento) {
                 movimientoRepository.delete(movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento));
         }

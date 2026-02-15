@@ -59,12 +59,15 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@inversionSecurity.tienePermiso('VER_SOCIOS_POR_INVERSION', #idInversion)")
     public InversionConSociosResponse sociosPorInversion(Long idInversion) {
         return inversionMapper.toInversionConSociosResponse(
                 inversionHelper.buscarPorIdOLanzarExcepcion(idInversion));
     }
 
     @Override
+    @Transactional(readOnly = true)
+    @PreAuthorize("@inversionSecurity.tienePermiso('BALANCES_SOCIOS_POR_INVERSION', #idInversion)")
     public InversionConBalancesSociosResponse balanceSociosPorInversion(Long idInversion) {
 
         BalanceInversionProjection inversionProjection;
@@ -92,6 +95,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@userSecurity.tienePermiso('RESUMEN_MOVIMIENTOS_POR_INVERSION', #idInversion)")
     public List<ResumenMovimientoResponse> resumenMovimientosPorInversion(Long idInversion) {
         return movimientoRepository.resumenMovimientosPorInversion(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
@@ -124,6 +128,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
+    @PreAuthorize("@inversionSecurity.tienePermiso('ELIMINAR_INVERSIONES', #idInversion)")
     public void eliminarInversion(Long idInversion) {
 
         Inversion inversion = inversionHelper.buscarPorIdOLanzarExcepcion(idInversion);

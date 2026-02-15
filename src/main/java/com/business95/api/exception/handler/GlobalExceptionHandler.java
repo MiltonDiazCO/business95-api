@@ -23,7 +23,9 @@ import com.business95.api.exception.InversionSocioNoEncontradoException;
 import com.business95.api.exception.MedidaNoEncontradaException;
 import com.business95.api.exception.MonedaNoEncontradaException;
 import com.business95.api.exception.MovimientoNoEncontradoException;
+import com.business95.api.exception.RolInversionException;
 import com.business95.api.exception.RolNoEncontradoException;
+import com.business95.api.exception.RolSistemaException;
 import com.business95.api.exception.SocioNoEncontradoException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.exception.TipoActividadNoEncontradoException;
@@ -57,6 +59,15 @@ public class GlobalExceptionHandler {
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 ErrorUtils.construirErroresDeValidacion(result),
                 HttpStatus.NOT_FOUND.value(), request);
+    }
+
+    @ExceptionHandler({ RolSistemaException.class, RolInversionException.class })
+    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesDeRoles(
+            RuntimeException exc,
+            HttpServletRequest request) {
+        return ErrorUtils.construirErrorResponse(request.getMethod(),
+                ErrorUtils.construirErroresDeExcepcion(exc.getMessage()),
+                HttpStatus.BAD_REQUEST.value(), request);
     }
 
     @ExceptionHandler({

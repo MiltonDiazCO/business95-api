@@ -8,6 +8,8 @@ import com.business95.api.dto.response.InversionConSociosResponse;
 
 public interface InversionSocioService {
 
+    String obtenerRolSocioPorInversion(Long idInversion);
+
     InversionConSociosResponse agregarSociosAInversion(
             Long idInversion,
             Set<SocioRolInversionRequest> socios);

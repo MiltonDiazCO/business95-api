@@ -1,7 +1,11 @@
 package com.business95.api.entity;
 
+import com.business95.api.enums.ModuloRol;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,12 +23,17 @@ public class Rol {
     @Column(name = "rol", nullable = false, unique = true, length = 45)
     private String rol;
 
+    @Column(name = "modulo", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private ModuloRol modulo;
+
     public Rol() {
     }
 
-    public Rol(Long idRol, String rol) {
+    public Rol(Long idRol, String rol, ModuloRol modulo) {
         this.idRol = idRol;
         this.rol = rol;
+        this.modulo = modulo;
     }
 
     public Long getIdRol() {
@@ -41,6 +50,14 @@ public class Rol {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public ModuloRol getModulo() {
+        return modulo;
+    }
+
+    public void setModulo(ModuloRol modulo) {
+        this.modulo = modulo;
     }
 
 }

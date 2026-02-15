@@ -2,32 +2,34 @@ package com.business95.api.security.authorization;
 
 import org.springframework.stereotype.Component;
 
-import com.business95.api.exception.InversionSocioNoEncontradoException;
-import com.business95.api.repository.InversionSocioRepository;
+import com.business95.api.exception.RolSistemaException;
 import com.business95.api.repository.PermisoRepository;
-import com.business95.api.security.context.SocioActual;
+import com.business95.api.service.interfaces.InversionSocioService;
+import com.business95.api.service.interfaces.RolService;
 
 @Component("inversionSecurity")
 public class InversionSecurity {
 
-    private InversionSocioRepository inversionSocioRepository;
-    private PermisoRepository permisoRepository;
-    private SocioActual socioActual;
+    private final PermisoRepository permisoRepository;
+    private final InversionSocioService inversionSocioService;
+    private final RolService rolService;
 
     public InversionSecurity(
-            InversionSocioRepository inversionSocioRepository,
             PermisoRepository permisoRepository,
-            SocioActual socioActual) {
-        this.inversionSocioRepository = inversionSocioRepository;
+            InversionSocioService inversionSocioService,
+            RolService rolService) {
         this.permisoRepository = permisoRepository;
-        this.socioActual = socioActual;
+        this.inversionSocioService = inversionSocioService;
+        this.rolService = rolService;
     }
 
     public boolean tienePermiso(String permiso, Long idInversion) {
-        String rol = inversionSocioRepository
-                .buscarPorInversionYSocio(idInversion, socioActual.getIdSocioActual())
-                .orElseThrow(() -> new InversionSocioNoEncontradoException())
-                .getRol().getRol();
+
+        String rol = inversionSocioService.obtenerRolSocioPorInversion(idInversion);
+
+        if (rolService.esRolSistema(rol)) {
+            throw new RolSistemaException();
+        }
 
         return permisoRepository.buscarPorRolYPermiso(rol, permiso).isPresent();
     }

@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,6 +14,7 @@ import com.business95.api.entity.Inversion;
 import com.business95.api.entity.InversionSocio;
 import com.business95.api.entity.Rol;
 import com.business95.api.entity.Socio;
+import com.business95.api.exception.InversionSocioNoEncontradoException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.helper.InversionHelper;
 import com.business95.api.helper.InversionSocioHelper;
@@ -56,14 +58,24 @@ public class InversionSocioServiceImpl implements InversionSocioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public String obtenerRolSocioPorInversion(Long idInversion) {
+        return inversionSocioRepository
+                .buscarPorInversionYSocio(idInversion, socioActual.getIdSocioActual())
+                .orElseThrow(() -> new InversionSocioNoEncontradoException())
+                .getRol().getRol();
+    }
+
+    @Override
     @Transactional()
+    @PreAuthorize("@inversionSecurity.tienePermiso('AGREGAR_SOCIOS_A_INVERSION', #idInversion)")
     public InversionConSociosResponse agregarSociosAInversion(
             Long idInversion,
             Set<SocioRolInversionRequest> socios) {
 
         Inversion inversion = inversionHelper.buscarPorIdOLanzarExcepcion(idInversion);
 
-        if (socios.size() <= 0 || socios.isEmpty()) {
+        if (socios.isEmpty()) {
             throw new SociosRequeridosException();
         }
 
@@ -78,11 +90,13 @@ public class InversionSocioServiceImpl implements InversionSocioService {
     }
 
     @Override
+    @Transactional
+    @PreAuthorize("@inversionSecurity.tienePermiso('MODIFICAR_ROL_SOCIO_POR_INVERSION', #idInversion)")
     public InversionConSociosResponse modificarRolesDeSociosEnInversion(
             Long idinversion,
             Set<SocioRolInversionRequest> socios) {
 
-        if (socios.size() <= 0 || socios.isEmpty()) {
+        if (socios.isEmpty()) {
             throw new SociosRequeridosException();
         }
 
@@ -107,11 +121,12 @@ public class InversionSocioServiceImpl implements InversionSocioService {
 
     @Override
     @Transactional()
+    @PreAuthorize("@inversionSecurity.tienePermiso('ELIMINAR_SOCIOS_DE_INVERSION', #idInversion)")
     public void eliminarSociosDeInversion(Long idInversion, List<Long> socios) {
 
         Inversion inversion = inversionHelper.buscarPorIdOLanzarExcepcion(idInversion);
 
-        if (socios.size() <= 0 || socios.isEmpty()) {
+        if (socios.isEmpty()) {
             throw new SociosRequeridosException();
         }
 

@@ -3,6 +3,7 @@ package com.business95.api.service.implementation;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import com.business95.api.entity.Categoria;
@@ -19,6 +20,7 @@ public class CategoriaServiceImpl implements CategoriaService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@catalogoSecurity.tienePermiso('CONSULTAR_CATEGORIAS')")
     public List<Categoria> obtenerTodos() {
         return (List<Categoria>) categoriaRepository.findAll();
     }

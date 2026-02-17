@@ -24,25 +24,24 @@ public class SocioController {
         this.socioService = socioService;
     }
 
-    @GetMapping("/{idSocio}")
-    public ResponseEntity<SocioResponse> buscarSocioPorId(@PathVariable Long idSocio) {
-        return ResponseEntity.ok().body(socioService.socioPorId(idSocio));
+    @GetMapping("/detalle")
+    public ResponseEntity<SocioResponse> detalleSocio() {
+        return ResponseEntity.ok().body(socioService.detalleSocio());
+    }
+
+    @GetMapping("/balance")
+    public ResponseEntity<BalanceSocioResponse> balanceSocio() {
+        return ResponseEntity.ok().body(socioService.balanceSocio());
+    }
+
+    @GetMapping("/inversiones")
+    public ResponseEntity<List<InversionConBalancesSociosResponse>> balanceInversionesPorSocio() {
+        return ResponseEntity.ok().body(socioService.balanceInversionesPorSocio());
     }
 
     @GetMapping("/{idSocio}/nombres")
     public ResponseEntity<SocioNombresResponse> obtenerNombresSocioPorId(@PathVariable Long idSocio) {
         return ResponseEntity.ok().body(socioService.nombresSocio(idSocio));
-    }
-
-    @GetMapping("/{idSocio}/balance")
-    public ResponseEntity<BalanceSocioResponse> balanceSocio(@PathVariable Long idSocio) {
-        return ResponseEntity.ok().body(socioService.balanceSocio(idSocio));
-    }
-
-    @GetMapping("/{idSocio}/inversiones")
-    public ResponseEntity<List<InversionConBalancesSociosResponse>> balanceInversionesPorSocio(
-            @PathVariable Long idSocio) {
-        return ResponseEntity.ok().body(socioService.balanceInversionesPorSocio(idSocio));
     }
 
 }

@@ -39,8 +39,8 @@ public class InversionSecurity {
     }
 
     public boolean tienePermisoSegunMovimiento(String permiso, Long idMovimiento) {
-        Long idInversion = movimientoHelper
-                .buscarPorIdOLanzarExcepcion(idMovimiento).getInversion().getIdInversion();
+        Long idInversion = movimientoHelper.buscarPorIdOLanzarExcepcion(idMovimiento)
+                .getInversion().getIdInversion();
 
         return tienePermiso(permiso, idInversion);
     }

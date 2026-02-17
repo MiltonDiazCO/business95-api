@@ -2,7 +2,6 @@ package com.business95.api.service.implementation;
 
 import java.util.List;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +17,7 @@ import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceSocioProjection;
 import com.business95.api.repository.InversionRepository;
 import com.business95.api.repository.SocioRepository;
+import com.business95.api.security.context.SocioActual;
 import com.business95.api.service.interfaces.SocioService;
 
 @Service
@@ -27,38 +27,38 @@ public class SocioServiceImpl implements SocioService {
     private final InversionRepository inversionRepository;
     private final SocioHelper socioHelper;
     private final SocioMapper socioMapper;
+    private final SocioActual socioActual;
     private final InversionMapper inversionMapper;
 
     public SocioServiceImpl(SocioRepository socioRepository,
             InversionRepository inversionRepository,
             SocioHelper socioHelper,
             SocioMapper socioMapper,
+            SocioActual socioActual,
             InversionMapper inversionMapper) {
         this.socioRepository = socioRepository;
         this.inversionRepository = inversionRepository;
         this.socioHelper = socioHelper;
         this.socioMapper = socioMapper;
+        this.socioActual = socioActual;
         this.inversionMapper = inversionMapper;
     }
 
     @Override
     @Transactional(readOnly = true)
-    public SocioResponse socioPorId(Long idSocio) {
+    public SocioResponse detalleSocio() {
+        Long idSocio = socioActual.getIdSocioActual();
         return socioMapper.toSocioResponseDTO(socioHelper.buscarPorIdOLanzarExcepcion(idSocio));
     }
 
     @Override
     @Transactional(readOnly = true)
-    public SocioNombresResponse nombresSocio(Long idSocio) {
-        return socioMapper.toSocioNombresResponse(socioHelper.buscarPorIdOLanzarExcepcion(idSocio));
-    }
+    public BalanceSocioResponse balanceSocio() {
 
-    @Override
-    @Transactional(readOnly = true)
-    @PreAuthorize("@userSecurity.esDueño(#idSocio, authentication.name)")
-    public BalanceSocioResponse balanceSocio(Long idSocio) {
+        Long idSocio = socioActual.getIdSocioActual();
 
-        BalanceSocioProjection socioProjection = socioRepository.balanceSocio(idSocio)
+        BalanceSocioProjection socioProjection = socioRepository
+                .balanceSocio(idSocio)
                 .orElseThrow(() -> new SocioNoEncontradoException(idSocio));
 
         BalanceSocioResponse socioResponse = socioMapper.toBalanceSocioResponse(socioProjection);
@@ -75,13 +75,20 @@ public class SocioServiceImpl implements SocioService {
 
     @Override
     @Transactional(readOnly = true)
-    @PreAuthorize("@userSecurity.esDueño(#idSocio, authentication.name)")
-    public List<InversionConBalancesSociosResponse> balanceInversionesPorSocio(Long idSocio) {
+    public List<InversionConBalancesSociosResponse> balanceInversionesPorSocio() {
+        Long idSocio = socioActual.getIdSocioActual();
+
         return inversionRepository
                 .balanceInversionPorIdSocioOIdInversion(idSocio, null)
                 .stream()
                 .map(inversionMapper::toBalanceInversionResponse)
                 .toList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public SocioNombresResponse nombresSocio(Long idSocio) {
+        return socioMapper.toSocioNombresResponse(socioHelper.buscarPorIdOLanzarExcepcion(idSocio));
     }
 
 }

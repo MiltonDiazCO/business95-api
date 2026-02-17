@@ -9,12 +9,12 @@ import com.business95.api.dto.response.SocioResponse;
 
 public interface SocioService {
 
-    SocioResponse socioPorId(Long idSocio);
+    SocioResponse detalleSocio();
+
+    BalanceSocioResponse balanceSocio();
+
+    List<InversionConBalancesSociosResponse> balanceInversionesPorSocio();
 
     SocioNombresResponse nombresSocio(Long idSocio);
-
-    BalanceSocioResponse balanceSocio(Long idSocio);
-
-    List<InversionConBalancesSociosResponse> balanceInversionesPorSocio(Long idSocio);
 
 }

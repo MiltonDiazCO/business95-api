@@ -1,5 +1,7 @@
 package com.business95.api.entity;
 
+import com.business95.api.enums.NaturalezaActividad;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -71,10 +73,4 @@ public class TipoActividad {
         this.naturaleza = naturaleza;
     }
 
-}
-
-enum NaturalezaActividad {
-    CREDITO,
-    DEBITO,
-    NO_FINANCIERO
 }

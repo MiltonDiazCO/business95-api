@@ -95,7 +95,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional(readOnly = true)
-    @PreAuthorize("@userSecurity.tienePermiso('RESUMEN_MOVIMIENTOS_POR_INVERSION', #idInversion)")
+    @PreAuthorize("@inversionSecurity.tienePermiso('RESUMEN_MOVIMIENTOS_POR_INVERSION', #idInversion)")
     public List<ResumenMovimientoResponse> resumenMovimientosPorInversion(Long idInversion) {
         return movimientoRepository.resumenMovimientosPorInversion(idInversion)
                 .orElseThrow(() -> new InversionNoEncontradaException(idInversion));
@@ -103,6 +103,7 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
+    @PreAuthorize("@inversionSecurity.tienePermiso('AGREGAR_INVERSIONES', #idInversion)")
     public InversionConSociosResponse guardarInversionConSocios(InversionRequest inversionRequest) {
 
         Inversion inversion = inversionRepository.save(new Inversion(inversionRequest.getInversion()));

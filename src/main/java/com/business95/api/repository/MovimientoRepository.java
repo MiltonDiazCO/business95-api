@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
+import com.business95.api.dto.response.ResumenMovimientoPorSocioResponse;
 import com.business95.api.entity.Movimiento;
 
 @Repository
@@ -66,6 +67,29 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                 """)
         Optional<List<ResumenMovimientoResponse>> resumenMovimientosPorInversion(
                         @Param("idInversion") Long idInversion);
+        // @formatter:on
+
+        // @formatter:off
+        @Query("""
+                SELECT new com.business95.api.dto.response.ResumenMovimientoPorSocioResponse(
+                        m.idMovimiento AS idMovimiento, inv.idInversion AS idInversion,
+                        inv.inversion AS inversion, m.concepto AS concepto,
+                        m.categoria.categoria AS categoria,
+                        SUM(a.cantidad) AS cantidad, md.medida AS medida,
+                        SUM(a.monto) AS balance, m.moneda.idMoneda AS moneda,
+                        MIN(a.fecha) AS fechaApertura,
+                        MAX(a.fecha) AS fechaUltimaActividad
+                ) FROM Movimiento m
+                LEFT JOIN m.actividadesSocio a
+                LEFT JOIN m.medida md
+                JOIN m.inversion inv
+                JOIN inv.socios soc
+                WHERE soc.socio.idSocio = :idSocio
+                GROUP BY m.idMovimiento
+                ORDER BY MAX(a.fecha) DESC
+                """)
+        List<ResumenMovimientoPorSocioResponse> resumenMovimientosPorSocio(
+                        @Param("idSocio") Long idSocio);
         // @formatter:on
 
 }

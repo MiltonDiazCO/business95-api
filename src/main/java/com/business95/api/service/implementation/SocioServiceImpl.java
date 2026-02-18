@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.dto.response.BalanceAnualSocioResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
+import com.business95.api.dto.response.ResumenMovimientoPorSocioResponse;
+import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.SocioNombresResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
@@ -16,6 +18,7 @@ import com.business95.api.mapper.InversionMapper;
 import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceSocioProjection;
 import com.business95.api.repository.InversionRepository;
+import com.business95.api.repository.MovimientoRepository;
 import com.business95.api.repository.SocioRepository;
 import com.business95.api.security.context.SocioActual;
 import com.business95.api.service.interfaces.SocioService;
@@ -25,6 +28,7 @@ public class SocioServiceImpl implements SocioService {
 
     private final SocioRepository socioRepository;
     private final InversionRepository inversionRepository;
+    private final MovimientoRepository movimientoRepository;
     private final SocioHelper socioHelper;
     private final SocioMapper socioMapper;
     private final SocioActual socioActual;
@@ -32,12 +36,14 @@ public class SocioServiceImpl implements SocioService {
 
     public SocioServiceImpl(SocioRepository socioRepository,
             InversionRepository inversionRepository,
+            MovimientoRepository movimientoRepository,
             SocioHelper socioHelper,
             SocioMapper socioMapper,
             SocioActual socioActual,
             InversionMapper inversionMapper) {
         this.socioRepository = socioRepository;
         this.inversionRepository = inversionRepository;
+        this.movimientoRepository = movimientoRepository;
         this.socioHelper = socioHelper;
         this.socioMapper = socioMapper;
         this.socioActual = socioActual;
@@ -83,6 +89,12 @@ public class SocioServiceImpl implements SocioService {
                 .stream()
                 .map(inversionMapper::toBalanceInversionResponse)
                 .toList();
+    }
+
+    @Override
+    public List<ResumenMovimientoPorSocioResponse> resumenMovimientosPorSocio() {
+        Long idSocio = socioActual.getIdSocioActual();
+        return movimientoRepository.resumenMovimientosPorSocio(idSocio);
     }
 
     @Override

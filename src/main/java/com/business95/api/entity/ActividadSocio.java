@@ -12,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinColumns;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
@@ -47,7 +46,7 @@ public class ActividadSocio {
     private TipoActividad tipoActividad;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idMovimiento")
+    @JoinColumn(name = "id_movimiento")
     private Movimiento movimiento;
 
     @PrePersist
@@ -68,14 +67,21 @@ public class ActividadSocio {
     public ActividadSocio() {
     }
 
-    public ActividadSocio(Long idActividad, Socio socio, BigDecimal monto, BigDecimal cantidad,
-            LocalDateTime fecha, TipoActividad tipoActividad) {
+    public ActividadSocio(
+            Long idActividad,
+            Socio socio,
+            BigDecimal monto,
+            BigDecimal cantidad,
+            LocalDateTime fecha,
+            TipoActividad tipoActividad,
+            Movimiento movimiento) {
         this.idActividad = idActividad;
         this.socio = socio;
         this.monto = monto;
         this.cantidad = cantidad;
         this.fecha = fecha;
         this.tipoActividad = tipoActividad;
+        this.movimiento = movimiento;
     }
 
     public Long getIdActividad() {
@@ -124,6 +130,14 @@ public class ActividadSocio {
 
     public void setTipoActividad(TipoActividad tipoActividad) {
         this.tipoActividad = tipoActividad;
+    }
+
+    public Movimiento getMovimiento() {
+        return movimiento;
+    }
+
+    public void setMovimiento(Movimiento movimiento) {
+        this.movimiento = movimiento;
     }
 
 }

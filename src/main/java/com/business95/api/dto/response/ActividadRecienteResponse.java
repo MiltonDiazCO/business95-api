@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 public class ActividadRecienteResponse {
 
+    private Long idActividad;
     private Long idSocio;
     private String socio;
     private BigDecimal cantidad;
@@ -20,6 +21,7 @@ public class ActividadRecienteResponse {
     }
 
     public ActividadRecienteResponse(
+            Long idActividad,
             Long idSocio,
             String socio,
             BigDecimal cantidad,
@@ -30,6 +32,7 @@ public class ActividadRecienteResponse {
             String movimiento,
             Long idInversion,
             String inversion) {
+        this.idActividad = idActividad;
         this.idSocio = idSocio;
         this.socio = socio;
         this.cantidad = cantidad;
@@ -40,6 +43,14 @@ public class ActividadRecienteResponse {
         this.movimiento = movimiento;
         this.idInversion = idInversion;
         this.inversion = inversion;
+    }
+
+    public Long getIdActividad() {
+        return idActividad;
+    }
+
+    public void setIdActividad(Long idActividad) {
+        this.idActividad = idActividad;
     }
 
     public Long getIdSocio() {

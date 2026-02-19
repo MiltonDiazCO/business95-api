@@ -123,10 +123,12 @@ public class Movimiento {
 
     public void addActividadSocio(ActividadSocio actividadSocio) {
         this.actividadesSocio.add(actividadSocio);
+        actividadSocio.setMovimiento(this);
     }
 
     public void removeActividadSocio(ActividadSocio actividadSocio) {
         this.actividadesSocio.remove(actividadSocio);
+        actividadSocio.setMovimiento(null);
     }
 
 }

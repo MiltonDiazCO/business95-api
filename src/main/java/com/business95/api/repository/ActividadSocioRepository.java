@@ -15,7 +15,7 @@ public interface ActividadSocioRepository extends CrudRepository<ActividadSocio,
 
     @Query("""
             SELECT new com.business95.api.dto.response.ActividadRecienteResponse(
-                soc.idSocio AS idSocio,
+                act_soc.idActividad, soc.idSocio AS idSocio,
                 TRIM(CONCAT(soc.nombresRazonsocial, ' ', soc.apellidos)) AS socio,
                 act_soc.cantidad AS cantidad, act_soc.monto AS monto,
                 act_soc.fecha AS fecha, act_soc.tipoActividad.tipoActividad AS tipoActividad,

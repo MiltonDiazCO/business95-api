@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.dto.response.ActividadRecienteResponse;
 import com.business95.api.dto.response.BalanceAnualSocioResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
-import com.business95.api.dto.response.ResumenMovimientoPorSocioResponse;
+import com.business95.api.dto.response.MovimientoRecienteResponse;
 import com.business95.api.dto.response.SocioNombresResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
@@ -96,7 +96,7 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override
-    public List<ResumenMovimientoPorSocioResponse> movimientosRecientes() {
+    public List<MovimientoRecienteResponse> movimientosRecientes() {
         Long idSocio = socioActual.getIdSocioActual();
         return movimientoRepository.movimientosRecientes(idSocio);
     }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
-import com.business95.api.dto.response.ResumenMovimientoPorSocioResponse;
+import com.business95.api.dto.response.MovimientoRecienteResponse;
 import com.business95.api.entity.Movimiento;
 
 @Repository
@@ -71,7 +71,7 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
 
         // @formatter:off
         @Query("""
-                SELECT new com.business95.api.dto.response.ResumenMovimientoPorSocioResponse(
+                SELECT new com.business95.api.dto.response.MovimientoRecienteResponse(
                         m.idMovimiento AS idMovimiento, inv.idInversion AS idInversion,
                         inv.inversion AS inversion, m.concepto AS concepto,
                         m.categoria.categoria AS categoria,
@@ -88,7 +88,7 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                 GROUP BY m.idMovimiento
                 ORDER BY MAX(a.fecha) DESC
                 """)
-        List<ResumenMovimientoPorSocioResponse> movimientosRecientes(
+        List<MovimientoRecienteResponse> movimientosRecientes(
                         @Param("idSocio") Long idSocio);
         // @formatter:on
 

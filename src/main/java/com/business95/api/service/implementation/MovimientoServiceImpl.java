@@ -73,7 +73,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional
-        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('AGREGAR_MOVIMIENTO', #movimientoRequest.inversion)")
+        @PreAuthorize("@inversionSecurity.tienePermiso('AGREGAR_MOVIMIENTO', #movimientoRequest.inversion)")
         public MovimientoResponse guardar(MovimientoRequest movimientoRequest) {
 
                 Movimiento movimiento = movimientoHelper.construirMovimiento(
@@ -101,7 +101,7 @@ public class MovimientoServiceImpl implements MovimientoService {
 
         @Override
         @Transactional()
-        @PreAuthorize("@inversionSecurity('MODIFICAR_MOVIMIENTO', #idMovimiento)")
+        @PreAuthorize("@inversionSecurity.tienePermiso('MODIFICAR_MOVIMIENTO', #actualizarMovimientoRequest.inversion)")
         public MovimientoResponse actualizar(
                         Long idMovimiento,
                         ActualizarMovimientoRequest actualizarMovimientoRequest) {

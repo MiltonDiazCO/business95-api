@@ -88,7 +88,7 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                 GROUP BY m.idMovimiento
                 ORDER BY MAX(a.fecha) DESC
                 """)
-        List<ResumenMovimientoPorSocioResponse> resumenMovimientosPorSocio(
+        List<ResumenMovimientoPorSocioResponse> movimientosRecientes(
                         @Param("idSocio") Long idSocio);
         // @formatter:on
 

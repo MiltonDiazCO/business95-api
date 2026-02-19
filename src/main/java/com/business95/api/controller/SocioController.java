@@ -42,12 +42,12 @@ public class SocioController {
     }
 
     @GetMapping("/movimientos")
-    public ResponseEntity<List<ResumenMovimientoPorSocioResponse>> resumenMovimientosPorSocio() {
-        return ResponseEntity.ok().body(socioService.resumenMovimientosPorSocio());
+    public ResponseEntity<List<ResumenMovimientoPorSocioResponse>> movimientosRecientes() {
+        return ResponseEntity.ok().body(socioService.movimientosRecientes());
     }
 
     @GetMapping("/actividades")
-    public ResponseEntity<List<ActividadRecienteResponse>> actividadesPorSocio() {
+    public ResponseEntity<List<ActividadRecienteResponse>> actividadesRecientes() {
         return ResponseEntity.ok().body(socioService.actividadesRecientes());
     }
 

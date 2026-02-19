@@ -96,9 +96,9 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override
-    public List<ResumenMovimientoPorSocioResponse> resumenMovimientosPorSocio() {
+    public List<ResumenMovimientoPorSocioResponse> movimientosRecientes() {
         Long idSocio = socioActual.getIdSocioActual();
-        return movimientoRepository.resumenMovimientosPorSocio(idSocio);
+        return movimientoRepository.movimientosRecientes(idSocio);
     }
 
     @Override

@@ -17,7 +17,7 @@ public interface SocioService {
 
     List<InversionConBalancesSociosResponse> balanceInversionesPorSocio();
 
-    List<ResumenMovimientoPorSocioResponse> resumenMovimientosPorSocio();
+    List<ResumenMovimientoPorSocioResponse> movimientosRecientes();
 
     List<ActividadRecienteResponse> actividadesRecientes();
 

@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.ResumenMovimientoPorSocioResponse;
-import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.SocioNombresResponse;
+import com.business95.api.dto.response.ActividadRecienteResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
 import com.business95.api.service.interfaces.SocioService;
@@ -44,6 +44,11 @@ public class SocioController {
     @GetMapping("/movimientos")
     public ResponseEntity<List<ResumenMovimientoPorSocioResponse>> resumenMovimientosPorSocio() {
         return ResponseEntity.ok().body(socioService.resumenMovimientosPorSocio());
+    }
+
+    @GetMapping("/actividades")
+    public ResponseEntity<List<ActividadRecienteResponse>> actividadesPorSocio() {
+        return ResponseEntity.ok().body(socioService.actividadesRecientes());
     }
 
     @GetMapping("/{idSocio}/nombres")

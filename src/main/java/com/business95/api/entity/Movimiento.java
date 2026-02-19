@@ -43,9 +43,8 @@ public class Movimiento {
     @JoinColumn(name = "id_medida", nullable = true)
     private Medida medida;
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JoinColumn(name = "id_movimiento", nullable = false)
-    private List<ActividadSocio> actividadesSocio = new ArrayList<>();;
+    @OneToMany(mappedBy = "movimiento", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<ActividadSocio> actividadesSocio = new ArrayList<>();
 
     public Movimiento() {
     }

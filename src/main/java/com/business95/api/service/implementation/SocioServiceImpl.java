@@ -5,10 +5,10 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.business95.api.dto.response.ActividadRecienteResponse;
 import com.business95.api.dto.response.BalanceAnualSocioResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.ResumenMovimientoPorSocioResponse;
-import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.SocioNombresResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
@@ -17,6 +17,7 @@ import com.business95.api.helper.SocioHelper;
 import com.business95.api.mapper.InversionMapper;
 import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceSocioProjection;
+import com.business95.api.repository.ActividadSocioRepository;
 import com.business95.api.repository.InversionRepository;
 import com.business95.api.repository.MovimientoRepository;
 import com.business95.api.repository.SocioRepository;
@@ -29,6 +30,7 @@ public class SocioServiceImpl implements SocioService {
     private final SocioRepository socioRepository;
     private final InversionRepository inversionRepository;
     private final MovimientoRepository movimientoRepository;
+    private final ActividadSocioRepository actividadSocioRepository;
     private final SocioHelper socioHelper;
     private final SocioMapper socioMapper;
     private final SocioActual socioActual;
@@ -37,6 +39,7 @@ public class SocioServiceImpl implements SocioService {
     public SocioServiceImpl(SocioRepository socioRepository,
             InversionRepository inversionRepository,
             MovimientoRepository movimientoRepository,
+            ActividadSocioRepository actividadSocioRepository,
             SocioHelper socioHelper,
             SocioMapper socioMapper,
             SocioActual socioActual,
@@ -44,6 +47,7 @@ public class SocioServiceImpl implements SocioService {
         this.socioRepository = socioRepository;
         this.inversionRepository = inversionRepository;
         this.movimientoRepository = movimientoRepository;
+        this.actividadSocioRepository = actividadSocioRepository;
         this.socioHelper = socioHelper;
         this.socioMapper = socioMapper;
         this.socioActual = socioActual;
@@ -95,6 +99,13 @@ public class SocioServiceImpl implements SocioService {
     public List<ResumenMovimientoPorSocioResponse> resumenMovimientosPorSocio() {
         Long idSocio = socioActual.getIdSocioActual();
         return movimientoRepository.resumenMovimientosPorSocio(idSocio);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ActividadRecienteResponse> actividadesRecientes() {
+        Long idSocio = socioActual.getIdSocioActual();
+        return actividadSocioRepository.actividadesRecientes(idSocio);
     }
 
     @Override

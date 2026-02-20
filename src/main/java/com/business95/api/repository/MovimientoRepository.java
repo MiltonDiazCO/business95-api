@@ -19,6 +19,8 @@ import com.business95.api.entity.Movimiento;
 @Repository
 public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 
+        List<Movimiento> findByInversionIdInversion(Long idInversion);
+
         // @formatter:off
         @Query("""
                 SELECT new com.business95.api.dto.response.BalanceMovimientoResponse(
@@ -67,8 +69,9 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
                 WHERE m.inversion.idInversion = :idInversion
                 GROUP BY m.idMovimiento
                 """)
-        Optional<List<ResumenMovimientoResponse>> resumenMovimientosPorInversion(
-                        @Param("idInversion") Long idInversion);
+        Page<ResumenMovimientoResponse> resumenMovimientosPorInversion(
+                        @Param("idInversion") Long idInversion,
+                        Pageable pageable);
         // @formatter:on
 
         // @formatter:off

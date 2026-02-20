@@ -109,7 +109,6 @@ public class InversionServiceImpl implements InversionService {
 
     @Override
     @Transactional()
-    @PreAuthorize("@inversionSecurity.tienePermiso('AGREGAR_INVERSIONES', #idInversion)")
     public InversionConSociosResponse guardarInversionConSocios(InversionRequest inversionRequest) {
 
         Inversion inversion = inversionRepository.save(new Inversion(inversionRequest.getInversion()));

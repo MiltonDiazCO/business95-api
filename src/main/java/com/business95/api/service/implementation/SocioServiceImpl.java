@@ -108,9 +108,10 @@ public class SocioServiceImpl implements SocioService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ActividadRecienteResponse> actividadesRecientes() {
+    public Page<ActividadRecienteResponse> actividadesRecientes(int pagina, int limite) {
         Long idSocio = socioActual.getIdSocioActual();
-        return actividadSocioRepository.actividadesRecientes(idSocio);
+        Pageable pageable = PageRequest.of(pagina, limite);
+        return actividadSocioRepository.actividadesRecientes(idSocio, pageable);
     }
 
     @Override

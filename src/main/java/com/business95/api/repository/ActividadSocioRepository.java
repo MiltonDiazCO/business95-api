@@ -1,7 +1,7 @@
 package com.business95.api.repository;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -29,6 +29,6 @@ public interface ActividadSocioRepository extends CrudRepository<ActividadSocio,
             WHERE inv_soc.socio.idSocio = :idSocio
             ORDER BY act_soc.fecha DESC
                 """)
-    List<ActividadRecienteResponse> actividadesRecientes(@Param("idSocio") Long idSocio);
+    Page<ActividadRecienteResponse> actividadesRecientes(@Param("idSocio") Long idSocio, Pageable pageable);
 
 }

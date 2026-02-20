@@ -51,8 +51,10 @@ public class SocioController {
     }
 
     @GetMapping("/actividades")
-    public ResponseEntity<List<ActividadRecienteResponse>> actividadesRecientes() {
-        return ResponseEntity.ok().body(socioService.actividadesRecientes());
+    public ResponseEntity<Page<ActividadRecienteResponse>> actividadesRecientes(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "10") int limite) {
+        return ResponseEntity.ok().body(socioService.actividadesRecientes(pagina, limite));
     }
 
     @GetMapping("/{idSocio}/nombres")

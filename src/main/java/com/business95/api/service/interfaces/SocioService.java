@@ -21,7 +21,7 @@ public interface SocioService {
 
     Page<MovimientoRecienteResponse> movimientosRecientes(int pagina, int limite);
 
-    List<ActividadRecienteResponse> actividadesRecientes();
+    Page<ActividadRecienteResponse> actividadesRecientes(int pagina, int limite);
 
     SocioNombresResponse nombresSocio(Long idSocio);
 

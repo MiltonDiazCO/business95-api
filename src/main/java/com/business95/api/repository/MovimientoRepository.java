@@ -3,19 +3,21 @@ package com.business95.api.repository;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
 import com.business95.api.dto.response.MovimientoRecienteResponse;
+import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.entity.Movimiento;
 
 @Repository
-public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
+public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 
         // @formatter:off
         @Query("""
@@ -88,8 +90,9 @@ public interface MovimientoRepository extends CrudRepository<Movimiento, Long> {
                 GROUP BY m.idMovimiento
                 ORDER BY MAX(a.fecha) DESC
                 """)
-        List<MovimientoRecienteResponse> movimientosRecientes(
-                        @Param("idSocio") Long idSocio);
+        Page<MovimientoRecienteResponse> movimientosRecientes(
+                        @Param("idSocio") Long idSocio,
+                        Pageable pageable);
         // @formatter:on
 
 }

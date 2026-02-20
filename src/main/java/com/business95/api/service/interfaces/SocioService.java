@@ -2,6 +2,8 @@ package com.business95.api.service.interfaces;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoRecienteResponse;
 import com.business95.api.dto.response.SocioNombresResponse;
@@ -17,7 +19,7 @@ public interface SocioService {
 
     List<InversionConBalancesSociosResponse> balanceInversionesPorSocio();
 
-    List<MovimientoRecienteResponse> movimientosRecientes();
+    Page<MovimientoRecienteResponse> movimientosRecientes(int pagina, int limite);
 
     List<ActividadRecienteResponse> actividadesRecientes();
 

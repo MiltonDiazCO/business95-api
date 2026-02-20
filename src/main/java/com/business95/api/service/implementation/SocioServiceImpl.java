@@ -2,6 +2,10 @@ package com.business95.api.service.implementation;
 
 import java.util.List;
 
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,9 +100,10 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override
-    public List<MovimientoRecienteResponse> movimientosRecientes() {
+    public Page<MovimientoRecienteResponse> movimientosRecientes(int pagina, int limite) {
         Long idSocio = socioActual.getIdSocioActual();
-        return movimientoRepository.movimientosRecientes(idSocio);
+        Pageable pageable = PageRequest.of(pagina, limite);
+        return movimientoRepository.movimientosRecientes(idSocio, pageable);
     }
 
     @Override

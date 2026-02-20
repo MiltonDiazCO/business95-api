@@ -2,10 +2,12 @@ package com.business95.api.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
@@ -42,8 +44,10 @@ public class SocioController {
     }
 
     @GetMapping("/movimientos")
-    public ResponseEntity<List<MovimientoRecienteResponse>> movimientosRecientes() {
-        return ResponseEntity.ok().body(socioService.movimientosRecientes());
+    public ResponseEntity<Page<MovimientoRecienteResponse>> movimientosRecientes(
+            @RequestParam(defaultValue = "0") int pagina,
+            @RequestParam(defaultValue = "10") int limite) {
+        return ResponseEntity.ok().body(socioService.movimientosRecientes(pagina, limite));
     }
 
     @GetMapping("/actividades")

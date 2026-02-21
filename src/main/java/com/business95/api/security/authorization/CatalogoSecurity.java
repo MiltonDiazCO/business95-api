@@ -26,7 +26,7 @@ public class CatalogoSecurity {
     }
 
     public boolean tienePermiso(String permiso) {
-        Set<String> roles = usuarioRepository.findById(socioActual.getIdSocioActual())
+        Set<String> roles = usuarioRepository.findBySocioIdSocio(socioActual.getIdSocioActual())
                 .get().getRoles()
                 .stream().map((rol) -> rol.getRol()).collect(Collectors.toSet());
 

@@ -2,14 +2,17 @@ package com.business95.api.entity;
 
 import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -34,15 +37,25 @@ public class Usuario {
     @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_rol", referencedColumnName = "id_rol"))
     private Set<Rol> roles;
 
+    @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    private Socio socio;
+
     public Usuario() {
     }
 
-    public Usuario(Long idUsuario, String correoElectronico, String contrasena, Boolean habilitado, Set<Rol> roles) {
+    public Usuario(
+            Long idUsuario,
+            String correoElectronico,
+            String contrasena,
+            Boolean habilitado,
+            Set<Rol> roles,
+            Socio socio) {
         this.idUsuario = idUsuario;
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
         this.habilitado = habilitado;
         this.roles = roles;
+        this.socio = socio;
     }
 
     public Long getIdUsuario() {
@@ -59,7 +72,7 @@ public class Usuario {
 
     public void setCorreoElectronico(String correoElectronico) {
         this.correoElectronico = correoElectronico;
-    }    
+    }
 
     public String getContrasena() {
         return contrasena;
@@ -91,6 +104,14 @@ public class Usuario {
 
     public void removeRol(Rol rol) {
         this.roles.remove(rol);
+    }
+
+    public Socio getSocio() {
+        return socio;
+    }
+
+    public void setSocio(Socio socio) {
+        this.socio = socio;
     }
 
 }

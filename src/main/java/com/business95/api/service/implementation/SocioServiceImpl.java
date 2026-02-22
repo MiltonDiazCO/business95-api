@@ -10,6 +10,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.business95.api.dto.request.ActualizarSocioRequest;
 import com.business95.api.dto.request.RegistrarSocioRequest;
 import com.business95.api.dto.response.ActividadRecienteResponse;
 import com.business95.api.dto.response.BalanceAnualSocioResponse;
@@ -92,6 +93,20 @@ public class SocioServiceImpl implements SocioService {
         usuario.setSocio(socio);
 
         usuario.setRoles(Set.of(rolHelper.buscarPorRolOLanzarExcepcion("ROLE_USUARIO")));
+
+        return socioMapper.toSocioResponseDTO(socioRepository.save(socio));
+    }
+
+    @Override
+    @Transactional
+    public SocioResponse actualizarSocio(ActualizarSocioRequest socioRequest) {
+
+        Socio socio = socioHelper.construirSocio(
+                socioActual.getIdSocioActual(),
+                socioRequest.getNombresRazonsocial(),
+                socioRequest.getApellidos(),
+                socioRequest.getTelefono(),
+                socioRequest.getTipoPersona());
 
         return socioMapper.toSocioResponseDTO(socioRepository.save(socio));
     }

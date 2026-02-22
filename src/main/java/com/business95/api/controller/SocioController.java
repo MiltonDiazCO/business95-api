@@ -7,11 +7,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.business95.api.dto.request.ActualizarSocioRequest;
 import com.business95.api.dto.request.RegistrarSocioRequest;
 import com.business95.api.dto.response.ActividadRecienteResponse;
 import com.business95.api.dto.response.BalanceSocioResponse;
@@ -36,6 +38,11 @@ public class SocioController {
     @PostMapping
     public ResponseEntity<SocioResponse> registrarSocio(@Valid @RequestBody RegistrarSocioRequest socioRequest) {
         return ResponseEntity.ok().body(socioService.registrarSocio(socioRequest));
+    }
+
+    @PutMapping
+    public ResponseEntity<SocioResponse> actualizarSocio(@Valid @RequestBody ActualizarSocioRequest socioRequest) {
+        return ResponseEntity.ok().body(socioService.actualizarSocio(socioRequest));
     }
 
     @GetMapping("/detalle")

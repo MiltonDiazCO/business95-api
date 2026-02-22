@@ -6,17 +6,22 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.business95.api.dto.request.RegistrarSocioRequest;
+import com.business95.api.dto.response.ActividadRecienteResponse;
+import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoRecienteResponse;
 import com.business95.api.dto.response.SocioNombresResponse;
-import com.business95.api.dto.response.ActividadRecienteResponse;
-import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
 import com.business95.api.service.interfaces.SocioService;
+
+import jakarta.validation.Valid;
 
 @RestController()
 @RequestMapping("/socios")
@@ -26,6 +31,11 @@ public class SocioController {
 
     public SocioController(SocioService socioService) {
         this.socioService = socioService;
+    }
+
+    @PostMapping
+    public ResponseEntity<SocioResponse> registrarSocio(@Valid @RequestBody RegistrarSocioRequest socioRequest) {
+        return ResponseEntity.ok().body(socioService.registrarSocio(socioRequest));
     }
 
     @GetMapping("/detalle")

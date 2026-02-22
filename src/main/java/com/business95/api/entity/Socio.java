@@ -1,5 +1,8 @@
 package com.business95.api.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,8 +36,9 @@ public class Socio {
     @JoinColumn(name = "id_tipo_persona", nullable = false)
     private TipoPersona tipoPersona;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_usuario")
+    @JsonIgnoreProperties({"socio"})
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "id_usuario", unique = true, nullable = false)
     private Usuario usuario;
 
     public Socio() {

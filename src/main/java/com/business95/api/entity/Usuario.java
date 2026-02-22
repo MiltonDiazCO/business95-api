@@ -2,7 +2,8 @@ package com.business95.api.entity;
 
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -31,31 +32,23 @@ public class Usuario {
     private String contrasena;
 
     @Column(name = "habilitado", nullable = false)
-    private Boolean habilitado;
+    private boolean habilitado;
 
     @ManyToMany
     @JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_rol", referencedColumnName = "id_rol"))
     private Set<Rol> roles;
 
-    @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({ "usuario" })
+    @OneToOne(mappedBy = "usuario", fetch = FetchType.LAZY)
     private Socio socio;
 
     public Usuario() {
     }
 
-    public Usuario(
-            Long idUsuario,
-            String correoElectronico,
-            String contrasena,
-            Boolean habilitado,
-            Set<Rol> roles,
-            Socio socio) {
+    public Usuario(Long idUsuario, String correoElectronico, boolean habilitado) {
         this.idUsuario = idUsuario;
         this.correoElectronico = correoElectronico;
-        this.contrasena = contrasena;
         this.habilitado = habilitado;
-        this.roles = roles;
-        this.socio = socio;
     }
 
     public Long getIdUsuario() {
@@ -82,11 +75,11 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public Boolean getHabilitado() {
+    public boolean getHabilitado() {
         return habilitado;
     }
 
-    public void setHabilitado(Boolean habilitado) {
+    public void setHabilitado(boolean habilitado) {
         this.habilitado = habilitado;
     }
 

@@ -1,23 +1,29 @@
 package com.business95.api.service.implementation;
 
 import java.util.List;
-
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.business95.api.dto.request.RegistrarSocioRequest;
 import com.business95.api.dto.response.ActividadRecienteResponse;
 import com.business95.api.dto.response.BalanceAnualSocioResponse;
+import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.MovimientoRecienteResponse;
 import com.business95.api.dto.response.SocioNombresResponse;
-import com.business95.api.dto.response.BalanceSocioResponse;
 import com.business95.api.dto.response.SocioResponse;
+import com.business95.api.entity.Socio;
+import com.business95.api.entity.Usuario;
 import com.business95.api.exception.SocioNoEncontradoException;
+import com.business95.api.helper.RolHelper;
 import com.business95.api.helper.SocioHelper;
+import com.business95.api.helper.UsuarioHelper;
 import com.business95.api.mapper.InversionMapper;
 import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceSocioProjection;
@@ -36,15 +42,20 @@ public class SocioServiceImpl implements SocioService {
     private final MovimientoRepository movimientoRepository;
     private final ActividadSocioRepository actividadSocioRepository;
     private final SocioHelper socioHelper;
+    private final UsuarioHelper usuarioHelper;
+    private final RolHelper rolHelper;
     private final SocioMapper socioMapper;
     private final SocioActual socioActual;
     private final InversionMapper inversionMapper;
 
-    public SocioServiceImpl(SocioRepository socioRepository,
+    public SocioServiceImpl(
+            SocioRepository socioRepository,
             InversionRepository inversionRepository,
             MovimientoRepository movimientoRepository,
             ActividadSocioRepository actividadSocioRepository,
             SocioHelper socioHelper,
+            UsuarioHelper usuarioHelper,
+            RolHelper rolHelper,
             SocioMapper socioMapper,
             SocioActual socioActual,
             InversionMapper inversionMapper) {
@@ -53,9 +64,36 @@ public class SocioServiceImpl implements SocioService {
         this.movimientoRepository = movimientoRepository;
         this.actividadSocioRepository = actividadSocioRepository;
         this.socioHelper = socioHelper;
+        this.usuarioHelper = usuarioHelper;
+        this.rolHelper = rolHelper;
         this.socioMapper = socioMapper;
         this.socioActual = socioActual;
         this.inversionMapper = inversionMapper;
+    }
+
+    @Override
+    @Transactional
+    @PreAuthorize("@catalogoSecurity.tienePermiso('REGISTRAR_SOCIOS')")
+    public SocioResponse registrarSocio(RegistrarSocioRequest socioRequest) {
+
+        Socio socio = socioHelper.construirSocio(
+                null,
+                socioRequest.getNombresRazonsocial(),
+                socioRequest.getApellidos(),
+                socioRequest.getTelefono(),
+                socioRequest.getTipoPersona());
+
+        Usuario usuario = usuarioHelper.construirUsuario(
+                null,
+                socioRequest.getCorreoElectronico(),
+                socioRequest.getContrasena());
+
+        socio.setUsuario(usuario);
+        usuario.setSocio(socio);
+
+        usuario.setRoles(Set.of(rolHelper.buscarPorRolOLanzarExcepcion("ROLE_USUARIO")));
+
+        return socioMapper.toSocioResponseDTO(socioRepository.save(socio));
     }
 
     @Override

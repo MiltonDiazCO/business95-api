@@ -1,8 +1,5 @@
 package com.business95.api.dto.request;
 
-import java.util.Set;
-
-import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
@@ -30,9 +27,6 @@ public class RegistrarSocioRequest {
     @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.")
     private String contrasena;
 
-    @NotEmpty(message = "Debe especificar al menos un rol.")
-    private Set<String> roles;
-
     public RegistrarSocioRequest() {
     }
 
@@ -42,15 +36,13 @@ public class RegistrarSocioRequest {
             @NotNull(message = "El teléfono es requerido.") @Size(max = 30, message = "El teléfono debe ser máximo de 30 caracteres.") String telefono,
             @NotNull(message = "El tipo de persona es requerido.") Long tipoPersona,
             @NotNull(message = "El correo electrónico es requerido.") @Size(max = 150, message = "El correo electrónico debe ser máximo de 150 caracteres.") String correoElectronico,
-            @NotNull(message = "La contraseña es requerido.") @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.") String contrasena,
-            @NotEmpty(message = "Debe especificar al menos un rol.") Set<String> roles) {
+            @NotNull(message = "La contraseña es requerido.") @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.") String contrasena) {
         this.nombresRazonsocial = nombresRazonsocial;
         this.apellidos = apellidos;
         this.telefono = telefono;
         this.tipoPersona = tipoPersona;
         this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
-        this.roles = roles;
     }
 
     public String getNombresRazonsocial() {
@@ -99,14 +91,6 @@ public class RegistrarSocioRequest {
 
     public void setContrasena(String contrasena) {
         this.contrasena = contrasena;
-    }
-
-    public Set<String> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(Set<String> roles) {
-        this.roles = roles;
     }
 
 }

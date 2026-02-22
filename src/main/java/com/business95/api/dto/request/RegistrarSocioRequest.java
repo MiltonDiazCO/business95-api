@@ -23,7 +23,7 @@ public class RegistrarSocioRequest {
     @Size(max = 150, message = "El correo electrónico debe ser máximo de 150 caracteres.")
     private String correoElectronico;
 
-    @NotNull(message = "La contraseña es requerido.")
+    @NotNull(message = "La contraseña es requerida.")
     @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.")
     private String contrasena;
 
@@ -36,7 +36,7 @@ public class RegistrarSocioRequest {
             @NotNull(message = "El teléfono es requerido.") @Size(max = 30, message = "El teléfono debe ser máximo de 30 caracteres.") String telefono,
             @NotNull(message = "El tipo de persona es requerido.") Long tipoPersona,
             @NotNull(message = "El correo electrónico es requerido.") @Size(max = 150, message = "El correo electrónico debe ser máximo de 150 caracteres.") String correoElectronico,
-            @NotNull(message = "La contraseña es requerido.") @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.") String contrasena) {
+            @NotNull(message = "La contraseña es requerida.") @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.") String contrasena) {
         this.nombresRazonsocial = nombresRazonsocial;
         this.apellidos = apellidos;
         this.telefono = telefono;

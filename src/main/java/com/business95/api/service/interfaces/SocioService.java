@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
+import com.business95.api.dto.request.ActualizarContrasenaPorCorreoRequest;
+import com.business95.api.dto.request.ActualizarMiContrasenaRequest;
 import com.business95.api.dto.request.ActualizarSocioRequest;
 import com.business95.api.dto.request.RegistrarSocioRequest;
 import com.business95.api.dto.response.ActividadRecienteResponse;
@@ -18,6 +20,10 @@ public interface SocioService {
     SocioResponse registrarSocio(RegistrarSocioRequest socioRequest);
 
     SocioResponse actualizarSocio(ActualizarSocioRequest socioRequest);
+
+    void actualizarMiContrasena(ActualizarMiContrasenaRequest contrasenaRequest);
+
+    void actualizarContrasenaPorCorreo(ActualizarContrasenaPorCorreoRequest contrasenaPorCorreoRequest);
 
     SocioResponse detalleSocio();
 

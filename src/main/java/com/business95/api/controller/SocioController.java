@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.business95.api.dto.request.ActualizarMiContrasenaRequest;
 import com.business95.api.dto.request.ActualizarSocioRequest;
 import com.business95.api.dto.request.RegistrarSocioRequest;
 import com.business95.api.dto.response.ActividadRecienteResponse;
@@ -43,6 +44,12 @@ public class SocioController {
     @PutMapping
     public ResponseEntity<SocioResponse> actualizarSocio(@Valid @RequestBody ActualizarSocioRequest socioRequest) {
         return ResponseEntity.ok().body(socioService.actualizarSocio(socioRequest));
+    }
+
+    @PutMapping("/mi-contrasena")
+    public ResponseEntity<?> actualizarMiContrasena(@RequestBody ActualizarMiContrasenaRequest contrasenaRequest) {
+        socioService.actualizarMiContrasena(contrasenaRequest);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/detalle")

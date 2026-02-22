@@ -7,9 +7,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.business95.api.dto.request.ActualizarContrasenaPorCorreoRequest;
+import com.business95.api.dto.request.ActualizarMiContrasenaRequest;
 import com.business95.api.dto.request.ActualizarSocioRequest;
 import com.business95.api.dto.request.RegistrarSocioRequest;
 import com.business95.api.dto.response.ActividadRecienteResponse;
@@ -48,6 +51,7 @@ public class SocioServiceImpl implements SocioService {
     private final SocioMapper socioMapper;
     private final SocioActual socioActual;
     private final InversionMapper inversionMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public SocioServiceImpl(
             SocioRepository socioRepository,
@@ -59,7 +63,8 @@ public class SocioServiceImpl implements SocioService {
             RolHelper rolHelper,
             SocioMapper socioMapper,
             SocioActual socioActual,
-            InversionMapper inversionMapper) {
+            InversionMapper inversionMapper,
+            PasswordEncoder passwordEncoder) {
         this.socioRepository = socioRepository;
         this.inversionRepository = inversionRepository;
         this.movimientoRepository = movimientoRepository;
@@ -70,6 +75,7 @@ public class SocioServiceImpl implements SocioService {
         this.socioMapper = socioMapper;
         this.socioActual = socioActual;
         this.inversionMapper = inversionMapper;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -109,6 +115,21 @@ public class SocioServiceImpl implements SocioService {
                 socioRequest.getTipoPersona());
 
         return socioMapper.toSocioResponseDTO(socioRepository.save(socio));
+    }
+
+    @Override
+    public void actualizarMiContrasena(ActualizarMiContrasenaRequest contrasenaRequest) {
+        Socio socio = socioHelper.buscarPorIdOLanzarExcepcion(socioActual.getIdSocioActual());
+
+        socio.getUsuario().setContrasena(passwordEncoder.encode(contrasenaRequest.getContrasena()));
+
+        socioRepository.save(socio);
+    }
+
+    @Override
+    public void actualizarContrasenaPorCorreo(ActualizarContrasenaPorCorreoRequest contrasenaPorCorreoRequest) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actualizarContrasenaPorCorreo'");
     }
 
     @Override

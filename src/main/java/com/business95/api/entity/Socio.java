@@ -36,7 +36,7 @@ public class Socio {
     @JoinColumn(name = "id_tipo_persona", nullable = false)
     private TipoPersona tipoPersona;
 
-    @JsonIgnoreProperties({"socio"})
+    @JsonIgnoreProperties({ "socio" })
     @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_usuario", unique = true, nullable = false)
     private Usuario usuario;

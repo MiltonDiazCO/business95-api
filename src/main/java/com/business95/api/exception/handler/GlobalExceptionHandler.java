@@ -29,6 +29,7 @@ import com.business95.api.exception.RolSistemaException;
 import com.business95.api.exception.SocioNoEncontradoException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.exception.TipoActividadNoEncontradoException;
+import com.business95.api.exception.UsuarioNoEncontradoException;
 import com.business95.api.service.interfaces.ErroresService;
 import com.business95.api.util.ErrorUtils;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -80,7 +81,8 @@ public class GlobalExceptionHandler {
             TipoActividadNoEncontradoException.class,
             ActividadSocioNoEncontradaException.class,
             RolNoEncontradoException.class,
-            InversionSocioNoEncontradoException.class
+            InversionSocioNoEncontradoException.class,
+            UsuarioNoEncontradoException.class
     })
     public ResponseEntity<ErrorHttpResponse> manejarExcepcionesRecursoNoEncontrado(
             RuntimeException exc,

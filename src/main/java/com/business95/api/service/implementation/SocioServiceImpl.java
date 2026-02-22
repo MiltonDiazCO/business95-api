@@ -25,6 +25,7 @@ import com.business95.api.dto.response.SocioResponse;
 import com.business95.api.entity.Socio;
 import com.business95.api.entity.Usuario;
 import com.business95.api.exception.SocioNoEncontradoException;
+import com.business95.api.exception.UsuarioNoEncontradoException;
 import com.business95.api.helper.RolHelper;
 import com.business95.api.helper.SocioHelper;
 import com.business95.api.helper.UsuarioHelper;
@@ -118,6 +119,7 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override
+    @Transactional
     public void actualizarMiContrasena(ActualizarMiContrasenaRequest contrasenaRequest) {
         Socio socio = socioHelper.buscarPorIdOLanzarExcepcion(socioActual.getIdSocioActual());
 
@@ -127,9 +129,19 @@ public class SocioServiceImpl implements SocioService {
     }
 
     @Override
+    @Transactional
+    @PreAuthorize("@catalogoSecurity.tienePermiso('ACTUALIZAR_CONTRASENA')")
     public void actualizarContrasenaPorCorreo(ActualizarContrasenaPorCorreoRequest contrasenaPorCorreoRequest) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarContrasenaPorCorreo'");
+
+        String correoElectronico = contrasenaPorCorreoRequest.getCorreoElectronico();
+        String contrasena = contrasenaPorCorreoRequest.getContrasena();
+
+        Socio socio = socioRepository.findByUsuarioCorreoElectronico(correoElectronico)
+                .orElseThrow(() -> new UsuarioNoEncontradoException());
+
+        socio.getUsuario().setContrasena(passwordEncoder.encode(contrasena));
+
+        socioRepository.save(socio);
     }
 
     @Override

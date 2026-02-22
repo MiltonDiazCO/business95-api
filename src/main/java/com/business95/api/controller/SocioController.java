@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.business95.api.dto.request.ActualizarContrasenaPorCorreoRequest;
 import com.business95.api.dto.request.ActualizarMiContrasenaRequest;
 import com.business95.api.dto.request.ActualizarSocioRequest;
 import com.business95.api.dto.request.RegistrarSocioRequest;
@@ -47,8 +48,16 @@ public class SocioController {
     }
 
     @PutMapping("/mi-contrasena")
-    public ResponseEntity<?> actualizarMiContrasena(@RequestBody ActualizarMiContrasenaRequest contrasenaRequest) {
+    public ResponseEntity<?> actualizarMiContrasena(
+            @Valid @RequestBody ActualizarMiContrasenaRequest contrasenaRequest) {
         socioService.actualizarMiContrasena(contrasenaRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/contrasena")
+    public ResponseEntity<?> actualizarContrasenaPorCorreo(
+            @Valid @RequestBody ActualizarContrasenaPorCorreoRequest contrasenaPorCorreoRequest) {
+        socioService.actualizarContrasenaPorCorreo(contrasenaPorCorreoRequest);
         return ResponseEntity.noContent().build();
     }
 

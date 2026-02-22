@@ -7,7 +7,7 @@ public class ActualizarContrasenaPorCorreoRequest {
 
     @NotNull(message = "El correo electrónico es requerido.")
     @Size(max = 150, message = "El correo electrónico debe ser máximo de 150 caracteres.")
-    private String correoEletronico;
+    private String correoElectronico;
 
     @NotNull(message = "La contraseña es requerida.")
     @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.")
@@ -17,18 +17,18 @@ public class ActualizarContrasenaPorCorreoRequest {
     }
 
     public ActualizarContrasenaPorCorreoRequest(
-            @NotNull(message = "El correo electrónico es requerido.") @Size(max = 150, message = "El correo electrónico debe ser máximo de 150 caracteres.") String correoEletronico,
+            @NotNull(message = "El correo electrónico es requerido.") @Size(max = 150, message = "El correo electrónico debe ser máximo de 150 caracteres.") String correoElectronico,
             @NotNull(message = "La contraseña es requerida.") @Size(min = 4, message = "La contraseña debe contener al menos 4 caracteres.") String contrasena) {
-        this.correoEletronico = correoEletronico;
+        this.correoElectronico = correoElectronico;
         this.contrasena = contrasena;
     }
 
-    public String getCorreoEletronico() {
-        return correoEletronico;
+    public String getCorreoElectronico() {
+        return correoElectronico;
     }
 
-    public void setCorreoEletronico(String correoEletronico) {
-        this.correoEletronico = correoEletronico;
+    public void setCorreoElectronico(String correoElectronico) {
+        this.correoElectronico = correoElectronico;
     }
 
     public String getContrasena() {

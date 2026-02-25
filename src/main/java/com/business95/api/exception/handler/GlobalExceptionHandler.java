@@ -19,6 +19,7 @@ import com.business95.api.exception.CategoriaNoEncontradaException;
 import com.business95.api.exception.IdActividadRequeridaException;
 import com.business95.api.exception.InversionConMovimientosException;
 import com.business95.api.exception.InversionNoEncontradaException;
+import com.business95.api.exception.InversionSinSociosException;
 import com.business95.api.exception.InversionSocioNoEncontradoException;
 import com.business95.api.exception.MedidaNoEncontradaException;
 import com.business95.api.exception.MonedaNoEncontradaException;
@@ -99,6 +100,16 @@ public class GlobalExceptionHandler {
             RuntimeException exc,
             HttpServletRequest request) {
 
+        return ErrorUtils.construirErrorResponse(
+                erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
+                ErrorUtils.construirErroresDeExcepcion(exc.getMessage()),
+                HttpStatus.BAD_REQUEST.value(), request);
+    }
+
+    @ExceptionHandler({ InversionSinSociosException.class })
+    public ResponseEntity<ErrorHttpResponse> manejarExcepcionesDeInversion(
+            RuntimeException exc,
+            HttpServletRequest request) {
         return ErrorUtils.construirErrorResponse(
                 erroresService.obtenerMensajePorMetodoHttp(request.getMethod()),
                 ErrorUtils.construirErroresDeExcepcion(exc.getMessage()),

@@ -14,6 +14,7 @@ import com.business95.api.entity.Inversion;
 import com.business95.api.entity.InversionSocio;
 import com.business95.api.entity.Rol;
 import com.business95.api.entity.Socio;
+import com.business95.api.exception.InversionSinSociosException;
 import com.business95.api.exception.SociosRequeridosException;
 import com.business95.api.helper.InversionHelper;
 import com.business95.api.helper.InversionSocioHelper;
@@ -126,6 +127,10 @@ public class InversionSocioServiceImpl implements InversionSocioService {
 
         if (socios.isEmpty()) {
             throw new SociosRequeridosException();
+        }
+
+        if(socios.size() >= inversion.getSocios().size()) {
+            throw new InversionSinSociosException();
         }
 
         for (Long idSocio : socios) {

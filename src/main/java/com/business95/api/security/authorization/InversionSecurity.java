@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import com.business95.api.exception.RolSistemaException;
 import com.business95.api.helper.MovimientoHelper;
+import com.business95.api.repository.InversionRepository;
 import com.business95.api.repository.PermisoRepository;
 import com.business95.api.service.interfaces.InversionSocioService;
 import com.business95.api.service.interfaces.RolService;
@@ -12,19 +13,26 @@ import com.business95.api.service.interfaces.RolService;
 public class InversionSecurity {
 
     private final PermisoRepository permisoRepository;
+    private final InversionRepository inversionRepository;
     private final InversionSocioService inversionSocioService;
     private final MovimientoHelper movimientoHelper;
     private final RolService rolService;
 
     public InversionSecurity(
             PermisoRepository permisoRepository,
+            InversionRepository inversionRepository,
             InversionSocioService inversionSocioService,
             MovimientoHelper movimientoHelper,
             RolService rolService) {
         this.permisoRepository = permisoRepository;
+        this.inversionRepository = inversionRepository;
         this.movimientoHelper = movimientoHelper;
         this.inversionSocioService = inversionSocioService;
         this.rolService = rolService;
+    }
+
+    public boolean esNuevainversion(Long idInversion) {
+        return inversionRepository.findById(idInversion).get().getSocios().isEmpty();
     }
 
     public boolean tienePermiso(String permiso, Long idInversion) {

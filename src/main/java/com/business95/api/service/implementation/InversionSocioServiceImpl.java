@@ -67,7 +67,10 @@ public class InversionSocioServiceImpl implements InversionSocioService {
 
     @Override
     @Transactional()
-    @PreAuthorize("@inversionSecurity.tienePermiso('AGREGAR_SOCIOS_A_INVERSION', #idInversion)")
+    @PreAuthorize("""
+                @inversionSecurity.esNuevainversion(#idInversion)
+                || @inversionSecurity.tienePermiso('AGREGAR_SOCIOS_A_INVERSION', #idInversion)
+            """)
     public InversionConSociosResponse agregarSociosAInversion(
             Long idInversion,
             Set<SocioRolInversionRequest> socios) {
@@ -129,7 +132,7 @@ public class InversionSocioServiceImpl implements InversionSocioService {
             throw new SociosRequeridosException();
         }
 
-        if(socios.size() >= inversion.getSocios().size()) {
+        if (socios.size() >= inversion.getSocios().size()) {
             throw new InversionSinSociosException();
         }
 

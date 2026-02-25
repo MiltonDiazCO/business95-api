@@ -42,8 +42,12 @@ public class ActividadServiceImpl implements ActividadService {
 
         @Override
         @Transactional()
-        @PreAuthorize("@inversionSecurity.tienePermisoSegunMovimiento('AGREGAR_ACTIVIDADES', #idMovimiento) " +
-                        "|| @inversionSecurity.tienePermisoSegunMovimiento('MODIFICAR_ACTIVIDADES', #idMovimiento)")
+        // @formatter:off
+        @PreAuthorize("""
+                @inversionSecurity.tienePermisoSegunMovimiento('AGREGAR_ACTIVIDADES', #idMovimiento)
+                || @inversionSecurity.tienePermisoSegunMovimiento('MODIFICAR_ACTIVIDADES', #idMovimiento)
+        """)
+        // @formatter:on
         public List<ActividadSocioResponse> guardar(
                         Long idMovimiento,
                         List<ActividadSocioRequest> actividadesSociosRequest) {

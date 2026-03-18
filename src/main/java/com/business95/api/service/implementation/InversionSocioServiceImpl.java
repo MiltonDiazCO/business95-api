@@ -4,12 +4,15 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.business95.api.dto.request.SocioRolInversionRequest;
 import com.business95.api.dto.response.InversionConSociosResponse;
+import com.business95.api.dto.response.PaginaResponse;
+import com.business95.api.dto.response.SocioPorInversionResponse;
 import com.business95.api.entity.Inversion;
 import com.business95.api.entity.InversionSocio;
 import com.business95.api.entity.Rol;
@@ -21,6 +24,7 @@ import com.business95.api.helper.InversionSocioHelper;
 import com.business95.api.helper.RolHelper;
 import com.business95.api.helper.SocioHelper;
 import com.business95.api.mapper.InversionMapper;
+import com.business95.api.mapper.InversionSocioMapper;
 import com.business95.api.repository.InversionRepository;
 import com.business95.api.repository.InversionSocioRepository;
 import com.business95.api.security.context.SocioActual;
@@ -45,6 +49,7 @@ public class InversionSocioServiceImpl implements InversionSocioService {
             InversionHelper inversionHelper,
             SocioHelper socioHelper,
             RolHelper rolHelper,
+            InversionSocioMapper inversionSocioMapper,
             InversionMapper inversionMapper,
             SocioActual socioActual) {
         this.inversionSocioRepository = inversionSocioRepository;
@@ -55,6 +60,11 @@ public class InversionSocioServiceImpl implements InversionSocioService {
         this.rolHelper = rolHelper;
         this.inversionMapper = inversionMapper;
         this.socioActual = socioActual;
+    }
+
+    @Override
+    public PaginaResponse<SocioPorInversionResponse> sociosPorInversion(Long idInversion, Pageable pageable) {
+        return new PaginaResponse<>(inversionSocioRepository.buscarByinversionIdInversion(idInversion, pageable));
     }
 
     @Override

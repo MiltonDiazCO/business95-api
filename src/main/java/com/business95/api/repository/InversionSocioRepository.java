@@ -35,8 +35,7 @@ public interface InversionSocioRepository extends CrudRepository<InversionSocio,
                 WHERE i.inversion.id = :idInversion
                 """)
         Page<SocioPorInversionResponse> buscarByinversionIdInversion(
-                        @Param("idInversion") Long idInversion,
-                        Pageable pageable);
+                        @Param("idInversion") Long idInversion, Pageable pageable);
         // @formatter:on
 
         // @formatter:off

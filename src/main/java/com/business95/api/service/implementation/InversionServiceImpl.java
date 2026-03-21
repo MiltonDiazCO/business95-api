@@ -2,8 +2,6 @@ package com.business95.api.service.implementation;
 
 import java.util.List;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -12,10 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.business95.api.dto.request.ActualizarInversionRequest;
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.response.BalanceSocioPorInversionResponse;
+import com.business95.api.dto.response.DetalleMovimientoResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.InversionConSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
-import com.business95.api.dto.response.ResumenMovimientoResponse;
+import com.business95.api.dto.response.PaginaResponse;
 import com.business95.api.entity.Inversion;
 import com.business95.api.exception.InversionConMovimientosException;
 import com.business95.api.exception.InversionNoEncontradaException;
@@ -25,8 +24,8 @@ import com.business95.api.mapper.SocioMapper;
 import com.business95.api.projection.BalanceInversionProjection;
 import com.business95.api.repository.InversionRepository;
 import com.business95.api.repository.MovimientoRepository;
-import com.business95.api.service.interfaces.InversionSocioService;
 import com.business95.api.service.interfaces.InversionService;
+import com.business95.api.service.interfaces.InversionSocioService;
 
 @Service
 public class InversionServiceImpl implements InversionService {
@@ -99,12 +98,9 @@ public class InversionServiceImpl implements InversionService {
     @Override
     @Transactional(readOnly = true)
     @PreAuthorize("@inversionSecurity.tienePermiso('RESUMEN_MOVIMIENTOS_POR_INVERSION', #idInversion)")
-    public Page<ResumenMovimientoResponse> resumenMovimientosPorInversion(Long idInversion, int pagina, int limite) {
-        Pageable pageable = PageRequest.of(pagina, limite);
-
-        inversionHelper.buscarPorIdOLanzarExcepcion(idInversion);
-
-        return movimientoRepository.resumenMovimientosPorInversion(idInversion, pageable);
+    public PaginaResponse<DetalleMovimientoResponse> movimientosPorInversion(
+            Long idInversion, Pageable pageable) {
+        return new PaginaResponse<>(movimientoRepository.movimientosPorInversion(idInversion, pageable));
     }
 
     @Override

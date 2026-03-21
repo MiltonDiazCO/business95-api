@@ -12,8 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import com.business95.api.dto.response.BalanceMovimientoResponse;
 import com.business95.api.dto.response.BalanceSocioPorMovimientoResponse;
+import com.business95.api.dto.response.DetalleMovimientoResponse;
 import com.business95.api.dto.response.MovimientoRecienteResponse;
-import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.entity.Movimiento;
 
 @Repository
@@ -56,11 +56,14 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
 
         // @formatter:off
         @Query("""
-                SELECT new com.business95.api.dto.response.ResumenMovimientoResponse(
-                        m.idMovimiento AS idMovimiento, m.concepto AS concepto,
+                SELECT new com.business95.api.dto.response.DetalleMovimientoResponse(
+                        m.idMovimiento AS idMovimiento,
+                        m.concepto AS concepto,
                         m.categoria.categoria AS categoria,
-                        SUM(a.cantidad) AS cantidad, md.medida AS medida,
-                        SUM(a.monto) AS balance, m.moneda.idMoneda AS moneda,
+                        SUM(a.cantidad) AS cantidad,
+                        md.medida AS medida,
+                        SUM(a.monto) AS balance,
+                        m.moneda.idMoneda AS moneda,
                         MIN(a.fecha) AS fechaApertura,
                         MAX(a.fecha) AS fechaUltimaActividad
                 ) FROM Movimiento m
@@ -69,9 +72,8 @@ public interface MovimientoRepository extends JpaRepository<Movimiento, Long> {
                 WHERE m.inversion.idInversion = :idInversion
                 GROUP BY m.idMovimiento
                 """)
-        Page<ResumenMovimientoResponse> resumenMovimientosPorInversion(
-                        @Param("idInversion") Long idInversion,
-                        Pageable pageable);
+        Page<DetalleMovimientoResponse> movimientosPorInversion(
+                        @Param("idInversion") Long idInversion, Pageable pageable);
         // @formatter:on
 
         // @formatter:off

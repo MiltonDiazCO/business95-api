@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class ResumenMovimientoResponse {
+public class DetalleMovimientoResponse {
 
     private Long idMovimiento;
     private String concepto;
@@ -18,10 +18,10 @@ public class ResumenMovimientoResponse {
     private LocalDateTime fechaApertura;
     private LocalDateTime fechaUltimaActividad;
 
-    public ResumenMovimientoResponse() {
+    public DetalleMovimientoResponse() {
     }
 
-    public ResumenMovimientoResponse(
+    public DetalleMovimientoResponse(
             Long idMovimiento,
             String concepto,
             String categoria,

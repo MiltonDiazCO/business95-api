@@ -3,7 +3,6 @@ package com.business95.api.controller;
 import java.util.List;
 import java.util.Set;
 
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,16 +13,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.business95.api.dto.request.ActualizarInversionRequest;
 import com.business95.api.dto.request.InversionRequest;
 import com.business95.api.dto.request.SocioRolInversionRequest;
+import com.business95.api.dto.response.DetalleMovimientoResponse;
 import com.business95.api.dto.response.InversionConBalancesSociosResponse;
 import com.business95.api.dto.response.InversionResponse;
 import com.business95.api.dto.response.PaginaResponse;
-import com.business95.api.dto.response.ResumenMovimientoResponse;
 import com.business95.api.dto.response.SocioPorInversionResponse;
 import com.business95.api.service.interfaces.InversionService;
 import com.business95.api.service.interfaces.InversionSocioService;
@@ -62,14 +60,9 @@ public class InversionController {
     }
 
     @GetMapping("/{idInversion}/movimientos")
-    public ResponseEntity<Page<ResumenMovimientoResponse>> encontrarMovimientosPorInversion(
-            @PathVariable Long idInversion,
-            @RequestParam(defaultValue = "0") int pagina,
-            @RequestParam(defaultValue = "5") int limite) {
-        return ResponseEntity.ok().body(inversionService.resumenMovimientosPorInversion(
-                idInversion,
-                pagina,
-                limite));
+    public PaginaResponse<DetalleMovimientoResponse> movimientosPorInversion(
+            @PathVariable Long idInversion, Pageable pageable) {
+        return inversionService.movimientosPorInversion(idInversion, pageable);
     }
 
     @PostMapping

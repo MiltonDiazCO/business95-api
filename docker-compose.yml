@@ -11,6 +11,7 @@ services:
     
   app:
     build: .
+    image: business95-api:1.0
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/${MYSQL_DATABASE}
       SPRING_DATASOURCE_USERNAME: root
